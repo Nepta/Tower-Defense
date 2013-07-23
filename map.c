@@ -21,14 +21,13 @@ int main(){
 
 	SDL_Surface *background = loadMap("resources/forest.png");
 	Enemy *cat = newEnemy("resources/white_transparent_cat.png");
-	SDL_Rect sprite = {24,32,24,32};
-	addEnemyAnimation(cat, sprite, RIGHT);
+	initEnemyAnimation(cat);
 	
 	int time = 100;
 	while(time-- > 0){
 		SDL_BlitSurface(background, NULL, screen, NULL);
-		SDL_BlitSurface(cat->spriteSheet, &cat->animation[RIGHT]->animation, screen, NULL);
-		cat->animation[RIGHT] = cat->animation[RIGHT]->nextAnimation;
+		SDL_BlitSurface(cat->spriteSheet, &cat->animation[STAY]->animation, screen, NULL);
+		cat->animation[STAY] = cat->animation[STAY]->nextAnimation;
 		SDL_Flip(screen);
 	}
  return 0;
@@ -48,6 +47,35 @@ SDL_Surface* loadMap(char* mapName){
 		printf("IMG_Load: %s\n", IMG_GetError());
 		exit(-1);
 	}
-	return background;
+ return background;
 }
 
+void initEnemyAnimation(Enemy *enemy){
+	SDL_Rect sprite;
+	sprite.w = 24; sprite.h = 32;
+
+	sprite.x = 24; sprite.y = 0;
+	addEnemyAnimation(enemy, sprite, UP);
+	sprite.x = 48; sprite.y = 0;
+	addEnemyAnimation(enemy, sprite, UP);
+	
+	sprite.x = 24; sprite.y = 32;
+	addEnemyAnimation(enemy, sprite, LEFT);
+	sprite.x = 48; sprite.y = 32;
+	addEnemyAnimation(enemy, sprite, LEFT);
+	
+	sprite.x = 24; sprite.y = 64;
+	addEnemyAnimation(enemy, sprite, DOWN);
+	sprite.x = 48; sprite.y = 64;
+	addEnemyAnimation(enemy, sprite, DOWN);
+	
+	sprite.x = 24; sprite.y = 96;
+	addEnemyAnimation(enemy, sprite, LEFT);
+	sprite.x = 48; sprite.y = 96;
+	addEnemyAnimation(enemy, sprite, LEFT);
+
+	sprite.x = 24; sprite.y = 64;
+	addEnemyAnimation(enemy, sprite, STAY);
+	sprite.x = 48; sprite.y = 64;
+	addEnemyAnimation(enemy, sprite, STAY);
+}
