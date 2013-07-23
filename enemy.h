@@ -2,6 +2,7 @@
 #define __enemy_H__
 
 #include <SDL/SDL.h>
+#include "animation.h"
 
 typedef enum{
 	UP,
@@ -12,14 +13,9 @@ typedef enum{
 	AnimationStateLenght
 }AnimationState;
 
-typedef struct enemyAnimation{
-	SDL_Rect *animation;
-	struct enemyAnimation *nextAnimation;
-}EnemyAnimation;
-
 typedef struct enemy{
 	SDL_Surface *spriteSheet;
-	EnemyAnimation animation[AnimationStateLenght];
+	EnemyAnimation *animation[AnimationStateLenght];
 }Enemy;
 
 Enemy *newEnemy(char *enemySprite);
