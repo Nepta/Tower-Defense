@@ -19,6 +19,7 @@ typedef struct enemyAnimation{
 
 typedef struct enemy{
 	SDL_Surface *spriteSheet;
+	SDL_Rect position;
 	EnemyAnimation *animation[AnimationStateLenght];
 }Enemy;
 

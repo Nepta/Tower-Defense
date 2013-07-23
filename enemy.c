@@ -4,6 +4,8 @@
 
 Enemy *newEnemy(char *enemySprite){
 	Enemy *enemy = malloc(sizeof (Enemy));
+	enemy->position.w = 0;
+	enemy->position.h = 0;
 	SDL_Surface *spriteSheet = IMG_Load(enemySprite);
 	if(spriteSheet == NULL) {
 		printf("failed to load the enemy sprite sheet\n");

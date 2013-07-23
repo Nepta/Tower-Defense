@@ -21,12 +21,14 @@ int main(){
 
 	SDL_Surface *background = loadMap("resources/forest.png");
 	Enemy *cat = newEnemy("resources/white_transparent_cat.png");
+	cat->position.x = 0; cat->position.y = 0;
 	initEnemyAnimation(cat);
 	
 	int time = 100;
 	while(time-- > 0){
 		SDL_BlitSurface(background, NULL, screen, NULL);
-		SDL_BlitSurface(cat->spriteSheet, &cat->animation[STAY]->animation, screen, NULL);
+		SDL_BlitSurface(cat->spriteSheet, &cat->animation[STAY]->animation, screen, &cat->position);
+		cat->position.y++;
 		cat->animation[STAY] = cat->animation[STAY]->nextAnimation;
 		SDL_Flip(screen);
 	}
