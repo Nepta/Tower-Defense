@@ -26,7 +26,7 @@ ifeq ($(config),)
   DEFINES   += 
   INCLUDES  += 
   CPPFLAGS  += -MMD -MP $(DEFINES) $(INCLUDES)
-  CFLAGS    += $(CPPFLAGS) $(ARCH) -Wall
+  CFLAGS    += $(CPPFLAGS) $(ARCH) -Wall -std=c99
   CXXFLAGS  += $(CFLAGS) 
   LDFLAGS   += -s
   LIBS      += -lSDL -lSDL_image
@@ -43,6 +43,7 @@ endif
 
 OBJECTS := \
 	$(OBJDIR)/enemy.o \
+	$(OBJDIR)/animation.o \
 	$(OBJDIR)/map.o \
 
 RESOURCES := \
@@ -105,6 +106,9 @@ $(GCH): $(PCH)
 endif
 
 $(OBJDIR)/enemy.o: enemy.c
+	@echo $(notdir $<)
+	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/animation.o: animation.c
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/map.o: map.c
