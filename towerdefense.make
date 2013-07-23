@@ -42,6 +42,7 @@ ifeq ($(config),)
 endif
 
 OBJECTS := \
+	$(OBJDIR)/enemy.o \
 	$(OBJDIR)/map.o \
 
 RESOURCES := \
@@ -103,6 +104,9 @@ $(GCH): $(PCH)
 	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"
 endif
 
+$(OBJDIR)/enemy.o: enemy.c
+	@echo $(notdir $<)
+	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/map.o: map.c
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"

@@ -22,5 +22,7 @@ typedef struct enemy{
 	EnemyAnimation animation[AnimationStateLenght];
 }Enemy;
 
+Enemy *newEnemy(char *enemySprite);
+
 #endif /* __enemy_H__ */
 
