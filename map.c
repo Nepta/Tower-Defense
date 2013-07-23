@@ -25,7 +25,7 @@ int main(){
 	int time = 100;
 	while(time-- > 0){
 		SDL_BlitSurface(background, NULL, screen, NULL);
-		SDL_BlitSurface(cat->spriteSheet, &cat->animation[DOWN]->animation, screen, NULL);
+		SDL_BlitSurface(cat->spriteSheet, &cat->animation[LEFT]->animation, screen, NULL);
 		SDL_Flip(screen);
 	}
  return 0;
