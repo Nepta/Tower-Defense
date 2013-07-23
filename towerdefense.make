@@ -43,7 +43,6 @@ endif
 
 OBJECTS := \
 	$(OBJDIR)/enemy.o \
-	$(OBJDIR)/animation.o \
 	$(OBJDIR)/map.o \
 
 RESOURCES := \
@@ -106,9 +105,6 @@ $(GCH): $(PCH)
 endif
 
 $(OBJDIR)/enemy.o: enemy.c
-	@echo $(notdir $<)
-	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/animation.o: animation.c
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/map.o: map.c

@@ -48,3 +48,15 @@ Enemy *newEnemy(char *enemySprite){
  
  return enemy;
 }
+void addEnemyAnimation(Enemy *enemy, SDL_Rect animation, AnimationState state){
+	EnemyAnimation *firstAnimation = enemy->animation[state];
+	EnemyAnimation *animationList = enemy->animation[state];
+	while(animationList->nextAnimation != firstAnimation){
+		animationList = animationList->nextAnimation;
+	}
+	EnemyAnimation *newAnimation = malloc(sizeof (EnemyAnimation));
+	newAnimation->animation = animation;
+	newAnimation->nextAnimation = firstAnimation;
+	animationList->nextAnimation = newAnimation;
+}
+
