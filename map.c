@@ -21,10 +21,12 @@ int main(){
 
 	SDL_Surface *background = loadMap("resources/forest.png");
 	Enemy *cat = newEnemy("resources/white_transparent_cat.png");
-	cat->position.x = 0; cat->position.y = 0;
+	cat->position.x = 1; cat->position.y = 1;
 	initEnemyAnimation(cat);
 	
-	int time = 100;
+	Map **map = initMap();
+	
+	int time = 200;
 	while(time-- > 0){
 		SDL_BlitSurface(background, NULL, screen, NULL);
 		SDL_BlitSurface(cat->spriteSheet, &cat->animation[STAY]->animation, screen, &cat->position);
@@ -80,4 +82,25 @@ void initEnemyAnimation(Enemy *enemy){
 	addEnemyAnimation(enemy, sprite, STAY);
 	sprite.x = 48; sprite.y = 64;
 	addEnemyAnimation(enemy, sprite, STAY);
+}
+
+Map** initMap(){
+	Map *map_ = malloc(800 * 600 * sizeof (Map));
+	Map **map = malloc(800 * sizeof (Map*));
+	
+	for(int i=0; i<800; i++){
+		map[i] = &map_[i*600];
+		for(int j=0; j< 600; j++){
+			map[i][j].x = i;
+			map[i][j].y = j;
+			map[i][j].path.x = i;
+			map[i][j].path.y = j;
+			if(i == 0 || j == 0 || i == 799 || j == 599){
+				map[i][j].hasTower = 1;
+			}else{
+				map[i][j].hasTower = 0;
+			}
+		}
+	}
+ return map;
 }
