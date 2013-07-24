@@ -44,6 +44,7 @@ endif
 OBJECTS := \
 	$(OBJDIR)/enemy.o \
 	$(OBJDIR)/map.o \
+	$(OBJDIR)/pathFinding.o \
 
 RESOURCES := \
 
@@ -108,6 +109,9 @@ $(OBJDIR)/enemy.o: enemy.c
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/map.o: map.c
+	@echo $(notdir $<)
+	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/pathFinding.o: pathFinding.c
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"
 
