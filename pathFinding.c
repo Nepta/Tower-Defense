@@ -72,8 +72,10 @@ void searchPath(Map **map, Position start, Position end){
 
 List* popInList(Node *nodeToFind, List **list){
 	List *runningThroughList = *list;
+	// remove the first element
 	if(runningThroughList->item == nodeToFind){
-		*list = (*list)->nextList;
+		*list = runningThroughList->nextList;
+		runningThroughList->nextList = NULL;
 		return runningThroughList;
 	}
 	
@@ -81,6 +83,7 @@ List* popInList(Node *nodeToFind, List **list){
 		if(runningThroughList->nextList->item == nodeToFind){
 			List *findList = runningThroughList->nextList;
 			runningThroughList->nextList = runningThroughList->nextList->nextList;
+			findList->nextList = NULL;
 			return findList;
 		}
 		runningThroughList = runningThroughList->nextList;
