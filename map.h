@@ -11,7 +11,7 @@ typedef struct{
 
 typedef struct Map{
 	int x; int y;
-	Position path;
+	Position parent;
 	int hasTower;
 }Map;
 

@@ -93,8 +93,8 @@ Map** initMap(){
 		for(int j=0; j< 600; j++){
 			map[i][j].x = i;
 			map[i][j].y = j;
-			map[i][j].path.x = i;
-			map[i][j].path.y = j;
+			map[i][j].parent.x = i;
+			map[i][j].parent.y = j;
 			if(i == 0 || j == 0 || i == 799 || j == 599){
 				map[i][j].hasTower = 1;
 			}else{
