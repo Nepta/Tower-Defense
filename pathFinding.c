@@ -33,3 +33,60 @@ List* addNodeInSortedList(Node *node, List *list){
 	return newList;
 }
 
+List* newList(Node *firstItem){
+	List *newList = malloc(sizeof (List));
+	newList->item = firstItem;
+	newList->nextList = NULL;
+ return newList;
+}
+
+Node* newNode(int x, int y){
+	Node *newNode = malloc(sizeof (Node));
+	newNode->x = x;
+	newNode->y = y;
+	newNode->startToNodeCost = 0;
+	newNode->nodeToEndCost = 0;
+ return newNode;
+}
+
+/*
+void searchPath(Map **map, Position start, Position end){
+	Node *startNode = newNode(start.x, start.y);
+	Node *endNode = newNode(end.x, end.y);
+	List *openList = newList(endNode);
+	
+	Node *currentNode = endNode;
+	int i[] = {0,1,0,-1};
+	int j[] = {1,0,-1,0};
+	for(int k=0; k<4; k++){
+		Position currentLocation = {currentNode->x, currentNode->y};
+		if(map[currentLocation.x+i][currentLocation.y+j]->hasTower != 1){ //walkable area
+			if(){//not in closed list
+				map[currentLocation.x+i][currentLocation.y+j]->parent = currentLocation;
+				
+				openList = addNodeInSortedList(currentNode, openList);
+			}
+		}
+	}
+}
+*/
+
+List* popInList(Node *nodeToFind, List **list){
+	List *runningThroughList = *list;
+	if(runningThroughList->item == nodeToFind){
+		*list = (*list)->nextList;
+		return runningThroughList;
+	}
+	
+	while(runningThroughList->nextList != NULL){
+		if(runningThroughList->nextList->item == nodeToFind){
+			List *findList = runningThroughList->nextList;
+			runningThroughList->nextList = runningThroughList->nextList->nextList;
+			return findList;
+		}
+		runningThroughList = runningThroughList->nextList;
+	}
+ return NULL;
+}
+
+

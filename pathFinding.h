@@ -13,6 +13,7 @@ typedef struct list{
 }List;
 
 List* addNodeInSortedList(Node *node, List *list);
-
+List* newList(Node *firstItem);
+List* popInList(Node *nodeToFind, List **list);
 #endif /* __pathFinding_H__ */
 
