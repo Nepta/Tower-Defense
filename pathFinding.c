@@ -11,7 +11,7 @@ List* addNodeInSortedList(Node *node, List *list){
 	int currentListCost = list->item->startToNodeCost + list->item->nodeToEndCost;
 	if(newNodeCost <= currentListCost){
 		newList->nextList = list;
-	 	goto newNode;
+	 	return newList;
 	}
 
 	// running through the list
@@ -20,8 +20,8 @@ List* addNodeInSortedList(Node *node, List *list){
 		int nextListCost = nextNode->startToNodeCost + nextNode->nodeToEndCost;
 		if(newNodeCost <= nextListCost){
 			newList->nextList = runningThroughList->nextList;
-			runningThroughList->nextList = runningThroughList;
-			goto newNode;
+			runningThroughList->nextList = newList;
+			return list;
 		}
 		runningThroughList = runningThroughList->nextList;
 	}
@@ -29,8 +29,7 @@ List* addNodeInSortedList(Node *node, List *list){
 	//adding node at the end
 	newList->nextList = NULL;
 	runningThroughList->nextList = newList;
-	newNode:
-	return newList;
+	return list;
 }
 
 List* newList(Node *firstItem){
