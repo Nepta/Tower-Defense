@@ -26,9 +26,9 @@ ifeq ($(config),)
   DEFINES   += 
   INCLUDES  += 
   CPPFLAGS  += -MMD -MP $(DEFINES) $(INCLUDES)
-  CFLAGS    += $(CPPFLAGS) $(ARCH) -Wall -std=c99
+  CFLAGS    += $(CPPFLAGS) $(ARCH) -Wall -g -std=c99 -pg
   CXXFLAGS  += $(CFLAGS) 
-  LDFLAGS   += -s
+  LDFLAGS   += -pg
   LIBS      += -lSDL -lSDL_image
   RESFLAGS  += $(DEFINES) $(INCLUDES) 
   LDDEPS    += 
