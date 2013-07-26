@@ -1,6 +1,5 @@
 #include "pathFinding.h"
 #include <stdlib.h>
-#define inOpenList(node) 
 
 List* addNodeInSortedList(Node *node, List *list){
 	List *newList = malloc(sizeof (List));
@@ -108,7 +107,7 @@ int isInClosedList(Node *node){
 }
 
 SearchResult* searchNodeByXY(Node *nodeToFind, List *list){
-	SearchResult result = malloc(sizeof (SearchResult));
+	SearchResult *result = malloc(sizeof (SearchResult));
 	result->previous = NULL;
 	result->foundNode = list;
 	result->next = list->nextList;
@@ -121,7 +120,7 @@ SearchResult* searchNodeByXY(Node *nodeToFind, List *list){
 	while(result->next != NULL){
 		result->previous = result->foundNode;
 		result->foundNode = result->next;
-		result->next = result->next->nextNode;
+		result->next = result->next->nextList;
 		if(result->foundNode->item->x == nodeToFind->x && result->foundNode->item->y == nodeToFind->y){
 			return result;
 		}
@@ -132,22 +131,19 @@ SearchResult* searchNodeByXY(Node *nodeToFind, List *list){
 }
 
 List* popInList(Node *nodeToFind, List **list){
-	List *runningThroughList = *list;
-	// remove the first element
-	if(runningThroughList->item == nodeToFind){
-		*list = runningThroughList->nextList;
-		runningThroughList->nextList = NULL;
-		return runningThroughList;
-	}
-
-	while(runningThroughList->nextList != NULL){
-		if(runningThroughList->nextList->item == nodeToFind){
-			List *findList = runningThroughList->nextList;
-			runningThroughList->nextList = runningThroughList->nextList->nextList;
-			findList->nextList = NULL;
-			return findList;
+	SearchResult *result = searchNodeByXY(nodeToFind, *list);
+	// no found node
+	if(result->foundNode == NULL){
+		return NULL;
+	}else{
+		result->foundNode->nextList = NULL;
+		// first node
+		if(result->previous == NULL){
+			*list = result->next;
+		}else{
+			result->previous->nextList = result->next;
 		}
-		runningThroughList = runningThroughList->nextList;
+		return result->foundNode;
 	}
  return NULL;
 }
