@@ -21,6 +21,7 @@ SearchResult* searchNode(List *list);
 List* addNodeInSortedList(Node *node, List *list);
 List* newList(Node *firstItem);
 List* popInList(Node *nodeToFind, List **list);
+SearchResult* searchNodeByXY(Node *nodeToFind, List *list);
 
 int estimatedPathCost(Node *adjacentNode, Node *endNode);
 int isInList(Node *node, List *list);
