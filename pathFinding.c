@@ -1,4 +1,5 @@
 #include "pathFinding.h"
+#include "map.h"
 #include <stdlib.h>
 
 List* addNodeInSortedList(Node *node, List *list){
@@ -72,21 +73,20 @@ void searchPath(Map **map, Position start, Position end){
 		Node *adjacentNode = newNode(currentNode->x + i[k], currentNode->y + j[k]);
 		int newPathCost = currentNode->startToNodeCost + 1;
 		adjacentNode->startToNodeCost = newPathCost;
-		if(map[adjacentNode->x][adjacentNode->y]->hasTower != 1 && !isInClosedList(adjacentNode)){ //walkable area and non computed node
+		if(map[adjacentNode->x][adjacentNode->y].hasTower != 1 && !isInClosedList(adjacentNode)){ //walkable area and non computed node
 			if(isInOpenList(currentNode)){
-				Node *inOpenListNode = popInList(currentNode, openList);
+				Node *inOpenListNode = popInList(currentNode, &openList)->item;
 				if(newPathCost < adjacentNode->startToNodeCost){ //using new path is better
 					adjacentNode->nodeToEndCost = inOpenListNode->nodeToEndCost;
-					map[adjacentNode->x][adjacentNode->y]->parent = currentLocation;
-					addNodeInSortedList(adjacentNode, openList);
+					map[adjacentNode->x][adjacentNode->y].parent = currentLocation;
+					openList = addNodeInSortedList(adjacentNode, openList);
 				}else{ // we put the note where we took from
 					addNodeInSortedList(inOpenListNode, openList);
 				}
 			}else{
-				adjacentNode->nodeToEndCost = estimatedPathCost(adjacentNode, endNode);
-				List *isInOpenList = popInList(currentNode, &openList);
-
+				adjacentNode->nodeToEndCost = estimatedPathCost(adjacentNode, startNode);
 				openList = addNodeInSortedList(currentNode, openList);
+				map[adjacentNode->x][adjacentNode->y].parent = currentLocation;
 			}
 		}
 	}
@@ -100,7 +100,7 @@ int estimatedPathCost(Node *adjacentNode, Node *endNode){
 
 int isInList(Node *node, List *list){
 	SearchResult *result = searchNodeByXY(node, list);
- return result->foundNode
+ return result->foundNode != NULL;
 }
 
 int isInOpenList(Node *node){
