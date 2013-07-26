@@ -69,24 +69,34 @@ void searchPath(Map **map, Position start, Position end){
 	int j[] = {1,0,-1,0};
 	for(int k=0; k<4; k++){
 		Position currentLocation = {currentNode->x, currentNode->y};
-		Node *adjacentNode = 
-		if(map[currentLocation.x+i[k]][currentLocation.y+j[k]]->hasTower != 1){ //walkable area
-			if(1){//not in closed list
-				if(inOpenList(currentNode)){
-					int currentPathCose = currentNode->startToNodeCost;
-					int newPathCost = 
-				}else{
-					List *isInOpenList = popInList(currentNode, &openList);
-					map[currentLocation.x+i][currentLocation.y+j]->parent = currentLocation;
-
-					openList = addNodeInSortedList(currentNode, openList);
+		Node *adjacentNode = newNode(currentNode->x + i[k], currentNode->y + j[k]);
+		int newPathCost = currentNode->startToNodeCost + 1;
+		adjacentNode->startToNodeCost = newPathCost;
+		if(map[adjacentNode->x][adjacentNode->y]->hasTower != 1 && !isInClosedList(adjacentNode)){ //walkable area and non computed node
+			if(isInOpenList(currentNode)){
+				Node *inOpenListNode = popInList(currentNode, openList);
+				if(newPathCost < adjacentNode->startToNodeCost){ //using new path is better
+					adjacentNode->nodeToEndCost = inOpenListNode->nodeToEndCost;
+					map[adjacentNode->x][adjacentNode->y]->parent = currentLocation;
+					addNodeInSortedList(adjacentNode, openList);
+				}else{ // we put the note where we took from
+					addNodeInSortedList(inOpenListNode, openList);
 				}
+			}else{
+				adjacentNode->nodeToEndCost = estimatedPathCost(adjacentNode, endNode);
+				List *isInOpenList = popInList(currentNode, &openList);
+
+				openList = addNodeInSortedList(currentNode, openList);
 			}
 		}
 	}
 }
 
-
+int estimatedPathCost(Node *adjacentNode, Node *endNode){
+	// manathan path cost
+	int cost = abs(endNode->x - adjacentNode->x) + abs(endNode->y - adjacentNode->y);
+ return cost;
+}
 
 int isInList(Node *node, List *list){
 	SearchResult *result = searchNodeByXY(node, list);

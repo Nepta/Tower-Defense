@@ -22,6 +22,7 @@ List* addNodeInSortedList(Node *node, List *list);
 List* newList(Node *firstItem);
 List* popInList(Node *nodeToFind, List **list);
 
+int estimatedPathCost(Node *adjacentNode, Node *endNode);
 int isInList(Node *node, List *list);
 int isInOpenList(Node *node);
 int isInClosedList(Node *node);
