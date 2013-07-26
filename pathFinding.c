@@ -58,44 +58,39 @@ Node* newNode(int x, int y){
 static List *openList;
 static List *closedList;
 
-/*void searchPath(Map **map, Position start, Position end){*/
-/*	Node *startNode = newNode(start.x, start.y);*/
-/*	Node *endNode = newNode(end.x, end.y);*/
-/*	openList = newList(endNode);*/
-/*	closedList = NULL;*/
-/*	*/
-/*	Node *currentNode = endNode;*/
-/*	int i[] = {0,1,0,-1};*/
-/*	int j[] = {1,0,-1,0};*/
-/*	for(int k=0; k<4; k++){*/
-/*		Position currentLocation = {currentNode->x, currentNode->y};*/
-/*		Node *adjacentNode = */
-/*		if(map[currentLocation.x+i[k]][currentLocation.y+j[k]]->hasTower != 1){ //walkable area*/
-/*			if(1){//not in closed list*/
-/*				if(inOpenList(currentNode)){*/
-/*					int currentPathCose = currentNode->startToNodeCost;*/
-/*					int newPathCost = */
-/*				}else{*/
-/*					List *isInOpenList = popInList(currentNode, &openList);*/
-/*					map[currentLocation.x+i][currentLocation.y+j]->parent = currentLocation;*/
+void searchPath(Map **map, Position start, Position end){
+	Node *startNode = newNode(start.x, start.y);
+	Node *endNode = newNode(end.x, end.y);
+	openList = newList(endNode);
+	closedList = NULL;
+	
+	Node *currentNode = endNode;
+	int i[] = {0,1,0,-1};
+	int j[] = {1,0,-1,0};
+	for(int k=0; k<4; k++){
+		Position currentLocation = {currentNode->x, currentNode->y};
+		Node *adjacentNode = 
+		if(map[currentLocation.x+i[k]][currentLocation.y+j[k]]->hasTower != 1){ //walkable area
+			if(1){//not in closed list
+				if(inOpenList(currentNode)){
+					int currentPathCose = currentNode->startToNodeCost;
+					int newPathCost = 
+				}else{
+					List *isInOpenList = popInList(currentNode, &openList);
+					map[currentLocation.x+i][currentLocation.y+j]->parent = currentLocation;
 
-/*					openList = addNodeInSortedList(currentNode, openList);*/
-/*				}*/
-/*			}*/
-/*		}*/
-/*	}*/
-/*}*/
+					openList = addNodeInSortedList(currentNode, openList);
+				}
+			}
+		}
+	}
+}
 
 
 
 int isInList(Node *node, List *list){
-	List *fundElement = popInList(node,&list);
-	if(fundElement){
-		addNodeInSortedList(node, list);
-		return 1;
-	}else{
-		return 0;
-	}
+	SearchResult *result = searchNodeByXY(node, list);
+ return result->foundNode
 }
 
 int isInOpenList(Node *node){
