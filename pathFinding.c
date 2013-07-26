@@ -1,12 +1,20 @@
 #include "pathFinding.h"
 #include <stdlib.h>
+#define inOpenList(node) 
 
 List* addNodeInSortedList(Node *node, List *list){
 	List *newList = malloc(sizeof (List));
 	newList->item = node;
+	newList->nextList = NULL;
 	List *runningThroughList = list;
+	// Case of an empty List
+	if(runningThroughList == NULL){
+		return newList;
+	}
+
 	int newNodeCost = node->startToNodeCost + node->nodeToEndCost;
-	
+
+
 	//adding Node at the begining
 	int currentListCost = list->item->startToNodeCost + list->item->nodeToEndCost;
 	if(newNodeCost <= currentListCost){
@@ -25,7 +33,7 @@ List* addNodeInSortedList(Node *node, List *list){
 		}
 		runningThroughList = runningThroughList->nextList;
 	}
-	
+
 	//adding node at the end
 	newList->nextList = NULL;
 	runningThroughList->nextList = newList;
@@ -48,27 +56,80 @@ Node* newNode(int x, int y){
  return newNode;
 }
 
-/*
-void searchPath(Map **map, Position start, Position end){
-	Node *startNode = newNode(start.x, start.y);
-	Node *endNode = newNode(end.x, end.y);
-	List *openList = newList(endNode);
-	
-	Node *currentNode = endNode;
-	int i[] = {0,1,0,-1};
-	int j[] = {1,0,-1,0};
-	for(int k=0; k<4; k++){
-		Position currentLocation = {currentNode->x, currentNode->y};
-		if(map[currentLocation.x+i][currentLocation.y+j]->hasTower != 1){ //walkable area
-			if(){//not in closed list
-				map[currentLocation.x+i][currentLocation.y+j]->parent = currentLocation;
-				
-				openList = addNodeInSortedList(currentNode, openList);
-			}
-		}
+static List *openList;
+static List *closedList;
+
+/*void searchPath(Map **map, Position start, Position end){*/
+/*	Node *startNode = newNode(start.x, start.y);*/
+/*	Node *endNode = newNode(end.x, end.y);*/
+/*	openList = newList(endNode);*/
+/*	closedList = NULL;*/
+/*	*/
+/*	Node *currentNode = endNode;*/
+/*	int i[] = {0,1,0,-1};*/
+/*	int j[] = {1,0,-1,0};*/
+/*	for(int k=0; k<4; k++){*/
+/*		Position currentLocation = {currentNode->x, currentNode->y};*/
+/*		Node *adjacentNode = */
+/*		if(map[currentLocation.x+i[k]][currentLocation.y+j[k]]->hasTower != 1){ //walkable area*/
+/*			if(1){//not in closed list*/
+/*				if(inOpenList(currentNode)){*/
+/*					int currentPathCose = currentNode->startToNodeCost;*/
+/*					int newPathCost = */
+/*				}else{*/
+/*					List *isInOpenList = popInList(currentNode, &openList);*/
+/*					map[currentLocation.x+i][currentLocation.y+j]->parent = currentLocation;*/
+
+/*					openList = addNodeInSortedList(currentNode, openList);*/
+/*				}*/
+/*			}*/
+/*		}*/
+/*	}*/
+/*}*/
+
+
+
+int isInList(Node *node, List *list){
+	List *fundElement = popInList(node,&list);
+	if(fundElement){
+		addNodeInSortedList(node, list);
+		return 1;
+	}else{
+		return 0;
 	}
 }
-*/
+
+int isInOpenList(Node *node){
+	return isInList(node, openList);
+}
+
+int isInClosedList(Node *node){
+	return isInList(node, closedList);
+}
+
+SearchResult* searchNodeByXY(Node *nodeToFind, List *list){
+	SearchResult result = malloc(sizeof (SearchResult));
+	result->previous = NULL;
+	result->foundNode = list;
+	result->next = list->nextList;
+	
+	// check the first item
+	if(result->foundNode->item->x == nodeToFind->x && result->foundNode->item->y == nodeToFind->y){
+		return result;
+	}
+	
+	while(result->next != NULL){
+		result->previous = result->foundNode;
+		result->foundNode = result->next;
+		result->next = result->next->nextNode;
+		if(result->foundNode->item->x == nodeToFind->x && result->foundNode->item->y == nodeToFind->y){
+			return result;
+		}
+	}
+	result->previous = NULL;
+	result->foundNode = NULL;
+ return result;
+}
 
 List* popInList(Node *nodeToFind, List **list){
 	List *runningThroughList = *list;
@@ -78,7 +139,7 @@ List* popInList(Node *nodeToFind, List **list){
 		runningThroughList->nextList = NULL;
 		return runningThroughList;
 	}
-	
+
 	while(runningThroughList->nextList != NULL){
 		if(runningThroughList->nextList->item == nodeToFind){
 			List *findList = runningThroughList->nextList;
@@ -90,5 +151,4 @@ List* popInList(Node *nodeToFind, List **list){
 	}
  return NULL;
 }
-
 

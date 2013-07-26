@@ -12,8 +12,19 @@ typedef struct list{
 	struct list *nextList;
 }List;
 
+typedef struct{
+	List *previous, *foundNode, *next;
+}SearchResult;
+
+
+SearchResult* searchNode(List *list);
 List* addNodeInSortedList(Node *node, List *list);
 List* newList(Node *firstItem);
 List* popInList(Node *nodeToFind, List **list);
+
+int isInList(Node *node, List *list);
+int isInOpenList(Node *node);
+int isInClosedList(Node *node);
+
 #endif /* __pathFinding_H__ */
 
