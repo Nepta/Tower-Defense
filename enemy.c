@@ -50,6 +50,7 @@ Enemy *newEnemy(char *enemySprite){
  
  return enemy;
 }
+
 void addEnemyAnimation(Enemy *enemy, SDL_Rect animation, AnimationState state){
 	EnemyAnimation *firstAnimation = enemy->animation[state];
 	EnemyAnimation *animationList = enemy->animation[state];
@@ -60,5 +61,29 @@ void addEnemyAnimation(Enemy *enemy, SDL_Rect animation, AnimationState state){
 	newAnimation->animation = animation;
 	newAnimation->nextAnimation = firstAnimation;
 	animationList->nextAnimation = newAnimation;
+}
+
+void updateEnemy(Enemy *enemy, Map **map){
+	Position oldPosition = {cat->position.x, cat->position.y}
+	Position newPosition = map[oldPosition.x][oldPosition.y].parent;
+	cat->position.x = newPosition.x;
+	cat->position.y = newPosition.y;
+	AnimationState newState = getState(newPosition, oldPosition);
+	cat->animation[newState] = cat->animation[newState]->nextAnimation;
+}
+
+AnimationState getState(Position oldPosition, Position newPosition){
+	Position delta = {newPosition.x - oldPosition.x, newPosition.y - newPosition.y};
+	//{-1,0,1} --> {0,1,2}
+	delta.x += 1;
+	delta.y += 1;
+	
+	//normaly, enemy can't go in diagonal
+	AnimationState refTab[][] = {
+		{STAY, UP, STAY},
+		{LEFT, STAY, RIGHT},
+		{STAY, DOWN, STAY}
+	}
+	return refTab[delta.x][delta.y];
 }
 
