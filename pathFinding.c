@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 List* addNodeInSortedList(Node *node, List *list){
+// miaou
 	List *newList = malloc(sizeof (List));
 	newList->item = node;
 	newList->nextList = NULL;
@@ -65,10 +66,8 @@ void searchPath(Map **map, Position start, Position end){
 	openList = newList(endNode);
 	closedList = NULL;
 	
-	Node *currentNode = endNode;
 	int i[] = {0,1,0,-1};
 	int j[] = {1,0,-1,0};
-
 	do{
 		Node *currentNode = popFirstInList(&openList);
 		closedList = addNodeInSortedList(currentNode, closedList);
@@ -91,14 +90,7 @@ void searchPath(Map **map, Position start, Position end){
 					adjacentNode->nodeToEndCost = estimatedPathCost(adjacentNode, startNode);
 					openList = addNodeInSortedList(adjacentNode, openList);
 					map[adjacentNode->x][adjacentNode->y].parent = currentLocation;
-					openList = addNodeInSortedList(adjacentNode, openList);
-				}else{ // we put the note where we took from
-					addNodeInSortedList(inOpenListNode, openList);
 				}
-			}else{
-				adjacentNode->nodeToEndCost = estimatedPathCost(adjacentNode, startNode);
-				openList = addNodeInSortedList(currentNode, openList);
-				map[adjacentNode->x][adjacentNode->y].parent = currentLocation;
 			}
 		}
 	}while(!(isInOpenList(startNode) || openList == NULL));
@@ -129,6 +121,14 @@ int isInClosedList(Node *node){
 
 SearchResult* searchNodeByXY(Node *nodeToFind, List *list){
 	SearchResult *result = malloc(sizeof (SearchResult));
+	
+	//check for empty list
+	if(list == NULL){
+		result->previous = NULL;
+		result->foundNode = NULL;
+		result->next = NULL;
+		return result;
+	}
 	result->previous = NULL;
 	result->foundNode = list;
 	result->next = list->nextList;
@@ -166,6 +166,5 @@ List* popInList(Node *nodeToFind, List **list){
 		}
 		return result->foundNode;
 	}
- return NULL;
 }
 

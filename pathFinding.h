@@ -1,5 +1,6 @@
 #ifndef __pathFinding_H__
 #define __pathFinding_H__
+#include "map.h"
 
 typedef struct{
 	int x,y;
@@ -16,8 +17,9 @@ typedef struct{
 	List *previous, *foundNode, *next;
 }SearchResult;
 
+void searchPath(Map **map, Position start, Position end);
 
-SearchResult* searchNode(List *list);
+SearchResult* searchNodeByXY(Node *nodeToFind, List *list);
 List* addNodeInSortedList(Node *node, List *list);
 List* newList(Node *firstItem);
 List* popInList(Node *nodeToFind, List **list);
