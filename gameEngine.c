@@ -22,22 +22,23 @@ int main(){
 
 	SDL_Surface *background = loadMap("resources/forest.png");
 	Enemy *cat = newEnemy("resources/white_transparent_cat.png");
-	cat->position.x = 1; cat->position.y = 1;
+	cat->position.x = 400; cat->position.y = 300;
 	initEnemyAnimation(cat);
 	
-	Position end = {750, 500};
+	Position end = {100, 300};
 	Position start = {cat->position.x, cat->position.y};
 	Map **map = initMap();
 	searchPath(map, start, end);
 	
 	SDL_Rect endRect = {end.x,end.y,9,9};
 	
-	int time = 1337;
+	int time = 777;
 	while(time-- > 0){
 		SDL_BlitSurface(background, NULL, screen, NULL);
-		SDL_BlitSurface(cat->spriteSheet, &cat->animation[STAY]->animation, screen, &cat->position);
+		SDL_BlitSurface(cat->spriteSheet, &cat->animation[cat->animationState]->animation, screen, &cat->position);
 		SDL_FillRect(screen, &endRect, SDL_MapRGB(screen->format, 100, 100, 255));
 		SDL_Flip(screen);
+		updateEnemy(cat, map);
 	}
  return 0;
 }
@@ -69,9 +70,9 @@ void initEnemyAnimation(Enemy *enemy){
 	addEnemyAnimation(enemy, sprite, UP);
 	
 	sprite.x = 24; sprite.y = 32;
-	addEnemyAnimation(enemy, sprite, LEFT);
+	addEnemyAnimation(enemy, sprite, RIGHT);
 	sprite.x = 48; sprite.y = 32;
-	addEnemyAnimation(enemy, sprite, LEFT);
+	addEnemyAnimation(enemy, sprite, RIGHT);
 	
 	sprite.x = 24; sprite.y = 64;
 	addEnemyAnimation(enemy, sprite, DOWN);

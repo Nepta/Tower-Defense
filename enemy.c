@@ -38,7 +38,7 @@ Enemy *newEnemy(char *enemySprite){
  
 	enemy->animation[LEFT] = malloc(sizeof (EnemyAnimation));
 	enemy->animation[LEFT]->nextAnimation = enemy->animation[LEFT];
-	sprite.x = 0; sprite.y = 98;
+	sprite.x = 0; sprite.y = 96;
 	sprite.w = 24; sprite.h = 32;
 	enemy->animation[LEFT]->animation = sprite;
  
@@ -84,6 +84,7 @@ AnimationState getState(Position oldPosition, Position newPosition){
 		{DOWN, STAY, UP},
 		{STAY, LEFT, STAY}
 	};
+
 	return refTab[delta.x][delta.y];
 }
 
