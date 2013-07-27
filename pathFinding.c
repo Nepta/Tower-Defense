@@ -3,7 +3,6 @@
 #include <stdlib.h>
 
 List* addNodeInSortedList(Node *node, List *list){
-// miaou
 	List *newList = malloc(sizeof (List));
 	newList->item = node;
 	newList->nextList = NULL;

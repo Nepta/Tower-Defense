@@ -2,7 +2,6 @@
 #define __map_H__
 
 #include <SDL/SDL.h>
-#include "enemy.h"
 
 typedef struct{
 	int x;
@@ -15,8 +14,5 @@ typedef struct Map{
 	int hasTower;
 }Map;
 
-SDL_Surface* loadMap(char* mapName);
-void initEnemyAnimation(Enemy *enemy);
-Map** initMap();
 #endif /* __map_H__ */
 
