@@ -17,7 +17,7 @@ Enemy *newEnemy(char *enemySprite){
 		enemy->animation[i] = malloc(sizeof (EnemyAnimation));
 	}
 	SDL_Rect sprite;
-	
+	enemy->animationState = STAY;
 	enemy->animation[DOWN] = malloc(sizeof (EnemyAnimation));
 	enemy->animation[DOWN]->nextAnimation = enemy->animation[DOWN];
 	sprite.x = 0; sprite.y = 64;
@@ -64,26 +64,26 @@ void addEnemyAnimation(Enemy *enemy, SDL_Rect animation, AnimationState state){
 }
 
 void updateEnemy(Enemy *enemy, Map **map){
-	Position oldPosition = {cat->position.x, cat->position.y}
+	Position oldPosition = {enemy->position.x, enemy->position.y};
 	Position newPosition = map[oldPosition.x][oldPosition.y].parent;
-	cat->position.x = newPosition.x;
-	cat->position.y = newPosition.y;
-	AnimationState newState = getState(newPosition, oldPosition);
-	cat->animation[newState] = cat->animation[newState]->nextAnimation;
+	enemy->position.x = newPosition.x;
+	enemy->position.y = newPosition.y;
+	enemy->animationState = getState(newPosition, oldPosition);
+	enemy->animation[enemy->animationState] = enemy->animation[enemy->animationState]->nextAnimation;
 }
 
 AnimationState getState(Position oldPosition, Position newPosition){
-	Position delta = {newPosition.x - oldPosition.x, newPosition.y - newPosition.y};
+	Position delta = {newPosition.x - oldPosition.x, newPosition.y - oldPosition.y};
 	//{-1,0,1} --> {0,1,2}
 	delta.x += 1;
 	delta.y += 1;
 	
 	//normaly, enemy can't go in diagonal
-	AnimationState refTab[][] = {
-		{STAY, UP, STAY},
-		{LEFT, STAY, RIGHT},
-		{STAY, DOWN, STAY}
-	}
+	AnimationState refTab[3][3] = {
+		{STAY, RIGHT, STAY},
+		{DOWN, STAY, UP},
+		{STAY, LEFT, STAY}
+	};
 	return refTab[delta.x][delta.y];
 }
 
