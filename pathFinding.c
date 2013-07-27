@@ -101,7 +101,9 @@ Node* popFirstInList(List **list){
 
 int estimatedPathCost(Node *adjacentNode, Node *endNode){
 	// manathan path cost
-	int cost = abs(endNode->x - adjacentNode->x) + abs(endNode->y - adjacentNode->y);
+/*	int cost = abs(endNode->x - adjacentNode->x) + abs(endNode->y - adjacentNode->y);*/
+	// square bird fly 
+	int cost = ((endNode->x - adjacentNode->x)*(endNode->x - adjacentNode->x)) + ((endNode->y - adjacentNode->y)*(endNode->y - adjacentNode->y));
  return cost;
 }
 
