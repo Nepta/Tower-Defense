@@ -42,10 +42,11 @@ ifeq ($(config),)
 endif
 
 OBJECTS := \
-	$(OBJDIR)/gameEngine.o \
-	$(OBJDIR)/pathFinding.o \
 	$(OBJDIR)/enemy.o \
+	$(OBJDIR)/gameEngine.o \
+	$(OBJDIR)/menu.o \
 	$(OBJDIR)/map.o \
+	$(OBJDIR)/pathFinding.o \
 
 RESOURCES := \
 
@@ -106,16 +107,19 @@ $(GCH): $(PCH)
 	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"
 endif
 
-$(OBJDIR)/gameEngine.o: gameEngine.c
-	@echo $(notdir $<)
-	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/pathFinding.o: pathFinding.c
-	@echo $(notdir $<)
-	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/enemy.o: enemy.c
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/gameEngine.o: gameEngine.c
+	@echo $(notdir $<)
+	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/menu.o: menu.c
+	@echo $(notdir $<)
+	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/map.o: map.c
+	@echo $(notdir $<)
+	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/pathFinding.o: pathFinding.c
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"
 

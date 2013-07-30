@@ -15,28 +15,31 @@
 #include "enemy.h"
 #include "map.h"
 #include "gameEngine.h"
+#include "menu.h"
 
 int main(){
 	SDL_Init(SDL_INIT_VIDEO);
-	SDL_Surface *screen = SDL_SetVideoMode(800, 600, 32, SDL_HWSURFACE | SDL_ASYNCBLIT | SDL_DOUBLEBUF);
+	SDL_Surface *screen = SDL_SetVideoMode(950, 600, 32, SDL_HWSURFACE | SDL_ASYNCBLIT | SDL_DOUBLEBUF);
 
 	SDL_Surface *background = loadMap("resources/forest.png");
 	Enemy *cat = newEnemy("resources/white_transparent_cat.png");
 	cat->position.x = 400; cat->position.y = 300;
 	initEnemyAnimation(cat);
 	
-	Position end = {100, 300};
+	Position end = {700, 500};
 	Position start = {cat->position.x, cat->position.y};
 	Map **map = initMap();
 	searchPath(map, start, end);
 	
 	SDL_Rect endRect = {end.x,end.y,9,9};
-	
-	int time = 777;
+	Menu *menu = createMenu();
+	SDL_Rect menuPosition = {800,0,600,150};
+	int time = 777/2;
 	while(time-- > 0){
 		SDL_BlitSurface(background, NULL, screen, NULL);
 		SDL_BlitSurface(cat->spriteSheet, &cat->animation[cat->animationState]->animation, screen, &cat->position);
 		SDL_FillRect(screen, &endRect, SDL_MapRGB(screen->format, 100, 100, 255));
+		SDL_BlitSurface(menu->background, NULL, screen, &menuPosition);
 		SDL_Flip(screen);
 		updateEnemy(cat, map);
 	}
