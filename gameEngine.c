@@ -18,9 +18,13 @@
 #include "menu.h"
 #include "inputInterface.h"
 
+const int mapWidth = 800;
+const int mapHeight = 600;
+const int menuWidth = 150;
+
 int main(){
 	SDL_Init(SDL_INIT_VIDEO);
-	SDL_Surface *screen = SDL_SetVideoMode(950, 600, 32, SDL_HWSURFACE | SDL_ASYNCBLIT | SDL_DOUBLEBUF);
+	SDL_Surface *screen = SDL_SetVideoMode(mapWidth + menuWidth, mapHeight, 32, SDL_HWSURFACE | SDL_ASYNCBLIT | SDL_DOUBLEBUF);
 
 	SDL_Surface *background = loadMap("resources/forest.png");
 	Enemy *cat = newEnemy("resources/white_transparent_cat.png");
@@ -34,7 +38,7 @@ int main(){
 	
 	SDL_Rect endRect = {end.x,end.y,9,9};
 	Menu *menu = createMenu();
-	SDL_Rect menuPosition = {800,0,600,150};
+	SDL_Rect menuPosition = {mapWidth,0,mapHeight,menuWidth};
 	int time = 777/2;
 	int gameEnd = 0;
 	while(time-- > 0 && gameEnd != 1){
