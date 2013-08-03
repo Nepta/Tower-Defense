@@ -74,7 +74,7 @@ void searchPath(Map **map, Position start, Position end){
 			Position currentLocation = {currentNode->x, currentNode->y};
 			Node *adjacentNode = newNode(currentNode->x + i[k], currentNode->y + j[k]);
 			int newPathCost = currentNode->startToNodeCost + 1;
-			adjacentNode->startToNodeCost = newPathCost;
+/*			adjacentNode->startToNodeCost = newPathCost;*/
 			if(map[adjacentNode->x][adjacentNode->y].hasTower != 1 && !isInClosedList(adjacentNode)){ //walkable area and non computed node
 				if(isInOpenList(adjacentNode)){
 					Node *inOpenListNode = popInList(adjacentNode, &openList)->item;
