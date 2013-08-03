@@ -42,6 +42,7 @@ ifeq ($(config),)
 endif
 
 OBJECTS := \
+	$(OBJDIR)/inputInterface.o \
 	$(OBJDIR)/enemy.o \
 	$(OBJDIR)/gameEngine.o \
 	$(OBJDIR)/menu.o \
@@ -107,6 +108,9 @@ $(GCH): $(PCH)
 	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"
 endif
 
+$(OBJDIR)/inputInterface.o: inputInterface.c
+	@echo $(notdir $<)
+	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/enemy.o: enemy.c
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"

@@ -16,6 +16,7 @@
 #include "map.h"
 #include "gameEngine.h"
 #include "menu.h"
+#include "inputInterface.h"
 
 int main(){
 	SDL_Init(SDL_INIT_VIDEO);
@@ -35,7 +36,9 @@ int main(){
 	Menu *menu = createMenu();
 	SDL_Rect menuPosition = {800,0,600,150};
 	int time = 777/2;
-	while(time-- > 0){
+	int gameEnd = 0;
+	while(time-- > 0 && gameEnd != 1){
+		gameEnd = pollMouseClick();
 		SDL_BlitSurface(background, NULL, screen, NULL);
 		SDL_BlitSurface(cat->spriteSheet, &cat->animation[cat->animationState]->animation, screen, &cat->position);
 		SDL_FillRect(screen, &endRect, SDL_MapRGB(screen->format, 100, 100, 255));
