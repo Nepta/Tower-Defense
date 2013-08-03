@@ -3,6 +3,8 @@
 
 #include <SDL/SDL.h>
 
+#define ItemNumbers 2
+
 typedef struct{
 	SDL_Surface *sprite;
 	SDL_Rect position;
@@ -12,7 +14,7 @@ typedef struct{
 	SDL_Surface *background;
 	MenuItem currentItem;
 	int isUpdated;
-	MenuItem *items[1];
+	MenuItem *items[ItemNumbers];
 }Menu;
 
 Menu* createMenu();

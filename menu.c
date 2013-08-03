@@ -6,7 +6,8 @@
 Menu* createMenu(){
 	Menu *menu = malloc(sizeof (Menu));
 	menu->background = SDL_CreateRGBSurface(SDL_HWSURFACE, 150, 600, 32,0,0,0,0);
-	menu->items[0] = createMenuItem("resources/tower.png", 99, 99);
+	menu->items[0] = createMenuItem("resources/tower.png", 0, 99);
+	menu->items[1] = createMenuItem("resources/candy_cane.png", 32, 99); 
 	menu->isUpdated = 1;
 	drawMenu(menu);
  return menu;
@@ -30,7 +31,7 @@ void updateMenu(Menu *menu){
 }
 
 void drawMenu(Menu *menu){
-	for(int i=0; i<1; i++){
+	for(int i=0; i<ItemNumbers; i++){
 		drawMenuItem(menu->items[i], menu->background);
 	}
 }
