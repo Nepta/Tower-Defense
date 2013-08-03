@@ -24,7 +24,7 @@ const int menuWidth = 150;
 
 int main(){
 	SDL_Init(SDL_INIT_VIDEO);
-	SDL_Surface *screen = SDL_SetVideoMode(mapWidth + menuWidth, mapHeight, 32, SDL_HWSURFACE | SDL_ASYNCBLIT | SDL_DOUBLEBUF);
+	SDL_Surface *screen = SDL_SetVideoMode(mapWidth + menuWidth, mapHeight, 24, SDL_HWSURFACE | SDL_ASYNCBLIT | SDL_DOUBLEBUF);
 
 	SDL_Surface *background = loadMap("resources/forest.png");
 	Enemy *cat = newEnemy("resources/white_transparent_cat.png");
@@ -41,11 +41,13 @@ int main(){
 	SDL_Rect menuPosition = {mapWidth,0,mapHeight,menuWidth};
 	int time = 777/2;
 	int gameEnd = 0;
+	Interface interfaces = {menu};
 	while(time-- > 0 && gameEnd != 1){
-		gameEnd = pollMouseClick();
+		gameEnd = pollMouseClick(interfaces);
 		SDL_BlitSurface(background, NULL, screen, NULL);
 		SDL_BlitSurface(cat->spriteSheet, &cat->animation[cat->animationState]->animation, screen, &cat->position);
 		SDL_FillRect(screen, &endRect, SDL_MapRGB(screen->format, 100, 100, 255));
+		drawMenu(menu);
 		SDL_BlitSurface(menu->background, NULL, screen, &menuPosition);
 		SDL_Flip(screen);
 		updateEnemy(cat, map);

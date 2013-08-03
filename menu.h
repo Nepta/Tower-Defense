@@ -12,7 +12,8 @@ typedef struct{
 
 typedef struct{
 	SDL_Surface *background;
-	MenuItem currentItem;
+	SDL_Surface *blackTile;
+	MenuItem *currentItem;
 	int isUpdated;
 	MenuItem *items[ItemNumbers];
 }Menu;
@@ -22,6 +23,7 @@ MenuItem* createMenuItem(char* sprite, int x, int y);
 void updateMenu(Menu *menu);
 void drawMenu(Menu *menu);
 void drawMenuItem(MenuItem *item, SDL_Surface *surfaceToDraw);
+void clickOnMenu(Menu *menu, int x, int y);
 
 #endif /* __menu_H__ */
 
