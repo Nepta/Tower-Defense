@@ -55,12 +55,7 @@ int main(){
  return 0;
 }
 
-/**
- * \brief Create a map.
- *
- * \param mapName The Path of map's background.
- * \return The array on the map, in order to use it.
- */
+
 SDL_Surface* loadMap(char* mapName){
 	SDL_Surface *background;
 	background = IMG_Load(mapName);
