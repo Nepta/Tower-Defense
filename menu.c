@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
+#include <SDL/SDL_ttf.h>
+#include <string.h>
 
 Menu* createMenu(){
 	Menu *menu = malloc(sizeof (Menu));
@@ -10,12 +12,13 @@ Menu* createMenu(){
 	menu->items[0] = createMenuItem("resources/tower.png", 0, 99);
 	menu->items[1] = createMenuItem("resources/candy_cane.png", 32, 99); 
 	menu->currentItem = NULL;
+	menu->text = initTextArea();
 	menu->isUpdated = 1;
 	drawMenu(menu);
  return menu;
 }
 
-MenuItem* createMenuItem(char* sprite, int x, int y){
+MenuItem* createMenuItem(const char *sprite, int x, int y){
 	MenuItem *item = malloc(sizeof (MenuItem));
 	item->sprite = IMG_Load(sprite);
 	if(item->sprite == NULL) {
@@ -23,6 +26,7 @@ MenuItem* createMenuItem(char* sprite, int x, int y){
 		printf("IMG_Load: %s\n", IMG_GetError());
 		exit(-1);
 	}
+	strcpy(item->description, sprite);
 	SDL_Rect position = {x,y,0,0};
 	item->position = position;
  return item;
@@ -48,14 +52,43 @@ void drawMenu(Menu *menu){
 	for(int i=0; i<ItemNumbers; i++){
 		drawMenuItem(menu->items[i], menu->background);
 	}
-	SDL_Rect currentItemPosition = {75,50,0,0};
 	if(menu->currentItem){
+		SDL_Rect currentItemPosition = {75,50,0,0};
+		SDL_Rect currentTextPosition = {5,50,0,0};
 		SDL_BlitSurface(menu->blackTile, NULL, menu->background, &currentItemPosition);
 		SDL_BlitSurface(menu->currentItem->sprite, NULL, menu->background, &currentItemPosition);
+		drawMenuText(menu->text, menu->currentItem);
+		SDL_BlitSurface(menu->text->sprite, NULL, menu->background, &currentTextPosition);
 	}
+/*	SDL_Surface *renderText = TTF_RenderUTF8_Solid(font, text, blackColor);*/
 }
 
 void drawMenuItem(MenuItem *item, SDL_Surface *surfaceToDraw){
 	SDL_BlitSurface(item->sprite, NULL, surfaceToDraw, &item->position);
 }
 
+MenuText* initTextArea(){
+	SDL_Color white = {255,255,255}; 
+	TTF_Font *font_ = TTF_OpenFont("resources/zombieCat.ttf", 9);
+	if(!font_){
+		printf("font error: %s\n",TTF_GetError());
+		exit(-1);
+	}
+/*	TTF_Font *policeMini = TTF_OpenFont("resources/zombieCat.ttf", 14);*/
+	TTF_SetFontStyle(font_,TTF_STYLE_BOLD);
+/*	TTF_SetFontStyle(policeMini,TTF_STYLE_BOLD);*/
+	
+	MenuText *text = malloc(sizeof (MenuText));
+	text->color = white;
+	text->font = font_;
+	text->sprite = SDL_CreateRGBSurface(SDL_HWSURFACE, 100, 32, 24,0,0,0,0);
+ return text;
+}
+
+void drawMenuText(MenuText *text, MenuItem *currentItem){
+	text->sprite = TTF_RenderUTF8_Solid(
+		text->font,
+		currentItem->description,
+		text->color
+	);
+}

@@ -29,7 +29,7 @@ ifeq ($(config),)
   CFLAGS    += $(CPPFLAGS) $(ARCH) -Wall -g -std=c99 -pg
   CXXFLAGS  += $(CFLAGS) 
   LDFLAGS   += -pg
-  LIBS      += -lSDL -lSDL_image
+  LIBS      += -lSDL -lSDL_image -lSDL_ttf
   RESFLAGS  += $(DEFINES) $(INCLUDES) 
   LDDEPS    += 
   LINKCMD    = $(CC) -o $(TARGET) $(OBJECTS) $(LDFLAGS) $(RESOURCES) $(ARCH) $(LIBS)

@@ -24,6 +24,7 @@ const int menuWidth = 150;
 
 int main(){
 	SDL_Init(SDL_INIT_VIDEO);
+	TTF_Init();
 	SDL_Surface *screen = SDL_SetVideoMode(mapWidth + menuWidth, mapHeight, 24, SDL_HWSURFACE | SDL_ASYNCBLIT | SDL_DOUBLEBUF);
 
 	SDL_Surface *background = loadMap("resources/forest.png");
@@ -42,6 +43,10 @@ int main(){
 	int time = 777/2;
 	int gameEnd = 0;
 	Interface interfaces = {menu};
+	printf("candy cane text: %s\n"
+			 "tower text: %s\n",
+			 menu->items[0]->description,
+			 menu->items[1]->description);
 	while(time-- > 0 && gameEnd != 1){
 		gameEnd = pollMouseClick(interfaces);
 		SDL_BlitSurface(background, NULL, screen, NULL);
