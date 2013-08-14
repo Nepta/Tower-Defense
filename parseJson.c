@@ -1,6 +1,7 @@
 #include "jsmn.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct{
 	int currentPosition;
@@ -41,6 +42,22 @@ void getNextObject(TokenIterator *iterator){
 	}
 }
 
+int getTowerRoot(TokenIterator *it, char* jsonFile){
+	getNextObject(it);
+	while(!it->end){
+		
+		int objectPosition = it->currentPosition;
+		int stringStart = it->tokens[objectPosition+1].start;
+		int stringEnd = it->tokens[objectPosition+1].end;
+		int stringLenght = stringEnd - stringStart;
+		if(strncmp(jsonFile + stringStart, "towers", stringLenght) == 0){
+			return it->tokens[objectPosition].size;
+		}
+		getNextObject(it);
+	}
+ return 0;
+}
+
 int main(){
 	FILE *data;
 	data = fopen("resources/data.js", "r");
@@ -50,17 +67,23 @@ int main(){
 	jsmn_parser parser;
 	jsmntok_t tokens[32];	
 	jsmn_init(&parser);
-	jsmn_parse(&parser,jsonFile,tokens,32);
-
-	TokenIterator *it = createTokenIterator(&parser, tokens);
-	getNextObject(it);
-	while(!it->end){
-		int objectPosition = it->currentPosition;
-		for(int j=tokens[objectPosition].start; j<tokens[objectPosition].end; j++){
-			printf("%c",jsonFile[j]);
-		}
-		printf("\n");
-		getNextObject(it);
+	jsmnerr_t parsingError = jsmn_parse(&parser,jsonFile,tokens,32);
+	if(parsingError != JSMN_SUCCESS){
+		printf("%d\n",parsingError);
+		exit(parsingError);
 	}
+	TokenIterator *it = createTokenIterator(&parser, tokens);
+	int towerDeep = getTowerRoot(it,jsonFile);
+	if(it->end){
+		puts("unexpected end of parsing");
+		exit(5);
+	}
+	printf("deep:%d ",towerDeep);
+	int stringStart = it->tokens[it->currentPosition+1].start;
+	int stringLenght = it->tokens[it->currentPosition+1].end - it->tokens[it->currentPosition+1].start;
+	for(int i=0; i<stringLenght; i++){
+		printf("%c",jsonFile[stringStart + i]);
+	}
+	printf("\n");
  return 0;
 }
