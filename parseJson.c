@@ -19,6 +19,15 @@ TokenIterator* createTokenIterator(jsmn_parser *parser, jsmntok_t *tokens){
  return iterator;
 }
 
+TokenIterator* copyTokenIterator(TokenIterator *it){
+	TokenIterator *iterator = malloc(sizeof (TokenIterator));
+	iterator->currentPosition = it->currentPosition;
+	iterator->end = it->end;
+	iterator->endPosition = it->endPosition;
+	iterator->tokens = it->tokens;
+ return iterator;
+}
+
 char* fileToString(FILE *file){
 	fseek(file, 0, SEEK_END);
 	int fileSize = ftell(file);
@@ -96,20 +105,22 @@ int main(){
 		printf("%d\n",parsingError);
 		exit(parsingError);
 	}
-	TokenIterator *it = createTokenIterator(&parser, tokens);
+	TokenIterator *it_ = createTokenIterator(&parser, tokens);
+	TokenIterator *it = copyTokenIterator(it_);
+	free(it_);
 	int towerDeep = getTowerRoot(it,jsonFile);
 	if(it->end){
 		puts("unexpected end of parsing");
 		exit(5);
 	}
-	getNextString(it);
+	getNextObject(it);
 	int currentDeepness = it->tokens[it->currentPosition].size;
 	while(!(it->end /*|| currentDeepness <= towerDeep*/)){
-		printf("current deep: %d\t",currentDeepness);
+		printf("deep: %d\t",currentDeepness);
 		printToken(jsonFile, &it->tokens[it->currentPosition]);
-		getNextString(it);
+		getNextObject(it);
 		currentDeepness = it->tokens[it->currentPosition].size;
 	}
-	
+	free(it);	
  return 0;
 }
