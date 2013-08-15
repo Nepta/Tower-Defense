@@ -111,11 +111,9 @@ endif
 $(OBJDIR)/inputInterface.o: inputInterface.c
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(ALL_CFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
-
 $(OBJDIR)/enemy.o: enemy.c
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(ALL_CFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
-
 $(OBJDIR)/gameEngine.o: gameEngine.c
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(ALL_CFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
@@ -123,15 +121,12 @@ $(OBJDIR)/gameEngine.o: gameEngine.c
 $(OBJDIR)/jsonParser.o: jsonParser.c
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(ALL_CFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
-
 $(OBJDIR)/menu.o: menu.c
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(ALL_CFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
-
 $(OBJDIR)/map.o: map.c
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(ALL_CFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
-
 $(OBJDIR)/pathFinding.o: pathFinding.c
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(ALL_CFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
