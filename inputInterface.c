@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <SDL/SDL.h>
 
+extern const int mapWidth;
+extern const int menuWidth;
+
 int pollMouseClick(Interface interfaces){
 	SDL_Event event;
 	while(SDL_PollEvent(&event)){
