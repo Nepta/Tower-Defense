@@ -84,7 +84,7 @@ void drawMenuItem(MenuItem *item, SDL_Surface *surfaceToDraw){
 
 MenuText* initTextArea(){
 	SDL_Color white = {255,255,255,255}; 
-	TTF_Font *font_ = TTF_OpenFont("resources/zombieCat.ttf", 9);
+	TTF_Font *font_ = TTF_OpenFont("resources/zombieCat.ttf", 8);
 	if(!font_){
 		printf("font error: %s\n",TTF_GetError());
 		exit(-1);

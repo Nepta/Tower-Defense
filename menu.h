@@ -4,7 +4,7 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 
-#define ItemNumbers 2
+#define ItemNumbers 3
 #define MaxDescriptionLenght 32
 
 typedef struct{
