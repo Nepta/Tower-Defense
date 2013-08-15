@@ -7,32 +7,32 @@ ifndef verbose
   SILENT = @
 endif
 
-ifndef CC
-  CC = gcc
-endif
+CC = gcc
+CXX = g++
+AR = ar
 
-ifndef CXX
-  CXX = g++
-endif
-
-ifndef AR
-  AR = ar
+ifndef RESCOMP
+  ifdef WINDRES
+    RESCOMP = $(WINDRES)
+  else
+    RESCOMP = windres
+  endif
 endif
 
 ifeq ($(config),)
   OBJDIR     = obj/towerdefense
   TARGETDIR  = .
   TARGET     = $(TARGETDIR)/towerdefense
-  DEFINES   += 
-  INCLUDES  += 
-  CPPFLAGS  += -MMD -MP $(DEFINES) $(INCLUDES)
-  CFLAGS    += $(CPPFLAGS) $(ARCH) -Wall -g -std=c99 -pg
-  CXXFLAGS  += $(CFLAGS) 
-  LDFLAGS   += -pg
-  LIBS      += -lSDL -lSDL_image -lSDL_ttf
-  RESFLAGS  += $(DEFINES) $(INCLUDES) 
-  LDDEPS    += 
-  LINKCMD    = $(CC) -o $(TARGET) $(OBJECTS) $(LDFLAGS) $(RESOURCES) $(ARCH) $(LIBS)
+  DEFINES   +=
+  INCLUDES  +=
+  ALL_CPPFLAGS  += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES) $(FORCE_INCLUDE)
+  ALL_CFLAGS    += $(CFLAGS) $(ALL_CPPFLAGS) $(ARCH) -Wall -Wextra -g -std=c99 -pg
+  ALL_CXXFLAGS  += $(CXXFLAGS) $(ALL_CFLAGS)
+  ALL_RESFLAGS  += $(RESFLAGS) $(DEFINES) $(INCLUDES)
+  ALL_LDFLAGS   += $(LDFLAGS) -L. -pg libjsmn.a
+  LDDEPS    +=
+  LIBS      += $(LDDEPS) -lSDL -lSDL_image -lSDL_ttf
+  LINKCMD    = $(CC) -o $(TARGET) $(OBJECTS) $(RESOURCES) $(ARCH) $(ALL_LDFLAGS) $(LIBS)
   define PREBUILDCMDS
   endef
   define PRELINKCMDS
@@ -45,6 +45,7 @@ OBJECTS := \
 	$(OBJDIR)/inputInterface.o \
 	$(OBJDIR)/enemy.o \
 	$(OBJDIR)/gameEngine.o \
+	$(OBJDIR)/jsonParser.o \
 	$(OBJDIR)/menu.o \
 	$(OBJDIR)/map.o \
 	$(OBJDIR)/pathFinding.o \
@@ -104,27 +105,38 @@ prelink:
 ifneq (,$(PCH))
 $(GCH): $(PCH)
 	@echo $(notdir $<)
-	-$(SILENT) cp $< $(OBJDIR)
-	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"
+	$(SILENT) $(CC) -x c-header $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES) -o "$@" -MF "$(@:%.gch=%.d)" -c "$<"
 endif
 
 $(OBJDIR)/inputInterface.o: inputInterface.c
 	@echo $(notdir $<)
-	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"
+	$(SILENT) $(CC) $(ALL_CFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+
 $(OBJDIR)/enemy.o: enemy.c
 	@echo $(notdir $<)
-	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"
+	$(SILENT) $(CC) $(ALL_CFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+
 $(OBJDIR)/gameEngine.o: gameEngine.c
 	@echo $(notdir $<)
-	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"
+	$(SILENT) $(CC) $(ALL_CFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+
+$(OBJDIR)/jsonParser.o: jsonParser.c
+	@echo $(notdir $<)
+	$(SILENT) $(CC) $(ALL_CFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+
 $(OBJDIR)/menu.o: menu.c
 	@echo $(notdir $<)
-	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"
+	$(SILENT) $(CC) $(ALL_CFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+
 $(OBJDIR)/map.o: map.c
 	@echo $(notdir $<)
-	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"
+	$(SILENT) $(CC) $(ALL_CFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+
 $(OBJDIR)/pathFinding.o: pathFinding.c
 	@echo $(notdir $<)
-	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"
+	$(SILENT) $(CC) $(ALL_CFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 
 -include $(OBJECTS:%.o=%.d)
+ifneq (,$(PCH))
+  -include $(OBJDIR)/$(notdir $(PCH)).d
+endif

@@ -1,6 +1,5 @@
 gmon.out
 obj/
 towerdefense
-Makefile
-*.make
 *.png
+premake4.lua

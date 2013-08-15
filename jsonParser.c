@@ -2,13 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-typedef struct{
-	int currentPosition;
-	int endPosition;
-	jsmntok_t *tokens;
-	int end;
-}TokenIterator;
+#include "jsonParser.h"
+#define MAX_TOKEN 32
 
 TokenIterator* createTokenIterator(jsmn_parser *parser, jsmntok_t *tokens){
 	TokenIterator *iterator = malloc(sizeof (TokenIterator));
@@ -26,6 +21,17 @@ TokenIterator* copyTokenIterator(TokenIterator *it){
 	iterator->endPosition = it->endPosition;
 	iterator->tokens = it->tokens;
  return iterator;
+}
+
+char* extractnToken(jsmntok_t token, char* jsonFile, int n){
+	int tokenStart = token.start;
+	int tokenEnd = token.end;
+	int tokenLenght = tokenEnd - tokenStart;
+	int stringLenght = tokenLenght > n ? n : tokenLenght;
+	char* extractedString = malloc(stringLenght+1);
+	extractedString[stringLenght] = '\0';
+	strncpy(extractedString, jsonFile + tokenStart, stringLenght);
+return extractedString;
 }
 
 char* fileToString(FILE *file){
@@ -80,56 +86,16 @@ void getNextStringValue(TokenIterator *iterator, char* jsonFile, const char* key
 	}
 }
 
-int getTowerRoot(TokenIterator *it, char* jsonFile){
-	getNextObject(it);
-	while(!it->end){
-		int objectPosition = it->currentPosition;
-		int stringStart = it->tokens[objectPosition+1].start;
-		int stringEnd = it->tokens[objectPosition+1].end;
-		int stringLenght = stringEnd - stringStart;
-		if(strncmp(jsonFile + stringStart, "towers", stringLenght) == 0){
-			return it->tokens[objectPosition].size;
-		}
-		getNextObject(it);
-	}
- return 0;
-}
-
-int main(){
-	FILE *data;
-	data = fopen("resources/data.js", "r");
-	char* jsonFile = fileToString(data);
-	fclose(data);
-	
+TokenIterator* parseJson(char *jsonFile){
 	jsmn_parser parser;
-	jsmntok_t tokens[32];	
+	jsmntok_t *tokens = malloc(MAX_TOKEN * sizeof (jsmntok_t));
 	jsmn_init(&parser);
-	jsmnerr_t parsingError = jsmn_parse(&parser,jsonFile,tokens,32);
+	jsmnerr_t parsingError = jsmn_parse(&parser,jsonFile,tokens,MAX_TOKEN);
 	if(parsingError != JSMN_SUCCESS){
 		printf("%d\n",parsingError);
 		exit(parsingError);
 	}
 	TokenIterator *it = createTokenIterator(&parser, tokens);
-/*	TokenIterator *towerIterator = copyTokenIterator(it);*/
-	if(it->end){
-		puts("unexpected end of parsing");
-		exit(5);
-	}
-	
-	getNextStringValue(it,jsonFile,"towers");
-	int towerDeep = it->tokens[it->currentPosition].size; //getTowerRoot(it,jsonFile);
-	getNextObject(it);
-	int currentDeepness = it->tokens[it->currentPosition].size;
-	while(!(it->end || currentDeepness <= towerDeep)){
-		getNextStringValue(it,jsonFile,"location");//location
-		printToken(jsonFile, &it->tokens[it->currentPosition]);
-		
-		getNextStringValue(it,jsonFile,"description");//description
-		printToken(jsonFile, &it->tokens[it->currentPosition]);
-		puts("");
-		getNextObject(it);
-		currentDeepness = it->tokens[it->currentPosition].size;
-	}
-	free(it);	
- return 0;
+	return it;
 }
+
