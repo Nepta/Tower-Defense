@@ -20,18 +20,18 @@ ifndef RESCOMP
 endif
 
 ifeq ($(config),)
-  OBJDIR     = obj/towerdefense
+  OBJDIR     = obj/jsonParserTest
   TARGETDIR  = .
-  TARGET     = $(TARGETDIR)/towerdefense
+  TARGET     = $(TARGETDIR)/jsonParserTest
   DEFINES   +=
   INCLUDES  +=
   ALL_CPPFLAGS  += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES) $(FORCE_INCLUDE)
-  ALL_CFLAGS    += $(CFLAGS) $(ALL_CPPFLAGS) $(ARCH) -Wall -Wextra -g -std=c99 -pg
+  ALL_CFLAGS    += $(CFLAGS) $(ALL_CPPFLAGS) $(ARCH) -Wall -Wextra -g -std=c99
   ALL_CXXFLAGS  += $(CXXFLAGS) $(ALL_CFLAGS)
   ALL_RESFLAGS  += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-  ALL_LDFLAGS   += $(LDFLAGS) -L. -pg
+  ALL_LDFLAGS   += $(LDFLAGS) libjsmn.a
   LDDEPS    +=
-  LIBS      += $(LDDEPS) -lSDL -lSDL_image -lSDL_ttf
+  LIBS      += $(LDDEPS)
   LINKCMD    = $(CC) -o $(TARGET) $(OBJECTS) $(RESOURCES) $(ARCH) $(ALL_LDFLAGS) $(LIBS)
   define PREBUILDCMDS
   endef
@@ -42,13 +42,8 @@ ifeq ($(config),)
 endif
 
 OBJECTS := \
-	$(OBJDIR)/inputInterface.o \
-	$(OBJDIR)/enemy.o \
-	$(OBJDIR)/gameEngine.o \
+	$(OBJDIR)/parseJson.o \
 	$(OBJDIR)/jsonParser.o \
-	$(OBJDIR)/menu.o \
-	$(OBJDIR)/map.o \
-	$(OBJDIR)/pathFinding.o \
 
 RESOURCES := \
 
@@ -66,7 +61,7 @@ all: $(TARGETDIR) $(OBJDIR) prebuild prelink $(TARGET)
 	@:
 
 $(TARGET): $(GCH) $(OBJECTS) $(LDDEPS) $(RESOURCES)
-	@echo Linking towerdefense
+	@echo Linking jsonParserTest
 	$(SILENT) $(LINKCMD)
 	$(POSTBUILDCMDS)
 
@@ -87,7 +82,7 @@ else
 endif
 
 clean:
-	@echo Cleaning towerdefense
+	@echo Cleaning jsonParserTest
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) rm -f  $(TARGET)
 	$(SILENT) rm -rf $(OBJDIR)
@@ -108,31 +103,11 @@ $(GCH): $(PCH)
 	$(SILENT) $(CC) -x c-header $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES) -o "$@" -MF "$(@:%.gch=%.d)" -c "$<"
 endif
 
-$(OBJDIR)/inputInterface.o: inputInterface.c
-	@echo $(notdir $<)
-	$(SILENT) $(CC) $(ALL_CFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
-
-$(OBJDIR)/enemy.o: enemy.c
-	@echo $(notdir $<)
-	$(SILENT) $(CC) $(ALL_CFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
-
-$(OBJDIR)/gameEngine.o: gameEngine.c
+$(OBJDIR)/parseJson.o: parseJson.c
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(ALL_CFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 
 $(OBJDIR)/jsonParser.o: jsonParser.c
-	@echo $(notdir $<)
-	$(SILENT) $(CC) $(ALL_CFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
-
-$(OBJDIR)/menu.o: menu.c
-	@echo $(notdir $<)
-	$(SILENT) $(CC) $(ALL_CFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
-
-$(OBJDIR)/map.o: map.c
-	@echo $(notdir $<)
-	$(SILENT) $(CC) $(ALL_CFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
-
-$(OBJDIR)/pathFinding.o: pathFinding.c
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(ALL_CFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 
