@@ -1,24 +1,39 @@
 #include "menu.h"
-#include <stdlib.h>
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_ttf.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
+#include "jsonParser.h"
 
 Menu* createMenu(){
 	Menu *menu = malloc(sizeof (Menu));
 	menu->background = SDL_CreateRGBSurface(SDL_HWSURFACE, 150, 600, 24,0,0,0,0);
 	menu->blackTile = SDL_CreateRGBSurface(SDL_HWSURFACE, 32, 32, 24,0,0,0,0);
-	menu->items[0] = createMenuItem("resources/tower.png", 0, 99);
-	menu->items[1] = createMenuItem("resources/candy_cane.png", 32, 99); 
 	menu->currentItem = NULL;
 	menu->text = initTextArea();
 	menu->isUpdated = 1;
+
+	FILE *data;
+	data = fopen("resources/data.js", "r");
+	char* jsonFile = fileToString(data);
+	fclose(data);
+	TokenIterator *it = parseJson(jsonFile);
+	getNextStringValue(it,jsonFile,"towers");
+	for(int i=0; i<ItemNumbers; i++){
+		getNextStringValue(it,jsonFile,"location");
+		char* location = extractnToken(it->tokens[it->currentPosition], jsonFile, MaxDescriptionLenght);
+		getNextStringValue(it,jsonFile,"description");
+		char* description = extractnToken(it->tokens[it->currentPosition], jsonFile, MaxDescriptionLenght);
+		menu->items[i] = createMenuItem(location, description, i*32, 99);
+		getNextObject(it);
+	}
 	drawMenu(menu);
  return menu;
 }
 
-MenuItem* createMenuItem(const char *sprite, int x, int y){
+MenuItem* createMenuItem(const char* sprite, const char* description, int x, int y){
 	MenuItem *item = malloc(sizeof (MenuItem));
 	item->sprite = IMG_Load(sprite);
 	if(item->sprite == NULL) {
@@ -26,7 +41,7 @@ MenuItem* createMenuItem(const char *sprite, int x, int y){
 		printf("IMG_Load: %s\n", IMG_GetError());
 		exit(-1);
 	}
-	strcpy(item->description, sprite);
+	item->description = description;
 	SDL_Rect position = {x,y,0,0};
 	item->position = position;
  return item;
@@ -68,7 +83,7 @@ void drawMenuItem(MenuItem *item, SDL_Surface *surfaceToDraw){
 }
 
 MenuText* initTextArea(){
-	SDL_Color white = {255,255,255}; 
+	SDL_Color white = {255,255,255,255}; 
 	TTF_Font *font_ = TTF_OpenFont("resources/zombieCat.ttf", 9);
 	if(!font_){
 		printf("font error: %s\n",TTF_GetError());

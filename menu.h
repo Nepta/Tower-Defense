@@ -15,7 +15,7 @@ typedef struct{
 
 typedef struct{
 	SDL_Surface *sprite;
-	char description[MaxDescriptionLenght];
+	char* description;
 	SDL_Rect position;
 }MenuItem;
 
@@ -29,7 +29,7 @@ typedef struct{
 }Menu;
 
 Menu* createMenu();
-MenuItem* createMenuItem(const char *sprite, int x, int y);
+MenuItem* createMenuItem(const char* sprite, const char* description, int x, int y);
 void updateMenu(Menu *menu);
 void drawMenu(Menu *menu);
 void drawMenuItem(MenuItem *item, SDL_Surface *surfaceToDraw);
