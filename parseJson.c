@@ -42,6 +42,21 @@ void getNextObject(TokenIterator *iterator){
 	}
 }
 
+void getNextString(TokenIterator *iterator){
+	iterator->currentPosition++;
+	while(!(iterator->currentPosition >= iterator->endPosition)){
+		if(iterator->tokens[iterator->currentPosition].type == JSMN_STRING){
+			return;
+		}else{
+			iterator->currentPosition++;
+		}
+	}
+	if(iterator->currentPosition >= iterator->end){
+		iterator->end = 1;
+	}
+}
+
+
 int getTowerRoot(TokenIterator *it, char* jsonFile){
 	getNextObject(it);
 	while(!it->end){
@@ -87,11 +102,12 @@ int main(){
 		puts("unexpected end of parsing");
 		exit(5);
 	}
-	getNextObject(it);
+	getNextString(it);
 	int currentDeepness = it->tokens[it->currentPosition].size;
-	while(!(it->end || currentDeepness <= towerDeep)){
+	while(!(it->end /*|| currentDeepness <= towerDeep*/)){
+		printf("current deep: %d\t",currentDeepness);
 		printToken(jsonFile, &it->tokens[it->currentPosition]);
-		getNextObject(it);
+		getNextString(it);
 		currentDeepness = it->tokens[it->currentPosition].size;
 	}
 	
