@@ -58,6 +58,15 @@ int getTowerRoot(TokenIterator *it, char* jsonFile){
  return 0;
 }
 
+void printToken(char* jsonFile, jsmntok_t *token){
+	int stringStart = token->start;
+	int stringEnd = token->end;
+	for(int i=stringStart; i<stringEnd; i++){
+		printf("%c",jsonFile[i]);
+	}
+	printf("\n");
+}
+
 int main(){
 	FILE *data;
 	data = fopen("resources/data.js", "r");
@@ -78,12 +87,13 @@ int main(){
 		puts("unexpected end of parsing");
 		exit(5);
 	}
-	printf("deep:%d ",towerDeep);
-	int stringStart = it->tokens[it->currentPosition+1].start;
-	int stringLenght = it->tokens[it->currentPosition+1].end - it->tokens[it->currentPosition+1].start;
-	for(int i=0; i<stringLenght; i++){
-		printf("%c",jsonFile[stringStart + i]);
+	getNextObject(it);
+	int currentDeepness = it->tokens[it->currentPosition].size;
+	while(!(it->end || currentDeepness <= towerDeep)){
+		printToken(jsonFile, &it->tokens[it->currentPosition]);
+		getNextObject(it);
+		currentDeepness = it->tokens[it->currentPosition].size;
 	}
-	printf("\n");
+	
  return 0;
 }
