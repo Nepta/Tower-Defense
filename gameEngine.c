@@ -30,12 +30,19 @@ int main(){
 	SDL_Surface *screen = SDL_SetVideoMode(mapWidth + menuWidth, mapHeight, 24, SDL_HWSURFACE | SDL_ASYNCBLIT | SDL_DOUBLEBUF);
 
 	Position end = {700, 500};
-	Position start = {100, 100};
-	Position start2 = {25, 555};
+	Position start2 = {100, 100};
+	Position start = {25, 555};
 	Map **map = initMap();
 	searchPath(map, start, end);
 	searchPath(map, start2, end);
-
+	
+	for(int i=0; i<11; i++){		//for the black swag
+		start2.x += 4;
+		start2.y += 4;
+		searchPath(map,start2,end);
+	}
+	start2.x = 100;
+	start2.y = 100;
 	SDL_Surface *background = loadMap("resources/forest.png");
 	Enemy *whiteCat = newEnemy("resources/white_transparent_cat.png");
 	Enemy *blackCat = newEnemy("resources/black_transparent_cat.png");
@@ -43,6 +50,11 @@ int main(){
 	blackCat->position.x = start2.x; blackCat->position.y = start2.y;
 	initEnemyAnimation(whiteCat);
 	initEnemyAnimation(blackCat);
+
+	EnemySwag *blackSwag = createEnemySwag(blackCat,10);
+	for(int i=0; i<10; i++){
+		initEnemyAnimation(&blackSwag->enemy[i]);
+	}
 	
 	SDL_Rect endRect = {end.x,end.y,9,9};
 	Menu *menu = createMenu();
@@ -56,12 +68,18 @@ int main(){
 		SDL_BlitSurface(background, NULL, screen, NULL);
 		SDL_BlitSurface(whiteCat->spriteSheet, &whiteCat->animation[whiteCat->animationState]->animation, screen, &whiteCat->position);
 		SDL_BlitSurface(blackCat->spriteSheet, &blackCat->animation[blackCat->animationState]->animation, screen, &blackCat->position);
+		for(int i=0; i<10; i++){
+			SDL_BlitSurface(blackSwag->enemy[i].spriteSheet, &blackSwag->enemy[i].animation[blackSwag->enemy[i].animationState]->animation, screen, &blackSwag->enemy[i].position);
+		}
 		SDL_FillRect(screen, &endRect, SDL_MapRGB(screen->format, 100, 100, 255));
 		drawMenu(menu);
 		SDL_BlitSurface(menu->background, NULL, screen, &menuPosition);
 		SDL_Flip(screen);
 		updateEnemy(whiteCat, map);
 		updateEnemy(blackCat, map);
+		for(int i=0; i<10; i++){
+			updateEnemy(&blackSwag->enemy[i], map);
+		}
 	}
  return 0;
 }

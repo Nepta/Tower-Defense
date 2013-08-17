@@ -32,12 +32,22 @@ typedef struct enemyAnimation{
  * \brief Enemy structure
  * describle an enemy with it sprite sheet and position, life ...
  */
-typedef struct enemy{
+typedef struct{
 	SDL_Surface *spriteSheet;									//!< spriteSheet as a SDL_Surface
 	SDL_Rect position;											//!< current enemy position on map
 	AnimationState animationState;							//!< current looking direction of ennemy
 	EnemyAnimation *animation[AnimationStateLenght];	//!< animation tab
 }Enemy;
+
+/**
+ * A swag of ennemy that pop in the same time
+ * for wave capabilities
+ */
+typedef struct enemySwag{
+	int swagSize;						//!< size of the swag
+	struct enemySwag *nextSwag;	//!< next wave of ennemy
+	Enemy enemy[];						//!< Enemy list of the swag
+}EnemySwag;
 
 /**
  * create a new enemy
@@ -76,6 +86,14 @@ void updateEnemy(Enemy *enemy, Map **map);
  */
 void initEnemyAnimation(Enemy *enemy);
 
+/**
+ * create a swag of ennemy by copying the one passed as argument
+ * \param enemy the enemy to be copied
+ * \param swagSize the size (number of ennemy) in the swag
+ * \return a swag of enemy
+ */
+
+EnemySwag* createEnemySwag(Enemy *enemy, int swagSize);
 
 #endif /* __enemy_H__ */
 
