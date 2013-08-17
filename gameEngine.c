@@ -31,13 +31,18 @@ int main(){
 
 	Position end = {700, 500};
 	Position start = {100, 100};
+	Position start2 = {25, 555};
 	Map **map = initMap();
 	searchPath(map, start, end);
+	searchPath(map, start2, end);
 
 	SDL_Surface *background = loadMap("resources/forest.png");
-	Enemy *cat = newEnemy("resources/white_transparent_cat.png");
-	cat->position.x = start.x; cat->position.y = start.y;
-	initEnemyAnimation(cat);
+	Enemy *whiteCat = newEnemy("resources/white_transparent_cat.png");
+	Enemy *blackCat = newEnemy("resources/black_transparent_cat.png");
+	whiteCat->position.x = start.x; whiteCat->position.y = start.y;
+	blackCat->position.x = start2.x; blackCat->position.y = start2.y;
+	initEnemyAnimation(whiteCat);
+	initEnemyAnimation(blackCat);
 	
 	SDL_Rect endRect = {end.x,end.y,9,9};
 	Menu *menu = createMenu();
@@ -49,12 +54,14 @@ int main(){
 	while(gameEnd != 1){
 		gameEnd = pollMouseClick(interfaces);
 		SDL_BlitSurface(background, NULL, screen, NULL);
-		SDL_BlitSurface(cat->spriteSheet, &cat->animation[cat->animationState]->animation, screen, &cat->position);
+		SDL_BlitSurface(whiteCat->spriteSheet, &whiteCat->animation[whiteCat->animationState]->animation, screen, &whiteCat->position);
+		SDL_BlitSurface(blackCat->spriteSheet, &blackCat->animation[blackCat->animationState]->animation, screen, &blackCat->position);
 		SDL_FillRect(screen, &endRect, SDL_MapRGB(screen->format, 100, 100, 255));
 		drawMenu(menu);
 		SDL_BlitSurface(menu->background, NULL, screen, &menuPosition);
 		SDL_Flip(screen);
-		updateEnemy(cat, map);
+		updateEnemy(whiteCat, map);
+		updateEnemy(blackCat, map);
 	}
  return 0;
 }
