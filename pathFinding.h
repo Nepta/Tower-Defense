@@ -108,5 +108,13 @@ int isInOpenList(Node *node);
  */
 int isInClosedList(Node *node);
 
+/**
+ * tell if a node have to be computed or not
+ * \param map the map where pathFinding is calculated
+ * \param node a node to test
+ * \return 0 if node as to be set aside
+ */
+int dontComputeNode(Map **map, Node *node);
+
 #endif /* __pathFinding_H__ */
 

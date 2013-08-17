@@ -75,7 +75,7 @@ void searchPath(Map **map, Position start, Position end){
 			Node *adjacentNode = newNode(currentNode->x + i[k], currentNode->y + j[k]);
 			int newPathCost = currentNode->startToNodeCost + 1;
 /*			adjacentNode->startToNodeCost = newPathCost;*/
-			if(map[adjacentNode->x][adjacentNode->y].hasTower != 1 && !isInClosedList(adjacentNode)){ //walkable area and non computed node
+			if(!dontComputeNode(map,adjacentNode)){ //walkable area and non computed node
 				if(isInOpenList(adjacentNode)){
 					Node *inOpenListNode = popInList(adjacentNode, &openList)->item;
 					if(newPathCost < adjacentNode->startToNodeCost){ //using new path is better
@@ -93,6 +93,14 @@ void searchPath(Map **map, Position start, Position end){
 			}
 		}
 	}while(!(isInOpenList(startNode) || openList == NULL));
+}
+
+int dontComputeNode(Map **map, Node *node){
+	int walkable = map[node->x][node->y].hasTower != 1;
+	int alreadyComputed = isInClosedList(node) == 1;
+	int alreadyComputedInAnotherLoop = map[node->x][node->y].x != node->x
+											  && map[node->x][node->y].y != node->y;
+ return !walkable || alreadyComputed || alreadyComputedInAnotherLoop;
 }
 
 Node* popFirstInList(List **list){
