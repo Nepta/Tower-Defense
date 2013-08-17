@@ -2,6 +2,7 @@
 #define __menu_H__
 
 #include <SDL/SDL.h>
+#include <SDL/SDL_ttf.h>
 
 #define ItemNumbers 3 //!< number of item (tower type) in the menu
 #define MaxDescriptionLenght 32

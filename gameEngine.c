@@ -16,7 +16,9 @@
 #include "map.h"
 #include "gameEngine.h"
 #include "menu.h"
+#include "towerField.h"
 #include "inputInterface.h"
+
 
 const int mapWidth = 800;
 const int mapHeight = 600;
@@ -40,9 +42,11 @@ int main(){
 	SDL_Rect endRect = {end.x,end.y,9,9};
 	Menu *menu = createMenu();
 	SDL_Rect menuPosition = {mapWidth,0,mapHeight,menuWidth};
+	
+	FieldInterface *field = createFieldInterface();	
+	Interface interfaces = {menu,field};
 	int time = 777/2;
 	int gameEnd = 0;
-	Interface interfaces = {menu};
 	while(time-- > 0 && gameEnd != 1){
 		gameEnd = pollMouseClick(interfaces);
 		SDL_BlitSurface(background, NULL, screen, NULL);

@@ -2,12 +2,14 @@
 #define __inputInterface_H__
 
 #include "menu.h"
+#include "towerField.h"
 
 /**
  * Container for interface in the game (menu, hud ...)
  */
 typedef struct{
 	Menu *menu;	//!< the main menu on the right (for now)
+	FieldInterface *field; //!< the main zone where enemy move and tower are built
 }Interface;
 
 /**

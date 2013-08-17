@@ -1,6 +1,6 @@
-#include "inputInterface.h"
 #include <stdio.h>
 #include <SDL/SDL.h>
+#include "inputInterface.h"
 
 extern const int mapWidth;
 extern const int menuWidth;
@@ -19,6 +19,10 @@ int pollMouseClick(Interface interfaces){
 					int x = event.button.x - mapWidth;
 					int y = event.button.y;
 					clickOnMenu(interfaces.menu, x,y);
+				}else{
+					int x = event.button.x;
+					int y = event.button.y;
+					clickOnScreen(interfaces.field, x,y);
 				}
 				break;
 			default:
