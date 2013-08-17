@@ -21,5 +21,12 @@ typedef struct Map{
 	int hasTower;		//<! tower flag
 }Map;
 
+/**
+ * \brief Create a map.
+ *
+ * \return The array on the map, in order to use it.
+ */
+Map** initMap();
+
 #endif /* __map_H__ */
 

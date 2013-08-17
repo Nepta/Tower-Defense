@@ -70,5 +70,12 @@ AnimationState getState(Position oldPosition, Position newPosition);
  */
 void updateEnemy(Enemy *enemy, Map **map);
 
+/**
+ * load ennemy with all its animation from its sprite sheet
+ * \param enemy the enemy to load animation
+ */
+void initEnemyAnimation(Enemy *enemy);
+
+
 #endif /* __enemy_H__ */
 
