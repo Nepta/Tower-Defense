@@ -29,15 +29,15 @@ int main(){
 	TTF_Init();
 	SDL_Surface *screen = SDL_SetVideoMode(mapWidth + menuWidth, mapHeight, 24, SDL_HWSURFACE | SDL_ASYNCBLIT | SDL_DOUBLEBUF);
 
-	SDL_Surface *background = loadMap("resources/forest.png");
-	Enemy *cat = newEnemy("resources/white_transparent_cat.png");
-	cat->position.x = 400; cat->position.y = 300;
-	initEnemyAnimation(cat);
-	
 	Position end = {700, 500};
-	Position start = {cat->position.x, cat->position.y};
+	Position start = {100, 100};
 	Map **map = initMap();
 	searchPath(map, start, end);
+
+	SDL_Surface *background = loadMap("resources/forest.png");
+	Enemy *cat = newEnemy("resources/white_transparent_cat.png");
+	cat->position.x = start.x; cat->position.y = start.y;
+	initEnemyAnimation(cat);
 	
 	SDL_Rect endRect = {end.x,end.y,9,9};
 	Menu *menu = createMenu();
@@ -45,9 +45,8 @@ int main(){
 	
 	FieldInterface *field = createFieldInterface();	
 	Interface interfaces = {menu,field};
-	int time = 777/2;
 	int gameEnd = 0;
-	while(time-- > 0 && gameEnd != 1){
+	while(gameEnd != 1){
 		gameEnd = pollMouseClick(interfaces);
 		SDL_BlitSurface(background, NULL, screen, NULL);
 		SDL_BlitSurface(cat->spriteSheet, &cat->animation[cat->animationState]->animation, screen, &cat->position);
@@ -102,24 +101,4 @@ void initEnemyAnimation(Enemy *enemy){
 	addEnemyAnimation(enemy, sprite, STAY);
 }
 
-Map** initMap(){
-	Map *map_ = malloc(800 * 600 * sizeof (Map));
-	Map **map = malloc(800 * sizeof (Map*));
-	
-	for(int i=0; i<800; i++){
-		map[i] = &map_[i*600];
-		for(int j=0; j< 600; j++){
-			map[i][j].x = i;
-			map[i][j].y = j;
-			map[i][j].parent.x = i;
-			map[i][j].parent.y = j;
-			if(i == 0 || j == 0 || i == 799 || j == 599){
-				map[i][j].hasTower = 1;
-			}else{
-				map[i][j].hasTower = 0;
-			}
-		}
-	}
- return map;
-}
 
