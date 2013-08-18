@@ -3,12 +3,14 @@
 
 #include <SDL/SDL.h>
 #include "interfaces.h"
+#include "tower.h"
 
 /**
  * TODO: doc
  */
 struct fieldInterface{
 	SDL_Surface *background;
+	TowerManager *towerManager;
 };
 
 /**

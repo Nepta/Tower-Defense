@@ -6,7 +6,7 @@ ifndef config
 endif
 export config
 
-PROJECTS := towerdefense
+PROJECTS := towerdefense jsonParserTest
 
 .PHONY: all clean help $(PROJECTS)
 
@@ -16,8 +16,13 @@ towerdefense:
 	@echo "==== Building towerdefense ($(config)) ===="
 	@${MAKE} --no-print-directory -C . -f towerdefense.make
 
+jsonParserTest: 
+	@echo "==== Building jsonParserTest ($(config)) ===="
+	@${MAKE} --no-print-directory -C . -f jsonParserTest.make
+
 clean:
 	@${MAKE} --no-print-directory -C . -f towerdefense.make clean
+	@${MAKE} --no-print-directory -C . -f jsonParserTest.make clean
 
 help:
 	@echo "Usage: make [config=name] [target]"
@@ -29,5 +34,6 @@ help:
 	@echo "   all (default)"
 	@echo "   clean"
 	@echo "   towerdefense"
+	@echo "   jsonParserTest"
 	@echo ""
 	@echo "For more information, see http://industriousone.com/premake/quick-start"

@@ -49,6 +49,7 @@ OBJECTS := \
 	$(OBJDIR)/jsonParser.o \
 	$(OBJDIR)/menu.o \
 	$(OBJDIR)/map.o \
+	$(OBJDIR)/tower.o \
 	$(OBJDIR)/pathFinding.o \
 
 RESOURCES := \
@@ -134,6 +135,10 @@ $(OBJDIR)/menu.o: menu.c
 	$(SILENT) $(CC) $(ALL_CFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 
 $(OBJDIR)/map.o: map.c
+	@echo $(notdir $<)
+	$(SILENT) $(CC) $(ALL_CFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+
+$(OBJDIR)/tower.o: tower.c
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(ALL_CFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 
