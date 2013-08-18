@@ -1,12 +1,12 @@
 #ifndef __towerField_H__
 #define __towerField_H__
-
+#include "interfaces.h"
 /**
  * TODO: doc
  */
-typedef struct{
+struct fieldInterface{
 //	SDL_Surface *background;
-}FieldInterface;
+};
 
 /**
  * create an interface to hang up event in the main field
@@ -20,7 +20,7 @@ FieldInterface* createFieldInterface();
  * \param x x position of mouse in the field
  * \param y y position of mouse in the field
  */
-void clickOnScreen(FieldInterface* field, int x,int y);
+void clickOnScreen(Interface* interfaces, int x,int y);
 
 #endif /* __towerField_H__ */
 

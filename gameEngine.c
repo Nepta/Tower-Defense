@@ -59,7 +59,7 @@ int main(){
 	Interface interfaces = {menu,field};
 	int gameEnd = 0;
 	while(gameEnd != 1){
-		gameEnd = pollMouseClick(interfaces);
+		gameEnd = pollMouseClick(&interfaces);
 		SDL_BlitSurface(background, NULL, screen, NULL);
 		SDL_BlitSurface(whiteCat->spriteSheet, &whiteCat->animation[whiteCat->animationState]->animation, screen, &whiteCat->position);
 		SDL_BlitSurface(blackCat->spriteSheet, &blackCat->animation[blackCat->animationState]->animation, screen, &blackCat->position);

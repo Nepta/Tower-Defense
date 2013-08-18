@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <SDL/SDL.h>
 #include "inputInterface.h"
+#include "menu.h"
+#include "towerField.h"
 
 extern const int mapWidth;
 extern const int menuWidth;
 
-int pollMouseClick(Interface interfaces){
+int pollMouseClick(Interface *interfaces){
 	SDL_Event event;
 	while(SDL_PollEvent(&event)){
 		switch(event.type){
@@ -18,11 +20,11 @@ int pollMouseClick(Interface interfaces){
 				if(event.button.x > mapWidth){
 					int x = event.button.x - mapWidth;
 					int y = event.button.y;
-					clickOnMenu(interfaces.menu, x,y);
+					clickOnMenu(interfaces, x,y);
 				}else{
 					int x = event.button.x;
 					int y = event.button.y;
-					clickOnScreen(interfaces.field, x,y);
+					clickOnScreen(interfaces, x,y);
 				}
 				break;
 			default:

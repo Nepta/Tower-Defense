@@ -3,6 +3,7 @@
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
+#include "interfaces.h"
 
 #define ItemNumbers 3 //!< number of item (tower type) in the menu
 #define MaxDescriptionLenght 32
@@ -25,14 +26,15 @@ typedef struct{
 /**
  * Menu definition with all item it contain, current item selected and text displayed
  */
-typedef struct{
+
+struct menu{
 	SDL_Surface *background;		//!< background image of the menu
 	SDL_Surface *blackTile;			//!< ... because i'm stupid (use the background you morron !)
 	MenuItem *currentItem;			//!< the current selected item, which need more description
 	MenuText *text;
 	int isUpdated;						//!< if the menu need to be redraw
 	MenuItem *items[ItemNumbers];	//!< list of item in the menu
-}Menu;
+};
 
 /**
  * Create a menu and populate it with items
@@ -74,7 +76,7 @@ void drawMenuItem(MenuItem *item, SDL_Surface *surfaceToDraw);
  * \param x x position of the click (relative to the menu)
  * \param y y position of the click (relative to the menu)
  */
-void clickOnMenu(Menu *menu, int x, int y);
+void clickOnMenu(Interface *interfaces, int x, int y);
 
 MenuText* initTextArea();
 void drawMenuText(MenuText *text, MenuItem *currentItem);

@@ -51,7 +51,8 @@ void updateMenu(Menu *menu){
 	menu->isUpdated = 1;
 }
 
-void clickOnMenu(Menu *menu, int x, int y){
+void clickOnMenu(Interface *interfaces, int x, int y){
+	Menu *menu = interfaces->menu;
 	for(int i=0; i<ItemNumbers; i++){
 		int xItem = menu->items[i]->position.x;
 		if(xItem <= x && x <= xItem+32){
