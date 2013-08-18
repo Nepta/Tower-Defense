@@ -6,21 +6,25 @@
 #include "interfaces.h"
 
 #define ItemNumbers 3 //!< number of item (tower type) in the menu
-#define MaxDescriptionLenght 32
+#define MaxDescriptionLenght 32 //!< maximum length of the description text
 
 /**
  * Selectable item of the menu (tower to be build) definition (position, sprite...)
+ * \attention can be useless
  */
 typedef struct{
-	SDL_Color color;
-	TTF_Font *font;
-	SDL_Surface *sprite;
+	SDL_Color color;		//!< color the text will be displayed
+	TTF_Font *font;		//!< description text font
+	SDL_Surface *sprite; //!< text converted in image to be displayed
 }MenuText;
 
+/**
+ * Individual item of the menu
+ */
 typedef struct{
 	SDL_Surface *sprite; //!< sprite of an item in the menu
-	char* description;
-	SDL_Rect position; //!< position of the item in the menu
+	char* description;	//!< description of an item
+	SDL_Rect position;	//!< position of the item in the menu
 }MenuItem;
 
 /**
@@ -29,9 +33,9 @@ typedef struct{
 
 struct menu{
 	SDL_Surface *background;		//!< background image of the menu
-	SDL_Surface *blackTile;			//!< ... because i'm stupid (use the background you morron !)
+	SDL_Surface *blackTile;			//!< black tile used to "erase" previous selected tower
 	MenuItem *currentItem;			//!< the current selected item, which need more description
-	MenuText *text;
+	MenuText *text;					//!< description text for current selected tower
 	int isUpdated;						//!< if the menu need to be redraw
 	MenuItem *items[ItemNumbers];	//!< list of item in the menu
 };
@@ -78,7 +82,17 @@ void drawMenuItem(MenuItem *item, SDL_Surface *surfaceToDraw);
  */
 void clickOnMenu(Interface *interfaces, int x, int y);
 
+/**
+ * create a imaged text for a menu item
+ * return text as image and some information to blit
+ */
 MenuText* initTextArea();
+
+/**
+ * draw the text of an menu item and it's icon
+ * \param text the text of the menu item to be displayed
+ * \param currentItem the item to be iconified
+ */
 void drawMenuText(MenuText *text, MenuItem *currentItem);
 
 #endif /* __menu_H__ */
