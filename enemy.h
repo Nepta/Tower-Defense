@@ -54,7 +54,7 @@ typedef struct enemySwag{
 
 /**
  * create a new enemy
- * \param enemySprite path to enemy sprite sheet
+ * \param enemyName name of the enemy in the config file
  * \return the newly created enemy
  */
 Enemy *newEnemy(char *enemySprite);
