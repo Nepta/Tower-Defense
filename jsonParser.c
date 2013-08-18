@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "jsonParser.h"
-#define MAX_TOKEN 128
+#define MAX_TOKEN 10240 //10ko
 
 TokenIterator* createTokenIterator(jsmn_parser *parser, jsmntok_t *tokens){
 	TokenIterator *iterator = malloc(sizeof (TokenIterator));
