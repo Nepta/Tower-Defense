@@ -18,25 +18,6 @@ Enemy *newEnemy(char *enemySprite){
 		enemy->animation[i] = NULL;
 	}
 	enemy->animationState = STAY;
-	
-	SDL_Rect sprite;
-	sprite.w = 24; sprite.h = 32;
-
-	sprite.x = 0; sprite.y = 64;
-	addEnemyAnimation(enemy,sprite,DOWN);
-	
-	sprite.x = 0; sprite.y = 64;
-	addEnemyAnimation(enemy,sprite,STAY);
- 
-	sprite.x = 0; sprite.y = 0;
-	addEnemyAnimation(enemy,sprite,UP);
- 
-	sprite.x = 0; sprite.y = 96;
-	addEnemyAnimation(enemy,sprite,LEFT);
- 
-	sprite.x = 0; sprite.y = 32;
-	addEnemyAnimation(enemy,sprite,RIGHT);
- 
  return enemy;
 }
 
@@ -88,26 +69,36 @@ void initEnemyAnimation(Enemy *enemy){
 	SDL_Rect sprite;
 	sprite.w = 24; sprite.h = 32;
 
+	sprite.x = 0; sprite.y = 0;
+	addEnemyAnimation(enemy,sprite,UP);
 	sprite.x = 24; sprite.y = 0;
 	addEnemyAnimation(enemy, sprite, UP);
 	sprite.x = 48; sprite.y = 0;
 	addEnemyAnimation(enemy, sprite, UP);
 	
+	sprite.x = 0; sprite.y = 32;
+	addEnemyAnimation(enemy,sprite,RIGHT);
 	sprite.x = 24; sprite.y = 32;
 	addEnemyAnimation(enemy, sprite, RIGHT);
 	sprite.x = 48; sprite.y = 32;
 	addEnemyAnimation(enemy, sprite, RIGHT);
 	
+	sprite.x = 0; sprite.y = 64;
+	addEnemyAnimation(enemy,sprite,DOWN);
 	sprite.x = 24; sprite.y = 64;
 	addEnemyAnimation(enemy, sprite, DOWN);
 	sprite.x = 48; sprite.y = 64;
 	addEnemyAnimation(enemy, sprite, DOWN);
 	
+	sprite.x = 0; sprite.y = 96;
+	addEnemyAnimation(enemy,sprite,LEFT);
 	sprite.x = 24; sprite.y = 96;
 	addEnemyAnimation(enemy, sprite, LEFT);
 	sprite.x = 48; sprite.y = 96;
 	addEnemyAnimation(enemy, sprite, LEFT);
 
+	sprite.x = 0; sprite.y = 64;
+	addEnemyAnimation(enemy,sprite,STAY);
 	sprite.x = 24; sprite.y = 64;
 	addEnemyAnimation(enemy, sprite, STAY);
 	sprite.x = 48; sprite.y = 64;
