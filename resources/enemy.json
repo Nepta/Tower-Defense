@@ -16,6 +16,23 @@
          }
       }
    ],
+   "zombie" : [
+      {
+         "location" : "resources/zombie.png",
+         "height" : 20,
+         "width" : 16,
+         "direction" : "line"
+      },
+      {
+         "animation" : {
+            "UP" : {"length":3, "x":0, "y":0},
+            "LEFT" : {"length":3, "x":0, "y":60},
+            "DOWN" : {"length":3, "x":0, "y":40},
+            "RIGHT" : {"length":3, "x":0, "y":20},
+            "STAY" : {"length":3, "x":0, "y":40}
+         }
+      }
+   ],
    "blackCat" : [
       {
          "location" : "resources/black_transparent_cat.png",
