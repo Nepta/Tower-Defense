@@ -10,7 +10,6 @@
 #include <stdlib.h>
 
 #include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
 #include "pathFinding.h"
 #include "enemy.h"
 #include "map.h"
@@ -43,7 +42,6 @@ int main(){
 	}
 	start2.x = 100;
 	start2.y = 100;
-	SDL_Surface *background = loadMap("resources/forest.png");
 	Enemy *whiteCat = newEnemy("whiteCat");
 	Enemy *blackCat = newEnemy("blackCat");
 	whiteCat->position.x = start.x; whiteCat->position.y = start.y;
@@ -55,12 +53,12 @@ int main(){
 	Menu *menu = createMenu();
 	SDL_Rect menuPosition = {mapWidth,0,mapHeight,menuWidth};
 	
-	FieldInterface *field = createFieldInterface();	
+	FieldInterface *field = createFieldInterface("resources/forest.png");
 	Interface interfaces = {menu,field};
 	int gameEnd = 0;
 	while(gameEnd != 1){
 		gameEnd = pollMouseClick(&interfaces);
-		SDL_BlitSurface(background, NULL, screen, NULL);
+		SDL_BlitSurface(field->background, NULL, screen, NULL);
 		SDL_BlitSurface(whiteCat->spriteSheet, &whiteCat->animation[whiteCat->animationState]->animation, screen, &whiteCat->position);
 		SDL_BlitSurface(blackCat->spriteSheet, &blackCat->animation[blackCat->animationState]->animation, screen, &blackCat->position);
 		for(int i=0; i<10; i++){
@@ -80,18 +78,4 @@ int main(){
 	}
  return 0;
 }
-
-
-SDL_Surface* loadMap(char* mapName){
-	SDL_Surface *background;
-	background = IMG_Load(mapName);
-	if(background == NULL) {
-		printf("failed to load the background map\n");
-		printf("IMG_Load: %s\n", IMG_GetError());
-		exit(-1);
-	}
- return background;
-}
-
-
 

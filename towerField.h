@@ -1,18 +1,22 @@
 #ifndef __towerField_H__
 #define __towerField_H__
+
+#include <SDL/SDL.h>
 #include "interfaces.h"
+
 /**
  * TODO: doc
  */
 struct fieldInterface{
-//	SDL_Surface *background;
+	SDL_Surface *background;
 };
 
 /**
  * create an interface to hang up event in the main field
+ * \param mapName path to the field image
  * \return interface to the field
  */
-FieldInterface* createFieldInterface();
+FieldInterface* createFieldInterface(char* mapName);
 
 /**
  * callback function which is called when we click on the main field
