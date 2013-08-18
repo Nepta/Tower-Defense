@@ -15,39 +15,27 @@ Enemy *newEnemy(char *enemySprite){
 	}
 	enemy->spriteSheet = spriteSheet;
 	for(int i=0; i<AnimationStateLenght; i++){
-		enemy->animation[i] = malloc(sizeof (EnemyAnimation));
+		enemy->animation[i] = NULL;
 	}
-	SDL_Rect sprite;
 	enemy->animationState = STAY;
-	enemy->animation[DOWN] = malloc(sizeof (EnemyAnimation));
-	enemy->animation[DOWN]->nextAnimation = enemy->animation[DOWN];
-	sprite.x = 0; sprite.y = 64;
+	
+	SDL_Rect sprite;
 	sprite.w = 24; sprite.h = 32;
-	enemy->animation[DOWN]->animation = sprite;
- 
-	enemy->animation[STAY] = malloc(sizeof (EnemyAnimation));
-	enemy->animation[STAY]->nextAnimation = enemy->animation[STAY];
+
 	sprite.x = 0; sprite.y = 64;
-	sprite.w = 24; sprite.h = 32;
-	enemy->animation[STAY]->animation = sprite;
+	addEnemyAnimation(enemy,sprite,DOWN);
+	
+	sprite.x = 0; sprite.y = 64;
+	addEnemyAnimation(enemy,sprite,STAY);
  
-	enemy->animation[UP] = malloc(sizeof (EnemyAnimation));
-	enemy->animation[UP]->nextAnimation = enemy->animation[UP];
 	sprite.x = 0; sprite.y = 0;
-	sprite.w = 24; sprite.h = 32;
-	enemy->animation[UP]->animation = sprite;
+	addEnemyAnimation(enemy,sprite,UP);
  
-	enemy->animation[LEFT] = malloc(sizeof (EnemyAnimation));
-	enemy->animation[LEFT]->nextAnimation = enemy->animation[LEFT];
 	sprite.x = 0; sprite.y = 96;
-	sprite.w = 24; sprite.h = 32;
-	enemy->animation[LEFT]->animation = sprite;
+	addEnemyAnimation(enemy,sprite,LEFT);
  
-	enemy->animation[RIGHT] = malloc(sizeof (EnemyAnimation));
-	enemy->animation[RIGHT]->nextAnimation = enemy->animation[RIGHT];
 	sprite.x = 0; sprite.y = 32;
-	sprite.w = 24; sprite.h = 32;
-	enemy->animation[RIGHT]->animation = sprite;
+	addEnemyAnimation(enemy,sprite,RIGHT);
  
  return enemy;
 }
