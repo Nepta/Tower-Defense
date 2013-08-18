@@ -75,6 +75,8 @@ int main(){
 		for(int i=0; i<10; i++){
 			updateEnemy(&blackSwag->enemy[i], map);
 		}
+		int slowMo = 10000000;
+		while(slowMo--){}
 	}
  return 0;
 }
