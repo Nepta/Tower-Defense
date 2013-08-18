@@ -1,4 +1,5 @@
 #include "towerField.h"
+#include "menu.h"
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <stdio.h>
@@ -17,5 +18,12 @@ FieldInterface* createFieldInterface(char* mapName){
 
 void clickOnScreen(Interface *interfaces, int x,int y){
 	FieldInterface *field = interfaces->field;
-	printf("(%d,%d)\n",x,y);
+	Menu *menu = interfaces->menu;
+	if(menu->currentItem != NULL){
+		MenuItem *item = menu->currentItem;
+		int towerBoxX = x - item->position.w / 2;
+		int towerBoxY = y - item->position.h / 2;
+		SDL_Rect towerBox = {towerBoxX,towerBoxY,0,0};
+		SDL_BlitSurface(item->sprite, NULL, field->background, &towerBox);
+	}
 }
