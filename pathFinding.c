@@ -1,6 +1,7 @@
 #include "pathFinding.h"
 #include "map.h"
 #include <stdlib.h>
+#define SQRT_2 1.41421356237309504880
 
 List* addNodeInSortedList(Node *node, List *list){
 	List *newList = malloc(sizeof (List));
@@ -108,10 +109,27 @@ Node* popFirstInList(List **list){
 }
 
 int estimatedPathCost(Node *adjacentNode, Node *endNode){
-	// manathan path cost
-/*	int cost = abs(endNode->x - adjacentNode->x) + abs(endNode->y - adjacentNode->y);*/
-	// square bird fly 
-	int cost = ((endNode->x - adjacentNode->x)*(endNode->x - adjacentNode->x)) + ((endNode->y - adjacentNode->y)*(endNode->y - adjacentNode->y));
+	int x = endNode->x - adjacentNode->x;
+	int y = endNode->y - adjacentNode->y;
+	x = x > 0 ? x : -x;
+	y = y > 0 ? y : -y;
+
+	// manathan heuristic
+/*	int cost = x + y;*/
+
+	// euclidian heuristic
+/*	int cost = (x * x) + (y * y);*/
+
+	// octile heuristic
+	int max,min;
+	if(x > y){
+		max = x;
+		min = y;
+	}else{
+		max = y;
+		min = x;
+	}
+	int cost = max + (SQRT_2 - 1) * min;
  return cost;
 }
 
