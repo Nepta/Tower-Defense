@@ -2,18 +2,20 @@
 #define __enemy_H__
 
 #include <SDL/SDL.h>
+#include "jsonParser.h"
 #include "map.h"
 
 /**
  * \brief State enumerator of an animation
  * each member describle the direction enemies are looking
+ * \see enemy.json for value order
  */
 typedef enum{
-	UP,		//!< use sprite that look north
-	DOWN,		//!< use sprite that look south
-	LEFT,		//!< use sprite that look west
-	RIGHT,	//!< use sprite that look east
-	STAY,		//!< use sprite that look south
+	UP = 0,		//!< use sprite that look north
+	LEFT = 1,		//!< use sprite that look west
+	DOWN = 2,		//!< use sprite that look south
+	RIGHT = 3,	//!< use sprite that look east
+	STAY = 4,		//!< use sprite that look south
 	AnimationStateLenght	//!< lenght of an AnimationState enmumeration
 }AnimationState;
 
@@ -34,6 +36,7 @@ typedef struct enemyAnimation{
  */
 typedef struct{
 	SDL_Surface *spriteSheet;									//!< spriteSheet as a SDL_Surface
+	SDL_Rect spriteSize;											//!< size of each tile in sprite sheet
 	SDL_Rect position;											//!< current enemy position on map
 	AnimationState animationState;							//!< current looking direction of ennemy
 	EnemyAnimation *animation[AnimationStateLenght];	//!< animation tab
@@ -83,8 +86,11 @@ void updateEnemy(Enemy *enemy, Map **map);
 /**
  * load ennemy with all its animation from its sprite sheet
  * \param enemy the enemy to load animation
+ * \param jsonFile json configuration file where tile information are stocked
+ * \param it iterator for the json parsing system
  */
-void initEnemyAnimation(Enemy *enemy);
+
+void initEnemyAnimation(Enemy *enemy, TokenIterator *it, char* jsonFile);
 
 /**
  * create a swag of ennemy by copying the one passed as argument

@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "jsonParser.h"
-#define MAX_TOKEN 32
+#define MAX_TOKEN 128
 
 TokenIterator* createTokenIterator(jsmn_parser *parser, jsmntok_t *tokens){
 	TokenIterator *iterator = malloc(sizeof (TokenIterator));
@@ -92,7 +92,7 @@ TokenIterator* parseJson(char *jsonFile){
 	jsmn_init(&parser);
 	jsmnerr_t parsingError = jsmn_parse(&parser,jsonFile,tokens,MAX_TOKEN);
 	if(parsingError != JSMN_SUCCESS){
-		printf("%d\n",parsingError);
+		printf("parsingError: %d\n",parsingError);
 		exit(parsingError);
 	}
 	TokenIterator *it = createTokenIterator(&parser, tokens);

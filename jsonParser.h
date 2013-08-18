@@ -1,6 +1,10 @@
 #ifndef __jsonParser_H__
 #define __jsonParser_H__
 #include "jsmn.h"
+#include <stdio.h>
+#define ExtractToken(maxLength) extractnToken(it->tokens[it->currentPosition], jsonFile, maxLength)
+#define GetNextStringValue(key) getNextStringValue(it,jsonFile,key)
+
 typedef struct{
 	int currentPosition;
 	int endPosition;

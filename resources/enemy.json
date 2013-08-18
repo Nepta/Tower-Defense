@@ -1,0 +1,36 @@
+{
+   "whiteCat" : [
+      {
+         "location" : "resources/white_transparent_cat.png",
+         "height" : 32,
+         "width" : 24,
+         "direction" : "line"
+      },
+      {
+         "animation" : {
+            "UP" : {"length":3, "x":0, "y":0},
+            "LEFT" : {"length":3, "x":0, "y":96},
+            "DOWN" : {"length":3, "x":0, "y":64},
+            "RIGHT" : {"length":3, "x":0, "y":32},
+            "STAY" : {"length":3, "x":0, "y":64}
+         }
+      }
+   ],
+   "blackCat" : [
+      {
+         "location" : "resources/black_transparent_cat.png",
+         "height" : 32,
+         "width" : 24,
+         "direction" : "line"
+      },
+      {
+         "animation" : {
+            "UP" : {"length":3, "x":0, "y":0},
+            "LEFT" : {"length":3, "x":0, "y":96},
+            "DOWN" : {"length":3, "x":0, "y":64},
+            "RIGHT" : {"length":3, "x":0, "y":32},
+            "STAY" : {"length":3, "x":0, "y":64}
+         }
+      }
+   ]
+}

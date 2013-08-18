@@ -44,17 +44,12 @@ int main(){
 	start2.x = 100;
 	start2.y = 100;
 	SDL_Surface *background = loadMap("resources/forest.png");
-	Enemy *whiteCat = newEnemy("resources/white_transparent_cat.png");
-	Enemy *blackCat = newEnemy("resources/black_transparent_cat.png");
+	Enemy *whiteCat = newEnemy("whiteCat");
+	Enemy *blackCat = newEnemy("blackCat");
 	whiteCat->position.x = start.x; whiteCat->position.y = start.y;
 	blackCat->position.x = start2.x; blackCat->position.y = start2.y;
-	initEnemyAnimation(whiteCat);
-	initEnemyAnimation(blackCat);
 
 	EnemySwag *blackSwag = createEnemySwag(blackCat,10);
-	for(int i=0; i<10; i++){
-		initEnemyAnimation(&blackSwag->enemy[i]);
-	}
 	
 	SDL_Rect endRect = {end.x,end.y,9,9};
 	Menu *menu = createMenu();

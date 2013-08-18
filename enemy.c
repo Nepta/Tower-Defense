@@ -1,12 +1,21 @@
 #include <SDL/SDL_image.h>
 #include <stdlib.h>
 #include <string.h> //memcpy
+#include "jsonParser.h"
 #include "enemy.h"
 
-Enemy *newEnemy(char *enemySprite){
+Enemy *newEnemy(char *enemyName){
 	Enemy *enemy = malloc(sizeof (Enemy));
 	enemy->position.w = 0;
 	enemy->position.h = 0;
+	FILE *data;
+	data = fopen("resources/enemy.json", "r");
+	char* jsonFile = fileToString(data);
+	fclose(data);
+	TokenIterator *it = parseJson(jsonFile);
+	getNextStringValue(it,jsonFile,enemyName);
+	GetNextStringValue("location");
+	char* enemySprite = ExtractToken(64);
 	SDL_Surface *spriteSheet = IMG_Load(enemySprite);
 	if(spriteSheet == NULL) {
 		printf("failed to load the enemy sprite sheet\n");
@@ -18,6 +27,12 @@ Enemy *newEnemy(char *enemySprite){
 		enemy->animation[i] = NULL;
 	}
 	enemy->animationState = STAY;
+
+	getNextStringValue(it,jsonFile,"height");
+	enemy->spriteSize.h = atoi(ExtractToken(8));
+	getNextStringValue(it,jsonFile,"width");
+	enemy->spriteSize.w = atoi(ExtractToken(8));
+	initEnemyAnimation(enemy,it,jsonFile);
  return enemy;
 }
 
@@ -65,45 +80,34 @@ AnimationState getState(Position oldPosition, Position newPosition){
 	return refTab[delta.x][delta.y];
 }
 
-void initEnemyAnimation(Enemy *enemy){
+void initEnemyAnimation(Enemy *enemy, TokenIterator *it, char* jsonFile){
+	GetNextStringValue("direction");
 	SDL_Rect sprite;
-	sprite.w = 24; sprite.h = 32;
-
-	sprite.x = 0; sprite.y = 0;
-	addEnemyAnimation(enemy,sprite,UP);
-	sprite.x = 24; sprite.y = 0;
-	addEnemyAnimation(enemy, sprite, UP);
-	sprite.x = 48; sprite.y = 0;
-	addEnemyAnimation(enemy, sprite, UP);
+	sprite.w = enemy->spriteSize.w;
+	sprite.h = enemy->spriteSize.h;
+	char loadingDirection = ExtractToken(1);
+	char* direction[] = {"UP", "LEFT", "DOWN", "RIGHT", "STAY"}; //see enemy.json for order
 	
-	sprite.x = 0; sprite.y = 32;
-	addEnemyAnimation(enemy,sprite,RIGHT);
-	sprite.x = 24; sprite.y = 32;
-	addEnemyAnimation(enemy, sprite, RIGHT);
-	sprite.x = 48; sprite.y = 32;
-	addEnemyAnimation(enemy, sprite, RIGHT);
-	
-	sprite.x = 0; sprite.y = 64;
-	addEnemyAnimation(enemy,sprite,DOWN);
-	sprite.x = 24; sprite.y = 64;
-	addEnemyAnimation(enemy, sprite, DOWN);
-	sprite.x = 48; sprite.y = 64;
-	addEnemyAnimation(enemy, sprite, DOWN);
-	
-	sprite.x = 0; sprite.y = 96;
-	addEnemyAnimation(enemy,sprite,LEFT);
-	sprite.x = 24; sprite.y = 96;
-	addEnemyAnimation(enemy, sprite, LEFT);
-	sprite.x = 48; sprite.y = 96;
-	addEnemyAnimation(enemy, sprite, LEFT);
-
-	sprite.x = 0; sprite.y = 64;
-	addEnemyAnimation(enemy,sprite,STAY);
-	sprite.x = 24; sprite.y = 64;
-	addEnemyAnimation(enemy, sprite, STAY);
-	sprite.x = 48; sprite.y = 64;
-	addEnemyAnimation(enemy, sprite, STAY);
+	GetNextStringValue("animation");
+	for(int i=0; i<5; i++){
+		GetNextStringValue(direction[i]);
+		GetNextStringValue("length");
+		int length = atoi(ExtractToken(8));
+		GetNextStringValue("x");
+		sprite.x = atoi(ExtractToken(8));
+		GetNextStringValue("y");
+		sprite.y = atoi(ExtractToken(8));
+		for(int ii=0; ii<length; ii++){
+			addEnemyAnimation(enemy,sprite,i);
+			if(loadingDirection == 'l'){ //loading in line
+				sprite.y += sprite.h;
+			}else{							  //loading in column
+				sprite.x += sprite.w;
+			}
+		}
+	}
 }
+
 
 EnemySwag* createEnemySwag(Enemy *enemy, int swagSize){
 	EnemySwag *swag = malloc(sizeof (EnemySwag) + swagSize * sizeof (Enemy));
