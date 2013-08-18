@@ -4,3 +4,4 @@ towerdefense
 *.png
 premake4.lua
 !resources/*.png
+jsonParserTest
