@@ -42,7 +42,7 @@ MenuItem* createMenuItem(const char* sprite, const char* description, int x, int
 		exit(-1);
 	}
 	item->description = description;
-	SDL_Rect position = {x,y,0,0};
+	SDL_Rect position = {x,y,32,32}; //!< \attention magic number
 	item->position = position;
  return item;
 }
