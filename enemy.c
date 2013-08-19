@@ -152,3 +152,10 @@ EnemySwag* createEnemySwag(Enemy *enemy, int swagSize){
  return swag;
 }
 
+void drawEnemy(Enemy *enemy, SDL_Surface *screen){
+	SDL_Rect enemyBox = {enemy->position.x, enemy->position.y,0,0};
+	enemyBox.x -= enemy->spriteSize.w/2;
+	enemyBox.y -= enemy->spriteSize.h/2;
+	SDL_BlitSurface(enemy->spriteSheet, &enemy->animation[enemy->animationState]->animation, screen, &enemyBox);
+}
+

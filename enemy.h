@@ -89,7 +89,6 @@ void updateEnemy(Enemy *enemy, Map **map);
  * \param jsonFile json configuration file where tile information are stocked
  * \param it iterator for the json parsing system
  */
-
 void initEnemyAnimation(Enemy *enemy, TokenIterator *it, char* jsonFile);
 
 /**
@@ -98,8 +97,14 @@ void initEnemyAnimation(Enemy *enemy, TokenIterator *it, char* jsonFile);
  * \param swagSize the size (number of ennemy) in the swag
  * \return a swag of enemy
  */
-
 EnemySwag* createEnemySwag(Enemy *enemy, int swagSize);
+
+/**
+ * draw an enemy on screen
+ * \param enemy the enemy to draw
+ * \param screen screen where enemy will be draw
+ */
+void drawEnemy(Enemy *enemy, SDL_Surface *screen);
 
 #endif /* __enemy_H__ */
 

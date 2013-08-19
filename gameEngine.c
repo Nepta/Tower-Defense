@@ -54,7 +54,6 @@ int main(){
 	SDL_Rect menuPosition = {mapWidth,0,mapHeight,menuWidth};
 	
 	FieldInterface *field = createFieldInterface("resources/forest.png");
-	FieldInterface *cleaner = createFieldInterface("resources/forest.png");
 	TowerManager *towerManager = newTowerManager(map);
 	field->towerManager = towerManager;
 	Interface interfaces = {menu,field};
@@ -62,7 +61,8 @@ int main(){
 	while(gameEnd != 1){
 		gameEnd = pollMouseClick(&interfaces);
 		SDL_BlitSurface(field->background, NULL, screen, NULL);
-		SDL_BlitSurface(whiteCat->spriteSheet, &whiteCat->animation[whiteCat->animationState]->animation, screen, &whiteCat->position);
+		drawEnemy(whiteCat,screen);
+/*		SDL_BlitSurface(whiteCat->spriteSheet, &whiteCat->animation[whiteCat->animationState]->animation, screen, &whiteCat->position);*/
 		SDL_BlitSurface(blackCat->spriteSheet, &blackCat->animation[blackCat->animationState]->animation, screen, &blackCat->position);
 		for(int i=0; i<10; i++){
 			SDL_BlitSurface(blackSwag->enemy[i].spriteSheet, &blackSwag->enemy[i].animation[blackSwag->enemy[i].animationState]->animation, screen, &blackSwag->enemy[i].position);
@@ -71,7 +71,6 @@ int main(){
 		drawMenu(menu);
 		SDL_BlitSurface(menu->background, NULL, screen, &menuPosition);
 		SDL_Flip(screen);
-		updateEnemy(whiteCat, map);
 		updateEnemy(blackCat, map);
 		updateTower(field);
 		if(field->hasChanged){
@@ -81,11 +80,10 @@ int main(){
 			searchPath(map,start2,end);
 			field->hasChanged = 0;
 		}
+		updateEnemy(whiteCat, map);
 		for(int i=0; i<10; i++){
 			updateEnemy(&blackSwag->enemy[i], map);
 		}
-		int slowMo = 5000000;
-/*		while(slowMo--){}*/
 	}
  return 0;
 }
