@@ -6,12 +6,12 @@
 #include "tower.h"
 
 /**
- * TODO: doc
+ * retain the status of the main field
  */
 struct fieldInterface{
-	SDL_Surface *background;
-	TowerManager *towerManager;
-	int hasChanged;
+	SDL_Surface *background;		//!< the map image
+	TowerManager *towerManager;	//!< manager for adding a tower
+	int hasChanged;					//!< true if a we need to redo the pathfinding
 };
 
 /**
