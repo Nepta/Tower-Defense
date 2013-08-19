@@ -3,7 +3,7 @@
 #include "towerField.h"
 #include <SDL/SDL.h>
 #include <stdlib.h>
-
+  
 extern int mapWidth;
 extern int mapHeight;
 
@@ -40,19 +40,18 @@ void placeTower(Interface *interfaces, int x, int y){
 	}
 	TowerManager *manager = interfaces->field->towerManager;
 	Position towerZone = getTowerZone(x,y);
-	SDL_Rect newTowerBox = {towerZone.x, towerZone.y, 32, 32};
+	SDL_Rect newTowerBox = {x, y, 32, 32};
 	if(manager->towers[towerZone.x][towerZone.y] == NULL){ //there aren't any tower in the zone
 		//check surrounding area of tower
-		int i[] = {0,1,0,-1};
-		int j[] = {1,0,-1,0};
+		int i[] = {0,1,0,-1,1,1,-1,-1};
+		int j[] = {1,0,-1,0,1,-1,-1,1};
 		int haveEnoughSpace = 1;
-		for(int k=0; k<4 && haveEnoughSpace; k++){
+		for(int k=0; k<8 && haveEnoughSpace; k++){
 			//if there are a tower we check if they won't overlap
 			Tower *nearTower = manager->towers[towerZone.x + i[k]][towerZone.y + j[k]];
 			if(nearTower != NULL){
-				if(isOverlapping(newTowerBox, nearTower->towerBox)){
+				if(isOverlapping(nearTower->towerBox, newTowerBox)){
 					haveEnoughSpace = 0;
-					break;
 				}
 			}
 		}
@@ -64,10 +63,12 @@ void placeTower(Interface *interfaces, int x, int y){
 	}
 }
 
-int isOverlapping(SDL_Rect rect1, SDL_Rect rect2){
-	int xOverlap = rect1.x - rect2.x < rect1.w/2 ? 1 : 0;
-	int yOverlap = rect1.y - rect2.y < rect1.h/2 ? 1 : 0;
- return xOverlap || yOverlap;
+int isOverlapping(SDL_Rect nearTower, SDL_Rect newTower){
+	int distanceX = abs(nearTower.x + nearTower.w/2 - newTower.x);
+	int distanceY = abs(nearTower.y + nearTower.h/2 - newTower.y);
+	int xOverlap = distanceX < nearTower.w/2 + newTower.w/2 ? 1 : 0;
+	int yOverlap = distanceY < nearTower.h/2 + newTower.h/2 ? 1 : 0;
+ return xOverlap && yOverlap;
 }
 
 void updateTower(FieldInterface *field){

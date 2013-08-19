@@ -54,6 +54,7 @@ int main(){
 	SDL_Rect menuPosition = {mapWidth,0,mapHeight,menuWidth};
 	
 	FieldInterface *field = createFieldInterface("resources/forest.png");
+	FieldInterface *cleaner = createFieldInterface("resources/forest.png");
 	TowerManager *towerManager = newTowerManager(map);
 	field->towerManager = towerManager;
 	Interface interfaces = {menu,field};
@@ -77,7 +78,7 @@ int main(){
 			updateEnemy(&blackSwag->enemy[i], map);
 		}
 		int slowMo = 5000000;
-		while(slowMo--){}
+/*		while(slowMo--){}*/
 	}
  return 0;
 }
