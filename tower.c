@@ -48,7 +48,7 @@ void placeTower(Interface *interfaces, int x, int y){
 		int haveEnoughSpace = 1;
 		for(int k=0; k<4 && haveEnoughSpace; k++){
 			//if there are a tower we check if they won't overlap
-			Tower *nearTower = manager->towers[i[k]][j[k]];
+			Tower *nearTower = manager->towers[towerZone.x + i[k]][towerZone.y + j[k]];
 			if(nearTower != NULL){
 				if(isOverlapping(newTowerBox, nearTower->towerBox)){
 					haveEnoughSpace = 0;
@@ -58,15 +58,15 @@ void placeTower(Interface *interfaces, int x, int y){
 		}
 		if(haveEnoughSpace){
 			SDL_Surface *currentSprite = currentItem->sprite;
-			Tower *tower = newTower(currentSprite, x - newTowerBox.w, y - newTowerBox.h);
+			Tower *tower = newTower(currentSprite, x - newTowerBox.w/2, y - newTowerBox.h/2);
 			manager->towers[towerZone.x][towerZone.y] = tower;
 		}
 	}
 }
 
 int isOverlapping(SDL_Rect rect1, SDL_Rect rect2){
-	int xOverlap = rect1.x - rect2.x < rect1.w ? 1 : 0;
-	int yOverlap = rect1.y - rect2.y < rect1.h ? 1 : 0;
+	int xOverlap = rect1.x - rect2.x < rect1.w/2 ? 1 : 0;
+	int yOverlap = rect1.y - rect2.y < rect1.h/2 ? 1 : 0;
  return xOverlap || yOverlap;
 }
 
