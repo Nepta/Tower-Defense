@@ -33,10 +33,10 @@ Position getTowerZone(int x, int y){
  return towerZone;
 }
 
-void placeTower(Interface *interfaces, int x, int y){
+int placeTower(Interface *interfaces, int x, int y){
 	MenuItem *currentItem = interfaces->menu->currentItem;
 	if(currentItem == NULL){ //there aren't any tower selected
-		return;
+		return 0;
 	}
 	TowerManager *manager = interfaces->field->towerManager;
 	Position towerZone = getTowerZone(x,y);
@@ -68,8 +68,10 @@ void placeTower(Interface *interfaces, int x, int y){
 				manager->workPlace[towerBox.x - 1][towerBox.y + i].hasTower = 1;
 				manager->workPlace[towerBox.x + towerBox.w +1][towerBox.y + 1].hasTower = 1;
 			}
+			return 1;
 		}
 	}
+ return 0;
 }
 
 int isOverlapping(SDL_Rect nearTower, SDL_Rect newTower){

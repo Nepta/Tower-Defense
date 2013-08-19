@@ -11,6 +11,7 @@
 struct fieldInterface{
 	SDL_Surface *background;
 	TowerManager *towerManager;
+	int hasChanged;
 };
 
 /**

@@ -53,8 +53,9 @@ TowerManager* newTowerManager(Map **map);
  * \param field the field to place tower
  * \param x x position of the tower
  * \param y y position of the tower
+ * \return 1 if a tower has been placed
  */
-void placeTower(Interface* interfaces, int x, int y);
+int placeTower(Interface* interfaces, int x, int y);
 
 /**
  * tell if two square are overlapping

@@ -20,6 +20,6 @@ void clickOnScreen(Interface *interfaces, int x,int y){
 	FieldInterface *field = interfaces->field;
 	Menu *menu = interfaces->menu;
 	if(menu->currentItem != NULL){
-		placeTower(interfaces, x, y);
+		field->hasChanged = placeTower(interfaces, x, y);
 	}
 }
