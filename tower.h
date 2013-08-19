@@ -36,11 +36,10 @@ Position getTowerZone(int x, int y);
 /**
  * function that create a tower
  * \param sprite the tower Sprite
- * \param x x position of the tower
- * \param y y position of the tower
+ * \param towerBox position and size of the tower
  * \return the constructed Tower
  */
-Tower* newTower(SDL_Surface *sprite, int x, int y);
+Tower* newTower(SDL_Surface *sprite, SDL_Rect towerBox);
 
 /**
  * create a tower manager
