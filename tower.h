@@ -3,6 +3,10 @@
 
 #include <SDL/SDL.h>
 #include "map.h"
+#include "interfaces.h"
+
+#define MaxWidthTower 25	//!< for a 800 x 600 map we can only put 25 size 32 towers in a line
+#define MaxHeightTower 18	//!< for a 800 x 600 map we can only put 18 size 32 towers in a column
 
 /**
  * A tower type
@@ -18,8 +22,16 @@ typedef struct{
  */
 typedef struct{
 	Map **workPlace; 			//!< place were manager set tower
-	Tower *towers[25][18];	//!< tower list (for a 800 x 600 map we can only put 25 x 18 size 32 towers)
+	Tower* towers[MaxWidthTower][MaxHeightTower];	//!< tower list
 }TowerManager;
+
+/**
+ * function to retrieve tower in the tower map
+ * \param x x position of the tower
+ * \param y y position of the tower
+ * \return zone where the tower sit
+ */
+Position getTowerZone(int x, int y);
 
 /**
  * function that create a tower
@@ -29,6 +41,29 @@ typedef struct{
  * \return the constructed Tower
  */
 Tower* newTower(SDL_Surface *sprite, int x, int y);
+
+/**
+ * create a tower manager
+ * \param map a map to manage
+ * \return a tower manager
+ */
+TowerManager* newTowerManager(Map **map);
+
+/**
+ * place a tower in the field and what it imply if we can
+ * \param field the field to place tower
+ * \param x x position of the tower
+ * \param y y position of the tower
+ */
+void placeTower(Interface* interfaces, int x, int y);
+
+/**
+ * tell if two square are overlapping
+ * \param rect1 the first square
+ * \param rect2 the second square
+ * \return 1 if the two square are overlapping
+ */
+int isOverlapping(SDL_Rect rect1, SDL_Rect rect2);
 
 #endif /* __tower_H__ */
 
