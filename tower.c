@@ -70,3 +70,16 @@ int isOverlapping(SDL_Rect rect1, SDL_Rect rect2){
  return xOverlap || yOverlap;
 }
 
+void updateTower(FieldInterface *field){
+	TowerManager *towerManager = field->towerManager;
+	for(int i=0; i<MaxWidthTower; i++){
+		for(int j=0; j<MaxHeightTower; j++){
+			Tower *tower = towerManager->towers[i][j];
+			if(tower != NULL){
+				SDL_Surface *background = field->background;
+				SDL_BlitSurface(tower->sprite, NULL, background, &tower->towerBox);
+			}
+		}		
+	}
+}
+

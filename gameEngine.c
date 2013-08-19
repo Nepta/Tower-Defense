@@ -72,6 +72,7 @@ int main(){
 		SDL_Flip(screen);
 		updateEnemy(whiteCat, map);
 		updateEnemy(blackCat, map);
+		updateTower(field);
 		for(int i=0; i<10; i++){
 			updateEnemy(&blackSwag->enemy[i], map);
 		}
