@@ -101,7 +101,7 @@ int dontComputeNode(Map **map, Node *node){
 	int alreadyComputed = isInClosedList(node) == 1;
 	int alreadyComputedInAnotherLoop = map[node->x][node->y].x != node->x
 											  && map[node->x][node->y].y != node->y;
- return !walkable || alreadyComputed || alreadyComputedInAnotherLoop;
+ return !walkable || alreadyComputed;// || alreadyComputedInAnotherLoop;
 }
 
 Node* popFirstInList(List **list){

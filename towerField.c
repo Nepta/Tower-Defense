@@ -13,6 +13,7 @@ FieldInterface* createFieldInterface(char* mapName){
 		printf("IMG_Load: %s\n", IMG_GetError());
 		exit(-1);
 	}
+	field->hasChanged = 0;
  return field;
 }
 

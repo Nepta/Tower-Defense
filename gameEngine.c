@@ -74,6 +74,13 @@ int main(){
 		updateEnemy(whiteCat, map);
 		updateEnemy(blackCat, map);
 		updateTower(field);
+		if(field->hasChanged){
+			puts("recalculate path for white cat");
+			start2.x = whiteCat->position.x;
+			start2.y = whiteCat->position.y;
+			searchPath(map,start2,end);
+			field->hasChanged = 0;
+		}
 		for(int i=0; i<10; i++){
 			updateEnemy(&blackSwag->enemy[i], map);
 		}

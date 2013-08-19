@@ -61,12 +61,9 @@ int placeTower(Interface *interfaces, int x, int y){
 			manager->towers[towerZone.x][towerZone.y] = tower;
 			SDL_Rect towerBox = tower->towerBox;
 			for(int i=-1; i<towerBox.w+1; i++){
-				manager->workPlace[towerBox.x + i][towerBox.y - 1].hasTower = 1;
-				manager->workPlace[towerBox.x + i][towerBox.y + towerBox.h + 1].hasTower = 1;
-			}
-			for(int i=-1; i<towerBox.h+1; i++){
-				manager->workPlace[towerBox.x - 1][towerBox.y + i].hasTower = 1;
-				manager->workPlace[towerBox.x + towerBox.w +1][towerBox.y + 1].hasTower = 1;
+				for(int j=-1; j<towerBox.h+1; j++){
+					manager->workPlace[towerBox.x + i][towerBox.y + j].hasTower = 1;
+				}
 			}
 			return 1;
 		}
