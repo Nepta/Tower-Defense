@@ -60,8 +60,8 @@ int placeTower(Interface *interfaces, int x, int y){
 			Tower *tower = newTower(currentSprite, newTowerBox);
 			manager->towers[towerZone.x][towerZone.y] = tower;
 			SDL_Rect towerBox = tower->towerBox;
-			for(int i=-1; i<towerBox.w+1; i++){
-				for(int j=-1; j<towerBox.h+1; j++){
+			for(int i=-32; i<towerBox.w+32; i++){
+				for(int j=-32; j<towerBox.h+32; j++){
 					manager->workPlace[towerBox.x + i][towerBox.y + j].hasTower = 1;
 				}
 			}
