@@ -5,7 +5,7 @@
 #include <SDL/SDL_ttf.h>
 #include "interfaces.h"
 
-#define ItemNumbers 3 //!< number of item (tower type) in the menu
+#define ItemNumbers 4 //!< number of item (tower type) in the menu
 #define MaxDescriptionLenght 32 //!< maximum length of the description text
 
 /**

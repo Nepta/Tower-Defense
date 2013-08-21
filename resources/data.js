@@ -8,6 +8,9 @@
 		,	
 		{"location":"resources/towerUP.png",
 		"description":"a uped to level 2 tower"}
+		,
+		{"location":"resources/brick.png",
+		"description":"a brick to block enemy"}
 	]
 },{
 	"garbage":[
