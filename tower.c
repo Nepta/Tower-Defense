@@ -38,6 +38,10 @@ int placeTower(Interface *interfaces, int x, int y){
 	if(currentItem == NULL){ //there aren't any tower selected
 		return 0;
 	}
+	if(currentItem->value > playerMoney){
+		return 0;
+	}
+	playerMoney -= currentItem->value;
 	TowerManager *manager = interfaces->field->towerManager;
 	Position towerZone = getTowerZone(x,y);
 	SDL_Rect newTowerBox = {x, y, 32, 32};
