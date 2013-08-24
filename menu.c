@@ -7,8 +7,6 @@
 #include <string.h>
 #include "jsonParser.h"
 
-int playerMoney = 100;
-
 Menu* createMenu(){
 	Menu *menu = malloc(sizeof (Menu));
 	menu->background = SDL_CreateRGBSurface(SDL_HWSURFACE, 150, 600, 24,0,0,0,0);
@@ -34,6 +32,7 @@ Menu* createMenu(){
 		getNextObject(it);
 	}
 	menu->coin = createAnimatedItem("resources/goldCoin.png", 10, 500); //!< \attention magic value
+	menu->playerMoney = 100;
 	drawMenu(menu);
  return menu;
 }

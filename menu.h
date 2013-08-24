@@ -50,6 +50,7 @@ struct menu{
 	int isUpdated;						//!< if the menu need to be redraw
 	MenuItem *items[ItemNumbers];	//!< list of item in the menu
 	AnimatedItem *coin;				//!< spining coin that indicate how much money we have
+	int playerMoney;
 };
 
 /**

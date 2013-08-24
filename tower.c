@@ -6,7 +6,7 @@
   
 extern int mapWidth;
 extern int mapHeight;
-extern int playerMoney;
+
 Tower* newTower(SDL_Surface *sprite, SDL_Rect towerBox){
 	Tower *tower = malloc(sizeof (Tower));
 	tower->sprite = sprite;
@@ -34,14 +34,15 @@ Position getTowerZone(int x, int y){
 }
 
 int placeTower(Interface *interfaces, int x, int y){
-	MenuItem *currentItem = interfaces->menu->currentItem;
+	Menu *menu = interfaces->menu;
+	MenuItem *currentItem = menu->currentItem;
 	if(currentItem == NULL){ //there aren't any tower selected
 		return 0;
 	}
-	if(currentItem->value > playerMoney){
+	if(currentItem->value > menu->playerMoney){
 		return 0;
 	}
-	playerMoney -= currentItem->value;
+	menu->playerMoney -= currentItem->value;
 	TowerManager *manager = interfaces->field->towerManager;
 	Position towerZone = getTowerZone(x,y);
 	SDL_Rect newTowerBox = {x, y, 32, 32};
