@@ -50,7 +50,7 @@ AnimatedItem* createAnimatedItem(const char* spriteSheet, int x, int y){
 	SDL_Rect sprite = {0,0,32,32}; //!< \attention magic number
 	for(int i=0; i<9; i++){
 		addEnemyAnimation((Enemy*)item,sprite,0);
-		sprite.y += sprite.h;
+		sprite.x += sprite.w;
 	}
 	SDL_Rect position = {x,y,32,32}; //!< \attention magic number
 	item->position = position;
@@ -101,7 +101,6 @@ void drawMenu(Menu *menu){
 		SDL_BlitSurface(menu->text->sprite, NULL, menu->background, &currentTextPosition);
 	}
 	drawAnimatedItem(menu, menu->coin);
-/*	SDL_Surface *renderText = TTF_RenderUTF8_Solid(font, text, blackColor);*/
 }
 
 void drawMenuItem(MenuItem *item, SDL_Surface *surfaceToDraw){
@@ -135,6 +134,7 @@ void drawMenuText(MenuText *text, MenuItem *currentItem){
 }
 
 void drawAnimatedItem(Menu *menu, AnimatedItem *item){
+	SDL_BlitSurface(menu->blackTile, NULL, menu->background, &item->position);
 	SDL_BlitSurface(item->spriteSheet, &item->animation[0]->animation, menu->background, &item->position);
 	item->animation[0] = item->animation[0]->nextAnimation;
 }
