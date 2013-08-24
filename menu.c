@@ -136,5 +136,16 @@ void drawAnimatedItem(Menu *menu, AnimatedItem *item){
 	SDL_BlitSurface(menu->blackTile, NULL, menu->background, &item->position);
 	SDL_BlitSurface(item->spriteSheet, &item->animation[0]->animation, menu->background, &item->position);
 	item->animation[0] = item->animation[0]->nextAnimation;
+	char* currentMoney = malloc(8);
+	snprintf(currentMoney,8,"%d",menu->playerMoney);
+	SDL_Surface *money = TTF_RenderUTF8_Solid(
+		menu->text->font,
+		currentMoney,
+		menu->text->color
+	);
+	SDL_Rect textPosition = {item->position.x,item->position.y,item->position.w,item->position.h};
+	textPosition.x += textPosition.w + 9;
+	textPosition.y += textPosition.h/2;
+	SDL_BlitSurface(money, NULL, menu->background, &textPosition);
 }
 
