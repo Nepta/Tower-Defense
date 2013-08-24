@@ -6,7 +6,7 @@
   
 extern int mapWidth;
 extern int mapHeight;
-
+extern int playerMoney;
 Tower* newTower(SDL_Surface *sprite, SDL_Rect towerBox){
 	Tower *tower = malloc(sizeof (Tower));
 	tower->sprite = sprite;

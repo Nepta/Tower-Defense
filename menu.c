@@ -7,6 +7,8 @@
 #include <string.h>
 #include "jsonParser.h"
 
+int playerMoney = 100;
+
 Menu* createMenu(){
 	Menu *menu = malloc(sizeof (Menu));
 	menu->background = SDL_CreateRGBSurface(SDL_HWSURFACE, 150, 600, 24,0,0,0,0);
