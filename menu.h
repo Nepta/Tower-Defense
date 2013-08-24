@@ -25,6 +25,7 @@ typedef struct{
 	SDL_Surface *sprite; //!< sprite of an item in the menu
 	char* description;	//!< description of an item
 	SDL_Rect position;	//!< position of the item in the menu
+	int value;				//!< a value for a menu item (like tower price or initial money)
 }MenuItem;
 
 /**
