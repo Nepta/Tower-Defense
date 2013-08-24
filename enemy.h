@@ -36,10 +36,10 @@ typedef struct enemyAnimation{
  */
 typedef struct{
 	SDL_Surface *spriteSheet;									//!< spriteSheet as a SDL_Surface
-	SDL_Rect spriteSize;											//!< size of each tile in sprite sheet
 	SDL_Rect position;											//!< current enemy position on map
-	AnimationState animationState;							//!< current looking direction of ennemy
 	EnemyAnimation *animation[AnimationStateLenght];	//!< animation tab
+	AnimationState animationState;							//!< current looking direction of ennemy
+	SDL_Rect spriteSize;											//!< size of each tile in sprite sheet
 }Enemy;
 
 /**

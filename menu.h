@@ -34,8 +34,8 @@ typedef struct{
  */
 typedef struct{
 	SDL_Surface *spriteSheet;	//!< sprite sheet for the coin
-	EnemyAnimation *animation[1];		//!< animation container to animate the coin
 	SDL_Rect position;			//!< position of the animated item
+	EnemyAnimation *animation[1];		//!< animation container to animate the coin
 }AnimatedItem;
 
 /**
@@ -115,6 +115,13 @@ void drawMenuText(MenuText *text, MenuItem *currentItem);
  * \return the animated item
  */
 AnimatedItem* createAnimatedItem(const char* spriteSheet, int x, int y);
+
+/**
+ * animate and draw an animated item
+ * \param the menu to draw the animation
+ * \param item the item to be draw and updated
+ */
+void drawAnimatedItem(Menu *menu, AnimatedItem *item);
 
 #endif /* __menu_H__ */
 

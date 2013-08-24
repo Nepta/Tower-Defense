@@ -33,6 +33,7 @@ Menu* createMenu(){
 		menu->items[i]->value = atoi(ExtractToken(8));
 		getNextObject(it);
 	}
+	menu->coin = createAnimatedItem("resources/goldCoin.png", 10, 500); //!< \attention magic value
 	drawMenu(menu);
  return menu;
 }
@@ -45,6 +46,7 @@ AnimatedItem* createAnimatedItem(const char* spriteSheet, int x, int y){
 		printf("IMG_Load: %s\n", IMG_GetError());
 		exit(-1);
 	}
+	item->animation[0] = NULL;
 	SDL_Rect sprite = {0,0,32,32}; //!< \attention magic number
 	for(int i=0; i<9; i++){
 		addEnemyAnimation((Enemy*)item,sprite,0);
@@ -98,6 +100,7 @@ void drawMenu(Menu *menu){
 		drawMenuText(menu->text, menu->currentItem);
 		SDL_BlitSurface(menu->text->sprite, NULL, menu->background, &currentTextPosition);
 	}
+	drawAnimatedItem(menu, menu->coin);
 /*	SDL_Surface *renderText = TTF_RenderUTF8_Solid(font, text, blackColor);*/
 }
 
@@ -130,3 +133,9 @@ void drawMenuText(MenuText *text, MenuItem *currentItem){
 		text->color
 	);
 }
+
+void drawAnimatedItem(Menu *menu, AnimatedItem *item){
+	SDL_BlitSurface(item->spriteSheet, &item->animation[0]->animation, menu->background, &item->position);
+	item->animation[0] = item->animation[0]->nextAnimation;
+}
+

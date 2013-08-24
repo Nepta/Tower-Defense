@@ -24,7 +24,7 @@ Enemy *newEnemy(char *enemyName){
 	}
 	enemy->spriteSheet = spriteSheet;
 	for(int i=0; i<AnimationStateLenght; i++){
-		enemy->animation[i] = NULL;
+		enemy->animation[i] = NULL;	//enemy->animation is never allocated?
 	}
 	enemy->animationState = STAY;
 
