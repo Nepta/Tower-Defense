@@ -16,7 +16,7 @@ Menu* createMenu(){
 	menu->isUpdated = 1;
 
 	FILE *data;
-	data = fopen("resources/data.js", "r");
+	data = fopen("resources/data.json", "r");
 	char* jsonFile = fileToString(data);
 	fclose(data);
 	TokenIterator *it = parseJson(jsonFile);
