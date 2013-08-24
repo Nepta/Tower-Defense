@@ -14,7 +14,6 @@
 typedef struct{
 	SDL_Rect towerBox;	//!< position en size of the tower
 	SDL_Surface *sprite;	//!< sprite of the tower
-	int price;				//!< how much a tower cost
 }Tower;
 
 /**
