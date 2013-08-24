@@ -29,6 +29,14 @@ typedef struct{
 }MenuItem;
 
 /**
+ * struct to add animated item in the menu
+ */
+typedef struct{
+	SDL_Surface *spriteSheet;	//!< sprite sheet for the coin
+	EnemyAnimation *item;		//!< animation container to animate the coin
+}AnimatedItem;
+
+/**
  * Menu definition with all item it contain, current item selected and text displayed
  */
 
@@ -39,6 +47,7 @@ struct menu{
 	MenuText *text;					//!< description text for current selected tower
 	int isUpdated;						//!< if the menu need to be redraw
 	MenuItem *items[ItemNumbers];	//!< list of item in the menu
+	AnimatedItem *coin;				//!< spining coin that indicate how much money we have
 };
 
 /**
