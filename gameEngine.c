@@ -24,6 +24,7 @@ const int mapHeight = 600;
 const int menuWidth = 150;
 
 int main(){
+	srand(42);
 	SDL_Init(SDL_INIT_VIDEO);
 	TTF_Init();
 	SDL_Surface *screen = SDL_SetVideoMode(mapWidth + menuWidth, mapHeight, 24, SDL_HWSURFACE | SDL_ASYNCBLIT | SDL_DOUBLEBUF);
@@ -35,11 +36,6 @@ int main(){
 	searchPath(map, start, end);
 	searchPath(map, start2, end);
 	
-	for(int i=0; i<11; i++){		//for the black swag
-		start2.x += 4;
-		start2.y += 4;
-		searchPath(map,start2,end);
-	}
 	start2.x = 100;
 	start2.y = 100;
 	Enemy *whiteCat = newEnemy("whiteCat");
@@ -48,6 +44,11 @@ int main(){
 	blackCat->position.x = start2.x; blackCat->position.y = start2.y;
 
 	EnemySwag *blackSwag = createEnemySwag(blackCat,10);
+	for(int i=0; i<blackSwag->swagSize; i++){		//for the black swag
+		start2.x = blackSwag->enemy[i].position.x;
+		start2.y = blackSwag->enemy[i].position.y;
+		searchPath(map,start2,end);
+	}
 	
 	SDL_Rect endRect = {end.x,end.y,9,9};
 	Menu *menu = createMenu();

@@ -115,8 +115,8 @@ EnemySwag* createEnemySwag(Enemy *enemy, int swagSize){
 	swag->nextSwag = NULL;
 	for(int i=0; i<swagSize; i++){
 		swag->enemy[i].spriteSheet = enemy->spriteSheet;
-		swag->enemy[i].position.x = enemy->position.x + 4*(i+1);
-		swag->enemy[i].position.y = enemy->position.y + 4*(i+1);
+		swag->enemy[i].position.x = enemy->position.x + (rand()&0x3F);
+		swag->enemy[i].position.y = enemy->position.y + (rand()&0x3F);
 		swag->enemy[i].animationState = STAY;
 
 		swag->enemy[i].spriteSheet = enemy->spriteSheet;
