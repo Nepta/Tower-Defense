@@ -37,6 +37,24 @@ Menu* createMenu(){
  return menu;
 }
 
+AnimatedItem* createAnimatedItem(const char* spriteSheet, int x, int y){
+	AnimatedItem *item = malloc(sizeof (AnimatedItem));
+	item->spriteSheet = IMG_Load(spriteSheet);
+	if(item->spriteSheet == NULL) {
+		printf("failed to load the animated item %s sprite\n", spriteSheet);
+		printf("IMG_Load: %s\n", IMG_GetError());
+		exit(-1);
+	}
+	SDL_Rect sprite = {0,0,32,32}; //!< \attention magic number
+	for(int i=0; i<9; i++){
+		addEnemyAnimation((Enemy*)item,sprite,0);
+		sprite.y += sprite.h;
+	}
+	SDL_Rect position = {x,y,32,32}; //!< \attention magic number
+	item->position = position;
+ return item;
+}
+
 MenuItem* createMenuItem(const char* sprite, const char* description, int x, int y){
 	MenuItem *item = malloc(sizeof (MenuItem));
 	item->sprite = IMG_Load(sprite);

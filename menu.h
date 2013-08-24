@@ -4,6 +4,7 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 #include "interfaces.h"
+#include "enemy.h"
 
 #define ItemNumbers 4 //!< number of item (tower type) in the menu
 #define MaxDescriptionLenght 32 //!< maximum length of the description text
@@ -33,7 +34,8 @@ typedef struct{
  */
 typedef struct{
 	SDL_Surface *spriteSheet;	//!< sprite sheet for the coin
-	EnemyAnimation *item;		//!< animation container to animate the coin
+	EnemyAnimation *animation[1];		//!< animation container to animate the coin
+	SDL_Rect position;			//!< position of the animated item
 }AnimatedItem;
 
 /**
@@ -104,6 +106,15 @@ MenuText* initTextArea();
  * \param currentItem the item to be iconified
  */
 void drawMenuText(MenuText *text, MenuItem *currentItem);
+
+/**
+ * create an animated item
+ * \param sprite sheet the spriteSheet of the animated item
+ * \param x x position of the item
+ * \param y y position of the item
+ * \return the animated item
+ */
+AnimatedItem* createAnimatedItem(const char* spriteSheet, int x, int y);
 
 #endif /* __menu_H__ */
 
