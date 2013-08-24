@@ -133,7 +133,11 @@ void drawMenuText(MenuText *text, MenuItem *currentItem){
 }
 
 void drawAnimatedItem(Menu *menu, AnimatedItem *item){
-	SDL_BlitSurface(menu->blackTile, NULL, menu->background, &item->position);
+	SDL_Rect itemPosition = {item->position.x,item->position.y,item->position.w,item->position.h};
+	for(int i=0;i<8;i++){
+		SDL_BlitSurface(menu->blackTile, NULL, menu->background, &itemPosition);
+		itemPosition.x += itemPosition.w;
+	}
 	SDL_BlitSurface(item->spriteSheet, &item->animation[0]->animation, menu->background, &item->position);
 	item->animation[0] = item->animation[0]->nextAnimation;
 	char* currentMoney = malloc(8);
