@@ -27,6 +27,8 @@ Menu* createMenu(){
 		getNextStringValue(it,jsonFile,"description");
 		char* description = extractnToken(it->tokens[it->currentPosition], jsonFile, MaxDescriptionLenght);
 		menu->items[i] = createMenuItem(location, description, i*32, 99);
+		GetNextStringValue("price");
+		int price = atoi(ExtractToken(8));
 		getNextObject(it);
 	}
 	drawMenu(menu);
