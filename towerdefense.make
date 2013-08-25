@@ -47,6 +47,7 @@ OBJECTS := \
 	$(OBJDIR)/enemy.o \
 	$(OBJDIR)/gameEngine.o \
 	$(OBJDIR)/jsonParser.o \
+	$(OBJDIR)/shoot.o \
 	$(OBJDIR)/menu.o \
 	$(OBJDIR)/map.o \
 	$(OBJDIR)/tower.o \
@@ -127,6 +128,10 @@ $(OBJDIR)/gameEngine.o: gameEngine.c
 	$(SILENT) $(CC) $(ALL_CFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 
 $(OBJDIR)/jsonParser.o: jsonParser.c
+	@echo $(notdir $<)
+	$(SILENT) $(CC) $(ALL_CFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
+
+$(OBJDIR)/shoot.o: shoot.c
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(ALL_CFLAGS) -o "$@" -MF $(@:%.o=%.d) -c "$<"
 
