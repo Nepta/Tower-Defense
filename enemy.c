@@ -33,6 +33,7 @@ Enemy *newEnemy(char *enemyName){
 	getNextStringValue(it,jsonFile,"width");
 	enemy->spriteSize.w = atoi(ExtractToken(8));
 	initEnemyAnimation(enemy,it,jsonFile);
+	enemy->life = 1;
  return enemy;
 }
 
@@ -115,6 +116,7 @@ EnemySwag* createEnemySwag(Enemy *enemy, int swagSize){
 	swag->isEmpty = 0;
 	swag->nextSwag = NULL;
 	for(int i=0; i<swagSize; i++){
+		swag->enemy[i].life = enemy->life;
 		swag->enemy[i].spriteSheet = enemy->spriteSheet;
 		swag->enemy[i].position.x = enemy->position.x + (rand()&0x3F);
 		swag->enemy[i].position.y = enemy->position.y + (rand()&0x3F);
