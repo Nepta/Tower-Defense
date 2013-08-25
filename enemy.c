@@ -38,18 +38,18 @@ Enemy *newEnemy(char *enemyName){
 }
 
 void addEnemyAnimation(Enemy *enemy, SDL_Rect animation, AnimationState state){
-	EnemyAnimation *firstAnimation = enemy->animation[state];
+	Animation *firstAnimation = enemy->animation[state];
 	if(firstAnimation != NULL){
-		EnemyAnimation *animationList = enemy->animation[state];
+		Animation *animationList = enemy->animation[state];
 		while(animationList->nextAnimation != firstAnimation){
 			animationList = animationList->nextAnimation;
 		}
-		EnemyAnimation *newAnimation = malloc(sizeof (EnemyAnimation));
+		Animation *newAnimation = malloc(sizeof (Animation));
 		newAnimation->animation = animation;
 		newAnimation->nextAnimation = firstAnimation;
 		animationList->nextAnimation = newAnimation;
 	}else{
-		EnemyAnimation *newAnimation = malloc(sizeof (EnemyAnimation));
+		Animation *newAnimation = malloc(sizeof (Animation));
 		newAnimation->animation = animation;
 		newAnimation->nextAnimation = newAnimation;
 		enemy->animation[state] = newAnimation;

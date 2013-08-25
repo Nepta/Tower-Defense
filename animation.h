@@ -18,7 +18,7 @@ typedef enum{
 /**
  *	\brief Animation for an Enemy
  *	List of sprite (position on a spriteSheet to display an animation
- * implemented with a looping list
+ * implemented with a looping list)
  */
 typedef struct enemyAnimation{
 	SDL_Rect animation;							//!< current sprite to display

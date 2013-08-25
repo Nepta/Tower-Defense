@@ -5,6 +5,7 @@
 #include <SDL/SDL_ttf.h>
 #include "interfaces.h"
 #include "enemy.h"
+#include "animation.h"
 
 #define ItemNumbers 4 //!< number of item (tower type) in the menu
 #define MaxDescriptionLenght 32 //!< maximum length of the description text
@@ -44,7 +45,7 @@ typedef struct{
 typedef struct{
 	SDL_Surface *spriteSheet;	//!< sprite sheet for the coin
 	SDL_Rect position;			//!< position of the animated item
-	EnemyAnimation *animation[1];		//!< animation container to animate the coin
+	Animation *animation[1];		//!< animation container to animate the coin
 }AnimatedItem;
 
 /**
