@@ -27,8 +27,13 @@ Menu* createMenu(){
 		getNextStringValue(it,jsonFile,"description");
 		char* description = extractnToken(it->tokens[it->currentPosition], jsonFile, MaxDescriptionLenght);
 		menu->items[i] = createMenuItem(location, description, i*32, 99);
+		menu->items[i]->values = malloc(sizeof (TowerValueLength)); //for item representing a tower
+/*		TowerValue value = Price;*/
 		GetNextStringValue("price");
-		menu->items[i]->value = atoi(ExtractToken(8));
+		menu->items[i]->values[Price] = atoi(ExtractToken(8));
+/*		value = Range;*/
+		GetNextStringValue("range");
+		menu->items[i]->values[Range] = atoi(ExtractToken(8));
 		getNextObject(it);
 	}
 	menu->coin = createAnimatedItem("resources/goldCoin.png", 10, 500); //!< \attention magic value

@@ -40,10 +40,10 @@ int placeTower(Interface *interfaces, int x, int y){
 	if(currentItem == NULL){ //there aren't any tower selected
 		return 0;
 	}
-	if(currentItem->value > menu->playerMoney){
+	if(currentItem->values[Price] > menu->playerMoney){
 		return 0;
 	}
-	menu->playerMoney -= currentItem->value;
+	menu->playerMoney -= currentItem->values[Price];
 	TowerManager *manager = interfaces->field->towerManager;
 	Position towerZone = getTowerZone(x,y);
 	SDL_Rect newTowerBox = {x, y, 32, 32};
@@ -63,7 +63,8 @@ int placeTower(Interface *interfaces, int x, int y){
 		}
 		if(haveEnoughSpace){
 			SDL_Surface *currentSprite = currentItem->sprite;
-			Tower *tower = newTower(currentSprite, newTowerBox, 0);
+			int range = currentItem->values[Range];
+			Tower *tower = newTower(currentSprite, newTowerBox, range);
 			manager->towers[towerZone.x][towerZone.y] = tower;
 			SDL_Rect towerBox = tower->towerBox;
 			for(int i=-towerBox.w/2; i<towerBox.w+towerBox.w/2; i++){

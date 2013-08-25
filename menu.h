@@ -20,13 +20,22 @@ typedef struct{
 }MenuText;
 
 /**
+ * Value an item can have to decrible a tower
+ */
+typedef enum{
+	Price,					//!< the price of a tower
+	Range,					//!< the range of a tower
+	TowerValueLength		//!< total length of a tower value type
+}TowerValue;
+
+/**
  * Individual item of the menu
  */
 typedef struct{
 	SDL_Surface *sprite; //!< sprite of an item in the menu
 	char* description;	//!< description of an item
 	SDL_Rect position;	//!< position of the item in the menu
-	int value;				//!< a value for a menu item (like tower price or initial money)
+	int *values;			//!< a value for a menu item (like tower price or initial money)
 }MenuItem;
 
 /**
