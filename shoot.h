@@ -6,8 +6,9 @@
  * A shooting manager connects towers and enemys to know if a tower can shoot an enemy
  */
 typedef struct{
-	EnemySwag *enemys;
-	TowerManager *towerManager;
+	EnemySwag *enemys;				//!< a list of enemy to manage
+	TowerManager *towerManager;	//!< a list of tower to manage
+	Animation *bullet;				//!< animation of a bullet
 }ShootManager;
 
 /**
@@ -17,6 +18,20 @@ typedef struct{
  * \return 1 if the enemy can be shoot
  */
 int isEnemyInRange(Enemy *enemy, Tower *tower);
+
+/**
+ * Function to search and destroy enemy
+ * \param shootManager entity that know each tower and each enemy
+ */
+void shootEnemy(ShootManager *shootManager);
+
+
+/**
+ * function called when a tower can hit an enemy
+ * \param tower the tower which can hit the enemy
+ * \param enemy the enemy which will be hitten
+ */
+void hitEnemy(Tower *tower, Enemy *enemy);
 
 #endif /* __shoot_H__ */
 
