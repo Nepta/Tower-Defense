@@ -7,13 +7,14 @@
 extern int mapWidth;
 extern int mapHeight;
 
-Tower* newTower(SDL_Surface *sprite, SDL_Rect towerBox){
+Tower* newTower(SDL_Surface *sprite, SDL_Rect towerBox, int range){
 	Tower *tower = malloc(sizeof (Tower));
 	tower->sprite = sprite;
 	tower->towerBox.x = towerBox.x - towerBox.w/2;
 	tower->towerBox.y = towerBox.y - towerBox.h/2;
 	tower->towerBox.w = towerBox.w;
 	tower->towerBox.h = towerBox.h;
+	tower->range = range;
  return tower;
 }
 
@@ -62,11 +63,11 @@ int placeTower(Interface *interfaces, int x, int y){
 		}
 		if(haveEnoughSpace){
 			SDL_Surface *currentSprite = currentItem->sprite;
-			Tower *tower = newTower(currentSprite, newTowerBox);
+			Tower *tower = newTower(currentSprite, newTowerBox, 0);
 			manager->towers[towerZone.x][towerZone.y] = tower;
 			SDL_Rect towerBox = tower->towerBox;
-			for(int i=-32; i<towerBox.w+32; i++){
-				for(int j=-32; j<towerBox.h+32; j++){
+			for(int i=-towerBox.w/2; i<towerBox.w+towerBox.w/2; i++){
+				for(int j=-towerBox.h/2; j<towerBox.h+towerBox.h/2; j++){
 					manager->workPlace[towerBox.x + i][towerBox.y + j].hasTower = 1;
 				}
 			}

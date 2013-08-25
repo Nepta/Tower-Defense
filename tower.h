@@ -14,6 +14,7 @@
 typedef struct{
 	SDL_Rect towerBox;	//!< position en size of the tower
 	SDL_Surface *sprite;	//!< sprite of the tower
+	int range;				//!< the range of which a tower can shoot an enemy
 }Tower;
 
 /**
@@ -37,9 +38,10 @@ Position getTowerZone(int x, int y);
  * function that create a tower
  * \param sprite the tower Sprite
  * \param towerBox position and size of the tower
+ * \param range the range a tower can shoot enemy
  * \return the constructed Tower
  */
-Tower* newTower(SDL_Surface *sprite, SDL_Rect towerBox);
+Tower* newTower(SDL_Surface *sprite, SDL_Rect towerBox, int range);
 
 /**
  * create a tower manager
