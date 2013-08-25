@@ -112,6 +112,7 @@ void initEnemyAnimation(Enemy *enemy, TokenIterator *it, char* jsonFile){
 EnemySwag* createEnemySwag(Enemy *enemy, int swagSize){
 	EnemySwag *swag = malloc(sizeof (EnemySwag) + swagSize * sizeof (Enemy));
 	swag->swagSize = swagSize;
+	swag->isEmpty = 0;
 	swag->nextSwag = NULL;
 	for(int i=0; i<swagSize; i++){
 		swag->enemy[i].spriteSheet = enemy->spriteSheet;

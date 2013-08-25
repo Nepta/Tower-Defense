@@ -48,6 +48,7 @@ typedef struct{
  */
 typedef struct enemySwag{
 	int swagSize;						//!< size of the swag
+	int isEmpty;						//!< tell if all enemy of a swag have been killed
 	struct enemySwag *nextSwag;	//!< next wave of ennemy
 	Enemy enemy[];						//!< Enemy list of the swag
 }EnemySwag;
