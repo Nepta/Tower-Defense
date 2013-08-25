@@ -6,9 +6,9 @@
  * A shooting manager connects towers and enemys to know if a tower can shoot an enemy
  */
 typedef struct{
-	EnemySwag *enemys;				//!< a list of enemy to manage
-	TowerManager *towerManager;	//!< a list of tower to manage
-	Animation *bullet;				//!< animation of a bullet
+	EnemySwag *enemys;	//!< a list of enemy to manage
+	Tower ***towers;		//!< a list of tower to manage (size: [MaxWidthTower][MaxHeightTower])
+	Animation *bullet;	//!< animation of a bullet
 }ShootManager;
 
 /**
@@ -32,6 +32,14 @@ void shootEnemy(ShootManager *shootManager);
  * \param enemy the enemy which will be hitten
  */
 void hitEnemy(Tower *tower, Enemy *enemy);
+
+/**
+ * create a shoot manager that connect towers to theirs target
+ * \param towers a list of tower
+ * \param enemys a list of enemy
+ * \return the shooting manager
+ */
+ShootManager* newShootManager(Tower *tower[MaxWidthTower][MaxHeightTower], EnemySwag *enemys);
 
 #endif /* __shoot_H__ */
 

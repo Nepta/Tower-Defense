@@ -12,7 +12,7 @@ int isEnemyInRange(Enemy *enemy, Tower *tower){
 }
 
 void shootEnemy(ShootManager *shootManager){
-	Tower ***towers = (Tower***)shootManager->towerManager->towers;
+	Tower ***towers = shootManager->towers;
 	EnemySwag *enemys = shootManager->enemys;
 	for(int i=0; i<MaxWidthTower; i++){
 		for(int j=0; j<MaxHeightTower; j++){
@@ -31,5 +31,12 @@ void shootEnemy(ShootManager *shootManager){
 }
 
 void hitEnemy(Tower *tower, Enemy *enemy){
+}
+
+ShootManager* newShootManager(Tower *towers[MaxWidthTower][MaxHeightTower], EnemySwag *enemys){
+	ShootManager *shootManager = malloc(sizeof (ShootManager));
+	shootManager->enemys = enemys;
+	shootManager->towers = (Tower***)towers;
+ return shootManager;
 }
 
