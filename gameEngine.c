@@ -17,7 +17,7 @@
 #include "menu.h"
 #include "towerField.h"
 #include "inputInterface.h"
-
+#include "shoot.h"
 
 const int mapWidth = 800;
 const int mapHeight = 600;
@@ -58,6 +58,9 @@ int main(){
 	TowerManager *towerManager = newTowerManager(map);
 	field->towerManager = towerManager;
 	Interface interfaces = {menu,field};
+	
+	ShootManager *shootManager = newShootManager(&towerManager->towers, blackSwag);
+	
 	int gameEnd = 0;
 	while(gameEnd != 1){
 		gameEnd = pollMouseClick(&interfaces);
@@ -85,6 +88,7 @@ int main(){
 		for(int i=0; i<10; i++){
 			updateEnemy(&blackSwag->enemy[i], map);
 		}
+		shootEnemy(shootManager);
 	}
  return 0;
 }

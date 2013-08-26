@@ -12,15 +12,15 @@ int isEnemyInRange(Enemy *enemy, Tower *tower){
 }
 
 void shootEnemy(ShootManager *shootManager){
-	Tower ***towers = shootManager->towers;
+	Tower *(*towers)[MaxWidthTower][MaxHeightTower] = shootManager->towers;
 	EnemySwag *enemys = shootManager->enemys;
 	for(int i=0; i<MaxWidthTower; i++){
 		for(int j=0; j<MaxHeightTower; j++){
 			if(towers[i][j] != NULL){
 				if(enemys->isEmpty != 1){
 					for(int k=0; k<enemys->swagSize; k++){
-						if(isEnemyInRange(&enemys->enemy[k],towers[i][j])){
-							hitEnemy(towers[i][j], &enemys->enemy[k]);
+						if(isEnemyInRange(&enemys->enemy[k],*towers[i][j])){
+							hitEnemy(*towers[i][j], &enemys->enemy[k]);
 							break; // a tower can hit only one enemy
 						}
 					}
@@ -31,12 +31,13 @@ void shootEnemy(ShootManager *shootManager){
 }
 
 void hitEnemy(Tower *tower, Enemy *enemy){
+	puts("miaou");
 }
 
-ShootManager* newShootManager(Tower *towers[MaxWidthTower][MaxHeightTower], EnemySwag *enemys){
+ShootManager* newShootManager(Tower *(*towers)[MaxWidthTower][MaxHeightTower], EnemySwag *enemys){
 	ShootManager *shootManager = malloc(sizeof (ShootManager));
 	shootManager->enemys = enemys;
-	shootManager->towers = (Tower***)towers;
+	shootManager->towers = towers;
  return shootManager;
 }
 
