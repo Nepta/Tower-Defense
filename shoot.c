@@ -19,9 +19,11 @@ void shootEnemy(ShootManager *shootManager){
 			if((*towers)[i][j] != NULL){
 				if(enemys->isEmpty != 1){
 					for(int k=0; k<enemys->swagSize; k++){
-						if(isEnemyInRange(&enemys->enemy[k],(*towers)[i][j])){
-							hitEnemy((*towers)[i][j], &enemys->enemy[k]);
-							break; // a tower can hit only one enemy
+						if(enemys->enemy[k].life > 0){
+							if(isEnemyInRange(&enemys->enemy[k],(*towers)[i][j])){
+								hitEnemy((*towers)[i][j], &enemys->enemy[k]);
+								break; // a tower can hit only one enemy
+							}
 						}
 					}
 				}
