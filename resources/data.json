@@ -3,17 +3,17 @@
 		{"location":"resources/tower.png",
 		 "description":"a basic level 1 tower",
 		 "price":10,
-		 "range":10}
+		 "range":32}
 		,
 		{"location":"resources/candy_cane.png",
 		"description":"a big colorful candy cane",
 		"price":42,
-		"range":30}
+		"range":42}
 		,	
 		{"location":"resources/towerUP.png",
 		"description":"a uped to level 2 tower",
 		"price":20,
-		"range":20}
+		"range":64}
 		,
 		{"location":"resources/brick.png",
 		"description":"a brick to block enemy",
