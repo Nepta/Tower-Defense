@@ -85,5 +85,12 @@ EnemySwag* createEnemySwag(Enemy *enemy, int swagSize);
  */
 void drawEnemy(Enemy *enemy, SDL_Surface *screen);
 
+/**
+ * draw swag(group) of enemy
+ * \param swag the swag(group) to draw
+ * \param screen screen where enemy will be draw
+ */
+void drawEnemySwag(EnemySwag *swag, SDL_Surface *screen);
+
 #endif /* __enemy_H__ */
 

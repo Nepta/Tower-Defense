@@ -140,3 +140,11 @@ void drawEnemy(Enemy *enemy, SDL_Surface *screen){
 	SDL_BlitSurface(enemy->spriteSheet, &enemy->animation[enemy->animationState]->animation, screen, &enemyBox);
 }
 
+void drawEnemySwag(EnemySwag *swag, SDL_Surface *screen){
+	for(int i=0; i<swag->swagSize; i++){
+		if(swag->enemy[i].life > 0){
+			drawEnemy(&swag->enemy[i], screen);
+		}
+	}
+}
+

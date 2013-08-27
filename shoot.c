@@ -16,11 +16,11 @@ void shootEnemy(ShootManager *shootManager){
 	EnemySwag *enemys = shootManager->enemys;
 	for(int i=0; i<MaxWidthTower; i++){
 		for(int j=0; j<MaxHeightTower; j++){
-			if(towers[i][j] != NULL){
+			if((*towers)[i][j] != NULL){
 				if(enemys->isEmpty != 1){
 					for(int k=0; k<enemys->swagSize; k++){
-						if(isEnemyInRange(&enemys->enemy[k],*towers[i][j])){
-							hitEnemy(*towers[i][j], &enemys->enemy[k]);
+						if(isEnemyInRange(&enemys->enemy[k],(*towers)[i][j])){
+							hitEnemy((*towers)[i][j], &enemys->enemy[k]);
 							break; // a tower can hit only one enemy
 						}
 					}
@@ -31,7 +31,7 @@ void shootEnemy(ShootManager *shootManager){
 }
 
 void hitEnemy(Tower *tower, Enemy *enemy){
-	puts("miaou");
+	enemy->life--;
 }
 
 ShootManager* newShootManager(Tower *(*towers)[MaxWidthTower][MaxHeightTower], EnemySwag *enemys){

@@ -68,9 +68,7 @@ int main(){
 		drawEnemy(whiteCat,screen);
 /*		SDL_BlitSurface(whiteCat->spriteSheet, &whiteCat->animation[whiteCat->animationState]->animation, screen, &whiteCat->position);*/
 		SDL_BlitSurface(blackCat->spriteSheet, &blackCat->animation[blackCat->animationState]->animation, screen, &blackCat->position);
-		for(int i=0; i<10; i++){
-			SDL_BlitSurface(blackSwag->enemy[i].spriteSheet, &blackSwag->enemy[i].animation[blackSwag->enemy[i].animationState]->animation, screen, &blackSwag->enemy[i].position);
-		}
+		drawEnemySwag(blackSwag,screen);
 		SDL_FillRect(screen, &endRect, SDL_MapRGB(screen->format, 100, 100, 255));
 		drawMenu(menu);
 		SDL_BlitSurface(menu->background, NULL, screen, &menuPosition);
