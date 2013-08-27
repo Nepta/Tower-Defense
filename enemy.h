@@ -63,6 +63,14 @@ AnimationState getState(Position oldPosition, Position newPosition);
 void updateEnemy(Enemy *enemy, Map **map);
 
 /**
+ * get new position of enemy according to the path finding algorithm
+ * and the new sprite in animation
+ * \param swag the swag (group of enemy) to update
+ * \param map a map containing a path
+ */
+void updateEnemySwag(EnemySwag *swag, Map **map);
+
+/**
  * load ennemy with all its animation from its sprite sheet
  * \param enemy the enemy to load animation
  * \param jsonFile json configuration file where tile information are stocked

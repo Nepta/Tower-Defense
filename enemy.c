@@ -65,6 +65,14 @@ void updateEnemy(Enemy *enemy, Map **map){
 	enemy->animation[enemy->animationState] = enemy->animation[enemy->animationState]->nextAnimation;
 }
 
+void updateEnemySwag(EnemySwag *swag, Map **map){
+	for(int i=0; i<swag->swagSize; i++){
+		if(swag->enemy[i].life > 0){
+			updateEnemy(&swag->enemy[i], map);
+		}
+	}
+}
+
 AnimationState getState(Position oldPosition, Position newPosition){
 	Position delta = {newPosition.x - oldPosition.x, newPosition.y - oldPosition.y};
 	//{-1,0,1} --> {0,1,2}
@@ -108,7 +116,6 @@ void initEnemyAnimation(Enemy *enemy, TokenIterator *it, char* jsonFile){
 		}
 	}
 }
-
 
 EnemySwag* createEnemySwag(Enemy *enemy, int swagSize){
 	EnemySwag *swag = malloc(sizeof (EnemySwag) + swagSize * sizeof (Enemy));

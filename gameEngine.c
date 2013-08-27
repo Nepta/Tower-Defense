@@ -83,9 +83,7 @@ int main(){
 			field->hasChanged = 0;
 		}
 		updateEnemy(whiteCat, map);
-		for(int i=0; i<10; i++){
-			updateEnemy(&blackSwag->enemy[i], map);
-		}
+		updateEnemySwag(blackSwag,map);
 		shootEnemy(shootManager);
 	}
  return 0;
