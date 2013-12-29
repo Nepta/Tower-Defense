@@ -70,7 +70,7 @@ int placeTower(Interface* interfaces, int x, int y);
 int isOverlapping(SDL_Rect rect1, SDL_Rect rect2);
 
 /**
- * blit all the tower in the workPlace
+ * blit all the tower and their shoot in the workPlace
  * \param field the field where tower must be blit
  */
 void updateTower(FieldInterface *field);

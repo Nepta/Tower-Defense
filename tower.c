@@ -100,6 +100,12 @@ void updateTower(FieldInterface *field){
 		for(int j=0; j<MaxHeightTower; j++){
 			Tower *tower = towerManager->towers[i][j];
 			if(tower != NULL){
+				int isTowerHasTarger = tower->bulletPosition.x != tower->target.x && tower->bulletPosition.y != tower->target.y;
+				if(isTowerHasTarger){
+					SDL_Surface *background = field->background;
+					SDL_Rect bulletMask = {32,0,32,32};
+					SDL_BlitSurface(tower->sprite, &bulletMask, background, &tower->bulletPosition);
+				}
 				SDL_Surface *background = field->background;
 				SDL_Rect spriteThumb = {0,0,32,32};
 				SDL_BlitSurface(tower->sprite, &spriteThumb, background, &tower->towerBox);
