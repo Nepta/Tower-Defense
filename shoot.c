@@ -1,5 +1,6 @@
 #include "shoot.h"
 #include <stdio.h>
+#include <math.h>
 
 int isEnemyInRange(Enemy *enemy, Tower *tower){
 	int x = enemy->position.x;
@@ -33,7 +34,27 @@ void shootEnemy(ShootManager *shootManager){
 }
 
 void hitEnemy(Tower *tower, Enemy *enemy){
-	enemy->life--;
+	int isBulletAlreadyFired = tower->bulletPosition.x != tower->towerBox.x && tower->bulletPosition.y != tower->towerBox.y;
+	if(isBulletAlreadyFired){
+		if(tower->bulletPosition.x == tower->target.x && tower->target.y == tower->towerBox.y){ //bullet reached enemy
+		 	enemy->life--;
+		 	tower->bulletPosition.x = tower->towerBox.x;
+		 	tower->bulletPosition.y = tower->towerBox.y;
+		 }
+	}else{
+		tower->target.x = enemy->position.x;
+		tower->target.y = enemy->position.y;
+	}
+	// get direction vector of bullet
+	int bulletDirectionX = enemy->position.x - tower->bulletPosition.x;
+	int bulletDirectionY = enemy->position.y - tower->bulletPosition.y;
+	//normalize direction vector
+	int bulletDirectionNorme = sqrt(pow(bulletDirectionX,2) + pow(bulletDirectionY,2));
+	bulletDirectionX /= bulletDirectionNorme;
+	bulletDirectionY /= bulletDirectionNorme;
+	
+	tower->bulletPosition.x += bulletDirectionX;
+	tower->bulletPosition.y += bulletDirectionY;
 }
 
 ShootManager* newShootManager(Tower *(*towers)[MaxWidthTower][MaxHeightTower], EnemySwag *enemys){
