@@ -14,7 +14,8 @@
 typedef struct{
 	SDL_Rect towerBox;			//!< position and size of the tower
 	SDL_Surface *sprite;			//!< sprite of the tower
-	SDL_Rect bulletPosition;	//!< postion of tower's bullet
+	float bulletPositionX;		//!< postion (x) of tower's bullet
+	float bulletPositionY;		//!< postion (y) of tower's bullet
 	SDL_Rect target;				//!< postion of tower's target
 	int range;						//!< the range of which a tower can shoot an enemy
 }Tower;

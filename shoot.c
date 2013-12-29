@@ -34,29 +34,29 @@ void shootEnemy(ShootManager *shootManager){
 }
 
 void hitEnemy(Tower *tower, Enemy *enemy){
-	int isBulletAlreadyFired = tower->bulletPosition.x != tower->towerBox.x && tower->bulletPosition.y != tower->towerBox.y;
+	int isBulletAlreadyFired = tower->bulletPositionX != tower->towerBox.x && tower->bulletPositionY != tower->towerBox.y;
 	if(isBulletAlreadyFired){
-		if(tower->bulletPosition.x == tower->target.x && tower->target.y == tower->towerBox.y){ //bullet reached enemy
+		if(tower->bulletPositionX == tower->target.x && tower->bulletPositionX == tower->target.y){ //bullet reached enemy
 		 	enemy->life--;
-		 	tower->bulletPosition.x = tower->towerBox.x;
-		 	tower->bulletPosition.y = tower->towerBox.y;
+		 	tower->bulletPositionX = tower->towerBox.x;
+		 	tower->bulletPositionY = tower->towerBox.y;
 		 }
 	}else{
 		tower->target.x = enemy->position.x;
 		tower->target.y = enemy->position.y;
 	}
 
-	int isTowerHasTarger = tower->bulletPosition.x != tower->target.x && tower->bulletPosition.y != tower->target.y;
+	int isTowerHasTarger = tower->bulletPositionX != tower->target.x && tower->bulletPositionY != tower->target.y;
 	if(isTowerHasTarger){
 		// get direction vector of bullet
-		int bulletDirectionX = enemy->position.x - tower->bulletPosition.x;
-		int bulletDirectionY = enemy->position.y - tower->bulletPosition.y;
+		float bulletDirectionX = enemy->position.x - tower->bulletPositionX;
+		float bulletDirectionY = enemy->position.y - tower->bulletPositionY;
 		//normalize direction vector
-		int bulletDirectionNorme = sqrt(pow(bulletDirectionX,2) + pow(bulletDirectionY,2));
+		float bulletDirectionNorme = sqrt(pow(bulletDirectionX,2) + pow(bulletDirectionY,2));
 		bulletDirectionX /= bulletDirectionNorme;
 		bulletDirectionY /= bulletDirectionNorme;
-		tower->bulletPosition.x += bulletDirectionX;
-		tower->bulletPosition.y += bulletDirectionY;
+		tower->bulletPositionX += bulletDirectionX;
+		tower->bulletPositionY += bulletDirectionY;
 	}
 }
 

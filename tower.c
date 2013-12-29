@@ -15,10 +15,8 @@ Tower* newTower(SDL_Surface *sprite, SDL_Rect towerBox, int range){
 	tower->towerBox.w = towerBox.w;
 	tower->towerBox.h = towerBox.h;
 	tower->range = range;
-	tower->bulletPosition.x = tower->towerBox.x;
-	tower->bulletPosition.y = tower->towerBox.y;
-	tower->bulletPosition.w = towerBox.w;
-	tower->bulletPosition.h = towerBox.h;
+	tower->bulletPositionX = tower->towerBox.x;
+	tower->bulletPositionY = tower->towerBox.y;
 	tower->target.x = tower->towerBox.x;
 	tower->target.y = tower->towerBox.y;
 	tower->target.w = towerBox.w;
@@ -100,11 +98,12 @@ void updateTower(FieldInterface *field){
 		for(int j=0; j<MaxHeightTower; j++){
 			Tower *tower = towerManager->towers[i][j];
 			if(tower != NULL){
-				int isTowerHasTarger = tower->bulletPosition.x != tower->target.x && tower->bulletPosition.y != tower->target.y;
+				int isTowerHasTarger = tower->bulletPositionX != tower->target.x && tower->bulletPositionY != tower->target.y;
 				if(isTowerHasTarger){
 					SDL_Surface *background = field->background;
 					SDL_Rect bulletMask = {32,0,32,32};
-					SDL_BlitSurface(tower->sprite, &bulletMask, background, &tower->bulletPosition);
+					SDL_Rect bulletPosition = {tower->bulletPositionX,tower->bulletPositionY,0,0};
+					SDL_BlitSurface(tower->sprite, &bulletMask, background, &bulletPosition);
 				}
 				SDL_Surface *background = field->background;
 				SDL_Rect spriteThumb = {0,0,32,32};
