@@ -12,8 +12,9 @@
  * A tower type
  */
 typedef struct{
-	SDL_Rect towerBox;	//!< position en size of the tower
+	SDL_Rect towerBox;	//!< position and size of the tower
 	SDL_Surface *sprite;	//!< sprite of the tower
+//	Animation *bullet;	//!< animation of a bullet
 	int range;				//!< the range of which a tower can shoot an enemy
 }Tower;
 

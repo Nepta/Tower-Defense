@@ -8,7 +8,6 @@
 typedef struct{
 	EnemySwag *enemys;											//!< a list of enemy to manage
 	Tower *(*towers)[MaxWidthTower][MaxHeightTower];	//!< a list of tower to manage
-	Animation *bullet;											//!< animation of a bullet
 }ShootManager;
 
 /**
