@@ -45,16 +45,19 @@ void hitEnemy(Tower *tower, Enemy *enemy){
 		tower->target.x = enemy->position.x;
 		tower->target.y = enemy->position.y;
 	}
-	// get direction vector of bullet
-	int bulletDirectionX = enemy->position.x - tower->bulletPosition.x;
-	int bulletDirectionY = enemy->position.y - tower->bulletPosition.y;
-	//normalize direction vector
-	int bulletDirectionNorme = sqrt(pow(bulletDirectionX,2) + pow(bulletDirectionY,2));
-	bulletDirectionX /= bulletDirectionNorme;
-	bulletDirectionY /= bulletDirectionNorme;
-	
-	tower->bulletPosition.x += bulletDirectionX;
-	tower->bulletPosition.y += bulletDirectionY;
+
+	int isTowerHasTarger = tower->bulletPosition.x != tower->target.x && tower->bulletPosition.y != tower->target.y;
+	if(isTowerHasTarger){
+		// get direction vector of bullet
+		int bulletDirectionX = enemy->position.x - tower->bulletPosition.x;
+		int bulletDirectionY = enemy->position.y - tower->bulletPosition.y;
+		//normalize direction vector
+		int bulletDirectionNorme = sqrt(pow(bulletDirectionX,2) + pow(bulletDirectionY,2));
+		bulletDirectionX /= bulletDirectionNorme;
+		bulletDirectionY /= bulletDirectionNorme;
+		tower->bulletPosition.x += bulletDirectionX;
+		tower->bulletPosition.y += bulletDirectionY;
+	}
 }
 
 ShootManager* newShootManager(Tower *(*towers)[MaxWidthTower][MaxHeightTower], EnemySwag *enemys){
