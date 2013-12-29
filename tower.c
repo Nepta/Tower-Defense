@@ -93,7 +93,8 @@ void updateTower(FieldInterface *field){
 			Tower *tower = towerManager->towers[i][j];
 			if(tower != NULL){
 				SDL_Surface *background = field->background;
-				SDL_BlitSurface(tower->sprite, NULL, background, &tower->towerBox);
+				SDL_Rect spriteThumb = {0,0,32,32};
+				SDL_BlitSurface(tower->sprite, &spriteThumb, background, &tower->towerBox);
 			}
 		}		
 	}

@@ -99,21 +99,23 @@ void drawMenu(Menu *menu){
 	if(menu->currentItem){
 		SDL_Rect currentItemPosition = {75,50,0,0};
 		SDL_Rect currentTextPosition = {5,50,0,0};
-		SDL_BlitSurface(menu->blackTile, NULL, menu->background, &currentItemPosition);
-		SDL_BlitSurface(menu->currentItem->sprite, NULL, menu->background, &currentItemPosition);
+		SDL_Rect spriteThumb = {0,0,32,32};
+		SDL_BlitSurface(menu->blackTile, &spriteThumb, menu->background, &currentItemPosition);
+		SDL_BlitSurface(menu->currentItem->sprite, &spriteThumb, menu->background, &currentItemPosition);
 		drawMenuText(menu->text, menu->currentItem);
-		SDL_BlitSurface(menu->text->sprite, NULL, menu->background, &currentTextPosition);
+		SDL_BlitSurface(menu->text->sprite, &spriteThumb, menu->background, &currentTextPosition);
 	}
 	drawAnimatedItem(menu, menu->coin);
 }
 
 void drawMenuItem(MenuItem *item, SDL_Surface *surfaceToDraw){
-	SDL_BlitSurface(item->sprite, NULL, surfaceToDraw, &item->position);
+	SDL_Rect spriteThumb = {0,0,32,32};
+	SDL_BlitSurface(item->sprite, &spriteThumb, surfaceToDraw, &item->position);
 }
 
 MenuText* initTextArea(){
 	SDL_Color white = {255,255,255,255}; 
-	TTF_Font *font_ = TTF_OpenFont("resources/zombieCat.ttf", 8);
+	TTF_Font *font_ = TTF_OpenFont("resources/zombieCat.ttf", 10);
 	if(!font_){
 		printf("font error: %s\n",TTF_GetError());
 		exit(-1);
