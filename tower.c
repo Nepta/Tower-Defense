@@ -15,6 +15,14 @@ Tower* newTower(SDL_Surface *sprite, SDL_Rect towerBox, int range){
 	tower->towerBox.w = towerBox.w;
 	tower->towerBox.h = towerBox.h;
 	tower->range = range;
+	tower->bulletPosition.x = tower->towerBox.x;
+	tower->bulletPosition.y = tower->towerBox.y;
+	tower->bulletPosition.w = towerBox.w;
+	tower->bulletPosition.h = towerBox.h;
+	tower->target.x = tower->towerBox.x;
+	tower->target.y = tower->towerBox.y;
+	tower->target.w = towerBox.w;
+	tower->target.h = towerBox.h;
  return tower;
 }
 
