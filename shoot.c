@@ -34,29 +34,29 @@ void shootEnemy(ShootManager *shootManager){
 }
 
 void hitEnemy(Tower *tower, Enemy *enemy){
-	int isBulletAlreadyFired = tower->bulletPositionX != tower->towerBox.x && tower->bulletPositionY != tower->towerBox.y;
-	if(isBulletAlreadyFired){
-		if(tower->bulletPositionX == tower->target.x && tower->bulletPositionX == tower->target.y){ //bullet reached enemy
+	int isTargetAcquired = tower->target.x != tower->towerBox.x || tower->target.y != tower->towerBox.y;
+	if(isTargetAcquired){
+		int isTargetReached = (int)tower->bulletPositionX == tower->target.x && (int)tower->bulletPositionY == tower->target.y;
+		if(isTargetReached){
 		 	enemy->life--;
 		 	tower->bulletPositionX = tower->towerBox.x;
 		 	tower->bulletPositionY = tower->towerBox.y;
-		 }
+			tower->target.x = tower->towerBox.x;
+			tower->target.y = tower->towerBox.y;
+		}else{
+			// get direction vector of bullet
+			float bulletDirectionX = tower->target.x - tower->bulletPositionX;
+			float bulletDirectionY = tower->target.y - tower->bulletPositionY;
+			//normalize direction vector
+			float bulletDirectionNorme = sqrt(pow(bulletDirectionX,2) + pow(bulletDirectionY,2));
+			bulletDirectionX /= bulletDirectionNorme;
+			bulletDirectionY /= bulletDirectionNorme;
+			tower->bulletPositionX += bulletDirectionX;
+			tower->bulletPositionY += bulletDirectionY;
+		}
 	}else{
 		tower->target.x = enemy->position.x;
 		tower->target.y = enemy->position.y;
-	}
-
-	int isTowerHasTarger = tower->bulletPositionX != tower->target.x && tower->bulletPositionY != tower->target.y;
-	if(isTowerHasTarger){
-		// get direction vector of bullet
-		float bulletDirectionX = enemy->position.x - tower->bulletPositionX;
-		float bulletDirectionY = enemy->position.y - tower->bulletPositionY;
-		//normalize direction vector
-		float bulletDirectionNorme = sqrt(pow(bulletDirectionX,2) + pow(bulletDirectionY,2));
-		bulletDirectionX /= bulletDirectionNorme;
-		bulletDirectionY /= bulletDirectionNorme;
-		tower->bulletPositionX += bulletDirectionX;
-		tower->bulletPositionY += bulletDirectionY;
 	}
 }
 
