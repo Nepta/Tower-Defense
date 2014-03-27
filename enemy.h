@@ -100,5 +100,12 @@ void drawEnemy(Enemy *enemy, SDL_Surface *screen);
  */
 void drawEnemySwag(EnemySwag *swag, SDL_Surface *screen);
 
+/**
+ * hurt an enemy and maybe kill it
+ * \param enemy the enemy to hurt
+ * \param damage number of damage an enemy take
+ */
+void bleedEnemy(Enemy* enemy, int damage);
+
 #endif /* __enemy_H__ */
 

@@ -66,10 +66,16 @@ void updateEnemy(Enemy *enemy, Map **map){
 }
 
 void updateEnemySwag(EnemySwag *swag, Map **map){
+	int livingEnemy = swag->swagSize;
 	for(int i=0; i<swag->swagSize; i++){
 		if(swag->enemy[i].life > 0){
 			updateEnemy(&swag->enemy[i], map);
+		}else{
+			livingEnemy--;
 		}
+	}
+	if(livingEnemy == 0){
+		//free(swag)
 	}
 }
 
@@ -152,6 +158,13 @@ void drawEnemySwag(EnemySwag *swag, SDL_Surface *screen){
 		if(swag->enemy[i].life > 0){
 			drawEnemy(&swag->enemy[i], screen);
 		}
+	}
+}
+
+void bleedEnemy(Enemy* enemy, int damage){
+	enemy->life -= damage;
+	if(enemy->life <= 0){
+		printf("die\n");	
 	}
 }
 
