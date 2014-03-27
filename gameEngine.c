@@ -66,14 +66,12 @@ int main(){
 		gameEnd = pollMouseClick(&interfaces);
 		SDL_BlitSurface(field->background, NULL, screen, NULL);
 		drawEnemy(whiteCat,screen);
-/*		SDL_BlitSurface(whiteCat->spriteSheet, &whiteCat->animation[whiteCat->animationState]->animation, screen, &whiteCat->position);*/
-		SDL_BlitSurface(blackCat->spriteSheet, &blackCat->animation[blackCat->animationState]->animation, screen, &blackCat->position);
 		drawEnemySwag(blackSwag,screen);
 		SDL_FillRect(screen, &endRect, SDL_MapRGB(screen->format, 100, 100, 255));
 		drawMenu(menu);
 		SDL_BlitSurface(menu->background, NULL, screen, &menuPosition);
 		SDL_Flip(screen);
-		updateEnemy(blackCat, map);
+/*		updateEnemy(blackCat, map);*/
 		updateTower(field);
 		if(field->hasChanged){
 			puts("recalculate path for white cat");
@@ -84,6 +82,9 @@ int main(){
 		}
 		updateEnemy(whiteCat, map);
 		updateEnemySwag(blackSwag,map);
+		shootEnemy(shootManager);
+		shootEnemy(shootManager);
+		shootEnemy(shootManager);
 		shootEnemy(shootManager);
 	}
  return 0;
