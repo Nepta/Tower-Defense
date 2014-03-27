@@ -3,12 +3,12 @@
 #include <math.h>
 
 int isEnemyInRange(Enemy *enemy, Tower *tower){
-	int x = enemy->position.x;
-	int y = enemy->position.y;
-	int i = tower->towerBox.x;
-	int j = tower->towerBox.y;
-	int r = tower->range;
-	int towerToEnemyDistance = ((x-i)*(x-i)) + ((y-j)*(y-j));
+	double x = enemy->position.x;
+	double y = enemy->position.y;
+	double i = tower->towerBox.x;
+	double j = tower->towerBox.y;
+	double r = tower->range;
+	double towerToEnemyDistance = ((x-i)*(x-i)) + ((y-j)*(y-j));
 	return towerToEnemyDistance <= r*r ? 1 : 0;
 }
 
@@ -38,17 +38,17 @@ void hitEnemy(Tower *tower, Enemy *enemy){
 	if(isTargetAcquired){
 		int isTargetReached = (int)tower->bulletPositionX == tower->target.x && (int)tower->bulletPositionY == tower->target.y;
 		if(isTargetReached){
-		 	enemy->life--;
+		 	bleedEnemy(enemy,1);
 		 	tower->bulletPositionX = tower->towerBox.x;
 		 	tower->bulletPositionY = tower->towerBox.y;
 			tower->target.x = tower->towerBox.x;
 			tower->target.y = tower->towerBox.y;
 		}else{
 			// get direction vector of bullet
-			float bulletDirectionX = tower->target.x - tower->bulletPositionX;
-			float bulletDirectionY = tower->target.y - tower->bulletPositionY;
+			double bulletDirectionX = tower->target.x - tower->bulletPositionX;
+			double bulletDirectionY = tower->target.y - tower->bulletPositionY;
 			//normalize direction vector
-			float bulletDirectionNorme = sqrt(pow(bulletDirectionX,2) + pow(bulletDirectionY,2));
+			double bulletDirectionNorme = sqrt(pow(bulletDirectionX,2) + pow(bulletDirectionY,2));
 			bulletDirectionX /= bulletDirectionNorme;
 			bulletDirectionY /= bulletDirectionNorme;
 			tower->bulletPositionX += bulletDirectionX;
