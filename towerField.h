@@ -9,9 +9,10 @@
  * retain the status of the main field
  */
 struct fieldInterface{
-	SDL_Surface *background;		//!< the map image
-	TowerManager *towerManager;	//!< manager for adding a tower
-	int hasChanged;					//!< true if a we need to redo the pathfinding
+	SDL_Surface *background;			//!< the map image
+	SDL_Surface *originalBackground;	//!< the map image (original)
+	TowerManager *towerManager;		//!< manager for adding a tower
+	int hasChanged;						//!< true if a we need to redo the pathfinding
 };
 
 /**

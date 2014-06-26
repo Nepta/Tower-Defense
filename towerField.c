@@ -8,7 +8,8 @@
 FieldInterface* createFieldInterface(char* mapName){
 	FieldInterface *field = malloc(sizeof (FieldInterface));
 	field->background = IMG_Load(mapName);
-	if(field->background == NULL) {
+	field->originalBackground = IMG_Load(mapName);
+	if(field->background == NULL || field->originalBackground == NULL){
 		printf("failed to load the background map\n");
 		printf("IMG_Load: %s\n", IMG_GetError());
 		exit(-1);

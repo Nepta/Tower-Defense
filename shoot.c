@@ -51,6 +51,7 @@ void hitEnemy(Tower *tower, Enemy *enemy){
 			double bulletDirectionNorme = sqrt(pow(bulletDirectionX,2) + pow(bulletDirectionY,2));
 			bulletDirectionX /= bulletDirectionNorme;
 			bulletDirectionY /= bulletDirectionNorme;
+
 			tower->bulletPositionX += bulletDirectionX;
 			tower->bulletPositionY += bulletDirectionY;
 		}
