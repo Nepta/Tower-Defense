@@ -23,7 +23,6 @@ void shootEnemy(ShootManager *shootManager){
 						if(enemys->enemy[k].life > 0){
 							if(isEnemyInRange(&enemys->enemy[k],(*towers)[i][j])){
 								targetEnemy((*towers)[i][j], &enemys->enemy[k]);
-								hitEnemy((*towers)[i][j], &enemys->enemy[k]);
 								break; // a tower can hit only one enemy
 							}
 						}

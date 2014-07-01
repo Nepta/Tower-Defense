@@ -1,6 +1,7 @@
 #include "tower.h"
 #include "menu.h"
 #include "towerField.h"
+#include "shoot.h"
 #include <SDL/SDL.h>
 #include <stdlib.h>
 #include <math.h>
@@ -22,6 +23,7 @@ Tower* newTower(SDL_Surface *sprite, SDL_Rect towerBox, int range){
 	tower->target.y = tower->towerBox.y;
 	tower->target.w = towerBox.w;
 	tower->target.h = towerBox.h;
+	tower->targetedEnemy = NULL;
  return tower;
 }
 
@@ -99,6 +101,9 @@ void updateTower(FieldInterface *field){
 		for(int j=0; j<MaxHeightTower; j++){
 			Tower *tower = towerManager->towers[i][j];
 			if(tower != NULL){
+				if(tower->targetedEnemy != NULL){
+					hitEnemy(tower, tower->targetedEnemy);
+				}
 				int isTowerHasTarget = tower->bulletPositionX != tower->target.x && tower->bulletPositionY != tower->target.y;
 				
 				SDL_Surface *background = field->background;
