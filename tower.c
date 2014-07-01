@@ -3,6 +3,7 @@
 #include "towerField.h"
 #include <SDL/SDL.h>
 #include <stdlib.h>
+#include <math.h>
   
 extern int mapWidth;
 extern int mapHeight;
@@ -108,15 +109,19 @@ void updateTower(FieldInterface *field){
 				SDL_BlitSurface(originalBackground, &bulletMaskReset, background, &bulletPositionReset);
 				
 				if(isTowerHasTarget){
-					
 					SDL_Rect bulletMask = {32,0,32,32};
 					SDL_Rect bulletPosition = {tower->bulletPositionX,tower->bulletPositionY,0,0};
 					SDL_BlitSurface(tower->sprite, &bulletMask, background, &bulletPosition);
 				}
+				
 				SDL_Rect spriteThumb = {0,0,32,32};
 				SDL_BlitSurface(tower->sprite, &spriteThumb, background, &tower->towerBox);
 			}
 		}		
 	}
+}
+
+void targetEnemy(Tower *tower, Enemy *enemy){
+	tower->targetedEnemy = enemy;
 }
 

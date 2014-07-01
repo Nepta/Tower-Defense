@@ -4,6 +4,7 @@
 #include <SDL/SDL.h>
 #include "map.h"
 #include "interfaces.h"
+#include "enemy.h"
 
 #define MaxWidthTower 25	//!< for a 800 x 600 map we can only put 25 size 32 towers in a line
 #define MaxHeightTower 18	//!< for a 800 x 600 map we can only put 18 size 32 towers in a column
@@ -17,7 +18,8 @@ typedef struct{
 	double bulletPositionX;		//!< postion (x) of tower's bullet
 	double bulletPositionY;		//!< postion (y) of tower's bullet
 	SDL_Rect target;				//!< postion of tower's target
-	double range;						//!< the range of which a tower can shoot an enemy
+	double range;					//!< the range of which a tower can shoot an enemy
+	Enemy *targetedEnemy;		//!< ennemy the tower is targeting
 }Tower;
 
 /**
@@ -75,6 +77,12 @@ int isOverlapping(SDL_Rect rect1, SDL_Rect rect2);
  * \param field the field where tower must be blit
  */
 void updateTower(FieldInterface *field);
+
+/**
+ * target an enemy to shoot at him
+ * \param
+ */
+void targetEnemy(Tower *tower, Enemy *enemy);
 
 #endif /* __tower_H__ */
 
