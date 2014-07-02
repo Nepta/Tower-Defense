@@ -17,12 +17,6 @@ Tower* newTower(SDL_Surface *sprite, SDL_Rect towerBox, int range){
 	tower->towerBox.w = towerBox.w;
 	tower->towerBox.h = towerBox.h;
 	tower->range = range;
-	tower->bulletPositionX = tower->towerBox.x;
-	tower->bulletPositionY = tower->towerBox.y;
-	tower->target.x = tower->towerBox.x;
-	tower->target.y = tower->towerBox.y;
-	tower->target.w = towerBox.w;
-	tower->target.h = towerBox.h;
 	tower->targetedEnemy = NULL;
  return tower;
 }
@@ -101,23 +95,21 @@ void updateTower(FieldInterface *field){
 		for(int j=0; j<MaxHeightTower; j++){
 			Tower *tower = towerManager->towers[i][j];
 			if(tower != NULL){
-				if(tower->targetedEnemy != NULL){
-					hitEnemy(tower, tower->targetedEnemy);
-				}
-				int isTowerHasTarget = tower->bulletPositionX != tower->target.x && tower->bulletPositionY != tower->target.y;
-				
+				//TODO createBullet
+/*				int isTowerHasTarget = tower->bulletPositionX != tower->target.x && tower->bulletPositionY != tower->target.y;*/
+/*				*/
 				SDL_Surface *background = field->background;
-				SDL_Surface *originalBackground = field->originalBackground;
-				
-				SDL_Rect bulletMaskReset = {tower->bulletPositionX-1,tower->bulletPositionY-1,34,34};
-				SDL_Rect bulletPositionReset = {tower->bulletPositionX-1,tower->bulletPositionY-1,34,34};
-				SDL_BlitSurface(originalBackground, &bulletMaskReset, background, &bulletPositionReset);
-				
-				if(isTowerHasTarget){
-					SDL_Rect bulletMask = {32,0,32,32};
-					SDL_Rect bulletPosition = {tower->bulletPositionX,tower->bulletPositionY,0,0};
-					SDL_BlitSurface(tower->sprite, &bulletMask, background, &bulletPosition);
-				}
+/*				SDL_Surface *originalBackground = field->originalBackground;*/
+/*				*/
+/*				SDL_Rect bulletMaskReset = {tower->bulletPositionX-1,tower->bulletPositionY-1,34,34};*/
+/*				SDL_Rect bulletPositionReset = {tower->bulletPositionX-1,tower->bulletPositionY-1,34,34};*/
+/*				SDL_BlitSurface(originalBackground, &bulletMaskReset, background, &bulletPositionReset);*/
+/*				*/
+/*				if(isTowerHasTarget){*/
+/*					SDL_Rect bulletMask = {32,0,32,32};*/
+/*					SDL_Rect bulletPosition = {tower->bulletPositionX,tower->bulletPositionY,0,0};*/
+/*					SDL_BlitSurface(tower->sprite, &bulletMask, background, &bulletPosition);*/
+/*				}*/
 				
 				SDL_Rect spriteThumb = {0,0,32,32};
 				SDL_BlitSurface(tower->sprite, &spriteThumb, background, &tower->towerBox);

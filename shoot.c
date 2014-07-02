@@ -34,31 +34,31 @@ void shootEnemy(ShootManager *shootManager){
 }
 
 void hitEnemy(Tower *tower, Enemy *enemy){
-	int isTargetAcquired = tower->target.x != tower->towerBox.x || tower->target.y != tower->towerBox.y;
-	if(isTargetAcquired){
-		int isTargetReached = (int)tower->bulletPositionX == tower->target.x && (int)tower->bulletPositionY == tower->target.y;
-		if(isTargetReached){
-		 	bleedEnemy(enemy,1);
-		 	tower->bulletPositionX = tower->towerBox.x;
-		 	tower->bulletPositionY = tower->towerBox.y;
-			tower->target.x = tower->towerBox.x;
-			tower->target.y = tower->towerBox.y;
-		}else{
-			// get direction vector of bullet
-			double bulletDirectionX = tower->target.x - tower->bulletPositionX;
-			double bulletDirectionY = tower->target.y - tower->bulletPositionY;
-			//normalize direction vector
-			double bulletDirectionNorme = sqrt(pow(bulletDirectionX,2) + pow(bulletDirectionY,2));
-			bulletDirectionX /= bulletDirectionNorme;
-			bulletDirectionY /= bulletDirectionNorme;
+/*	int isTargetAcquired = tower->target.x != tower->towerBox.x || tower->target.y != tower->towerBox.y;*/
+/*	if(isTargetAcquired){*/
+/*		int isTargetReached = (int)tower->bulletPositionX == tower->target.x && (int)tower->bulletPositionY == tower->target.y;*/
+/*		if(isTargetReached){*/
+/*		 	bleedEnemy(enemy,1);*/
+/*		 	tower->bulletPositionX = tower->towerBox.x;*/
+/*		 	tower->bulletPositionY = tower->towerBox.y;*/
+/*			tower->target.x = tower->towerBox.x;*/
+/*			tower->target.y = tower->towerBox.y;*/
+/*		}else{*/
+/*			// get direction vector of bullet*/
+/*			double bulletDirectionX = tower->target.x - tower->bulletPositionX;*/
+/*			double bulletDirectionY = tower->target.y - tower->bulletPositionY;*/
+/*			//normalize direction vector*/
+/*			double bulletDirectionNorme = sqrt(pow(bulletDirectionX,2) + pow(bulletDirectionY,2));*/
+/*			bulletDirectionX /= bulletDirectionNorme;*/
+/*			bulletDirectionY /= bulletDirectionNorme;*/
 
-			tower->bulletPositionX += bulletDirectionX;
-			tower->bulletPositionY += bulletDirectionY;
-		}
-	}else{
-		tower->target.x = enemy->position.x;
-		tower->target.y = enemy->position.y;
-	}
+/*			tower->bulletPositionX += bulletDirectionX;*/
+/*			tower->bulletPositionY += bulletDirectionY;*/
+/*		}*/
+/*	}else{*/
+/*		tower->target.x = enemy->position.x;*/
+/*		tower->target.y = enemy->position.y;*/
+/*	}*/
 }
 
 ShootManager* newShootManager(Tower *(*towers)[MaxWidthTower][MaxHeightTower], EnemySwag *enemys){
